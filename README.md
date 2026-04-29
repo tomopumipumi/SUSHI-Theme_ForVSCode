@@ -19,10 +19,11 @@
       <img width="390" height="94" alt="Image" src="./images/status_bar.png" />
     </td>
     <td style="width: 45%; padding: 20px; vertical-align: middle;">
-      <h3>🍵 SUSHI Memory Indicator</h3>
-      <p>Check your PC memory usage easily right in your status bar.</p>
-      <p>Low memory = Empty plate.<br>
-      High memory = Full of Sushi!</p>
+      <h3>🍣 SUSHI Memory Indicator</h3>
+      <p>Check your system memory usage easily right in your status bar.</p>
+      <p>Low memory = A few pieces of sushi.<br>
+      High memory = A full plate of sushi!</p>
+      <p style="font-size: 0.9em; color: #888;">Hover to see detailed System & Extension memory stats.</p>
     </td>
   </tr>
   
