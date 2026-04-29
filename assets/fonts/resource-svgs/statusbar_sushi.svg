@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 140" width="28" height="16">
+    <defs>
+        <g id="maguro-nigiri">
+            <rect x="50" y="70" width="100" height="50" rx="25" fill="#ffffff" />
+            
+            <path d="M 60 115 C 80 120, 120 120, 140 115" stroke="#f1f5f9" stroke-width="4" stroke-linecap="round" fill="none" />
+            <circle cx="70" cy="90" r="3" fill="#f1f5f9" />
+            <circle cx="90" cy="100" r="3" fill="#f1f5f9" />
+            <circle cx="115" cy="85" r="3" fill="#f1f5f9" />
+            <circle cx="130" cy="105" r="3" fill="#f1f5f9" />
+
+            <path d="M 30 75 C 40 40, 80 35, 100 35 C 120 35, 160 40, 170 75 C 175 90, 160 95, 150 90 C 120 75, 80 75, 50 90 C 40 95, 25 90, 30 75 Z" fill="#ef4444" />
+            
+            <path d="M 60 45 C 80 40, 100 40, 120 45" stroke="#fca5a5" stroke-width="4" stroke-linecap="round" fill="none" />
+            <path d="M 50 60 L 65 75" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" />
+            <path d="M 80 50 L 95 65" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" />
+            <path d="M 110 50 L 125 65" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" />
+            <path d="M 140 60 L 155 75" stroke="#fca5a5" stroke-width="3" stroke-linecap="round" />
+        </g>
+    </defs>
+
+    <g transform="translate(5, 5) scale(0.85)">
+        <use href="#maguro-nigiri" />
+    </g>
+
+    <g transform="translate(75, 20)">
+        <use href="#maguro-nigiri" />
+    </g>
+</svg>
