@@ -1,7 +1,7 @@
+import * as os from "node:os";
 import * as vscode from "vscode";
 
 const MAX_SUSHI = 15;
-const ADJUSTED_MB_PER_SUSHI = 10;
 
 export interface MemoryIndicator {
 	start: (statusBarItem: vscode.StatusBarItem) => void;
@@ -13,9 +13,11 @@ export interface MemoryIndicator {
 export const useMemoryIndicator = (): MemoryIndicator => {
 	let intervalId: NodeJS.Timeout | undefined;
 
+	const isWeb = vscode.env.uiKind === vscode.UIKind.Web;
+
 	const start = (statusBarItem: vscode.StatusBarItem): void => {
 		update(statusBarItem);
-		intervalId = setInterval(() => update(statusBarItem), 2000);
+		if (!isWeb) intervalId = setInterval(() => update(statusBarItem), 2000);
 	};
 
 	const stop = (): void => {
@@ -32,24 +34,56 @@ export const useMemoryIndicator = (): MemoryIndicator => {
 			return;
 		}
 
-		const usedMb = Math.round(process.memoryUsage().heapUsed / (1024 * 1024));
-		let sushiCount = Math.floor(usedMb / ADJUSTED_MB_PER_SUSHI);
+		if (isWeb) {
+			statusBarItem.text = "$(sushi-maguro)";
+			statusBarItem.tooltip = "System Memory: N/A (Web Environment)";
+			statusBarItem.show();
+			return;
+		}
+
+		const extUsedMb = Math.round(process.memoryUsage().heapUsed / (1024 * 1024));
+		const totalSysMem = os.totalmem();
+		const freeSysMem = os.freemem();
+		const usedSysMem = totalSysMem - freeSysMem;
+
+		const totalSysGb = (totalSysMem / 1024 ** 3).toFixed(1);
+		const usedSysGb = (usedSysMem / 1024 ** 3).toFixed(1);
+
+		const memoryUsageRatio = usedSysMem / totalSysMem;
+		let sushiCount = Math.ceil(memoryUsageRatio * MAX_SUSHI);
 		sushiCount = Math.max(1, Math.min(sushiCount, MAX_SUSHI));
 
 		statusBarItem.text = "$(sushi-maguro)".repeat(sushiCount);
-		statusBarItem.tooltip = `System Memory Usage: ${usedMb}MB`;
+		statusBarItem.tooltip = `System Memory: ${usedSysGb}GB / ${totalSysGb}GB\nExtension Memory: ${extUsedMb}MB`;
 		statusBarItem.show();
 	};
 
 	const showDetails = (): void => {
+		if (isWeb) {
+			vscode.window
+				.showInformationMessage(
+					"$(sushi-maguro) Memory usage is unavailable on the web.",
+					"Open Setting",
+				)
+				.then((selection) => {
+					selection === "Open Setting" &&
+						vscode.commands.executeCommand("workbench.action.openSettings", "sushiTheme");
+				});
+			return;
+		}
+
 		const memoryData = process.memoryUsage();
-		const usedMemory = Math.round(memoryData.heapUsed / (1024 * 1024));
-		const totalMemory = Math.round(memoryData.heapTotal / (1024 * 1024));
-		const rssMemory = Math.round(memoryData.rss / (1024 * 1024));
+		const extUsedMemory = Math.round(memoryData.heapUsed / (1024 * 1024));
+		const extRssMemory = Math.round(memoryData.rss / (1024 * 1024));
+
+		const totalSysMem = os.totalmem();
+		const freeSysMem = os.freemem();
+		const usedSysGb = ((totalSysMem - freeSysMem) / 1024 ** 3).toFixed(1);
+		const totalSysGb = (totalSysMem / 1024 ** 3).toFixed(1);
 
 		vscode.window
 			.showInformationMessage(
-				`🍣 System Memory: Used: ${usedMemory}MB / Total: ${totalMemory}MB (RSS: ${rssMemory}MB)`,
+				`$🍣 System: ${usedSysGb}GB / ${totalSysGb}GB | Ext: ${extUsedMemory}MB (RSS: ${extRssMemory}MB)`,
 				"Open Setting",
 			)
 			.then((selection) => {
