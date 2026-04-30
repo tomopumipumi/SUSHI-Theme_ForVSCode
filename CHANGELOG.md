@@ -4,6 +4,10 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.3.0] - 2026-05-01
+- Add `Throttle Ms` setting to allow users to adjust the effect rendering interval
+- Improve rendering performance by throttling continuous effect updates to prevent editor lag during key holds
+
 ## [1.2.0] - 2026-04-30
 - Enhance syntax highlighting with refined colors and new semantic tokens support
 - Optimize typing effect rendering to eliminate stuttering during continuous keystrokes
