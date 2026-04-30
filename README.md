@@ -8,7 +8,6 @@
   <img width="1919" height="1035" alt="Image" src="./images/all.png" />
 </div>
 
-
 <br><br>
 
 <h2>🍣 Fresh Features</h2>
@@ -99,6 +98,12 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Fever Spawn Count</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>5</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Number of sushi dropped per keystroke in Fever Time.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 1 / Max: 20</i></span></td>
+    </tr>
+    <!-- 新規追加: Throttle Ms -->
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Throttle Ms</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>80</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the minimum time (in milliseconds) between effect renders to prevent editor lag during continuous typing. Increase this value if you experience performance issues.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 16 / Max: 1000</i></span></td>
     </tr>
   </tbody>
 </table>

@@ -13,6 +13,8 @@ export const useComboManager = ({ onUpdate }: UseComboManagerProps): ComboManage
 	let comboCount = 0;
 	let comboTimeout: NodeJS.Timeout | undefined;
 
+	let lastUpdateTime = 0;
+
 	const resetCombo = (): void => {
 		comboCount = 0;
 	};
@@ -26,8 +28,15 @@ export const useComboManager = ({ onUpdate }: UseComboManagerProps): ComboManage
 		const rawResetMs = config.get<number>("comboTimeoutMs", defaultRawResetMs);
 		const resetMs = Math.max(1, Number(rawResetMs) || defaultRawResetMs);
 
+		const throttleMs = config.get<number>("throttleMs", 80);
+		const now = Date.now();
+
 		comboTimeout = setTimeout(() => resetCombo(), resetMs);
-		onUpdate(comboCount, position, editor);
+
+		if (now - lastUpdateTime >= throttleMs) {
+			lastUpdateTime = now;
+			onUpdate(comboCount, position, editor);
+		}
 	};
 
 	const dispose = (): void => {
