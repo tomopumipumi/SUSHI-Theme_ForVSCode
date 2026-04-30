@@ -2,7 +2,7 @@
 	"name": "sushitheme",
 	"displayName": "SUSHI Theme",
 	"description": "A delicious, dark theme inspired by Nori, Shari, and Wasabi.",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"publisher": "ichimura-tomoo",
 	"icon": "icon.png",
 	"repository": {
@@ -120,6 +120,7 @@
 		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
 
 		"package": "pnpm run lint && pnpm run check-types && node esbuild.js --production",
+		"build:vsix": "pnpm dlx @vscode/vsce package",
 
 		"compile-tests": "tsc -p . --outDir out",
 		"watch-tests": "tsc -p . -w --outDir out",

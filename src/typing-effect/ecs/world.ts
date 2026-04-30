@@ -23,6 +23,7 @@ export const useWorld = (): World => {
 	const renderSystem = useRenderSystem();
 
 	let timer: NodeJS.Timeout | undefined;
+	let lastTime = performance.now();
 
 	const startLoop = (): void => {
 		if (timer) return;
@@ -40,13 +41,17 @@ export const useWorld = (): World => {
 	};
 
 	const update = (): void => {
+		const now = performance.now();
+		const dt = (now - lastTime) / 30;
+		lastTime = now;
 		if (data.activeCount === 0) {
 			renderSystem.update(data);
 			stopLoop();
 			return;
 		}
 
-		physicsSystem.update(data);
+		physicsSystem.update(data, dt);
+
 		lifecycleSystem.update(data);
 		renderSystem.update(data);
 	};
