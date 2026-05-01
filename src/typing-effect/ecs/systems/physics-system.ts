@@ -1,25 +1,37 @@
-import type { ParticleData } from "../components/particle-data";
+import { COMPONENT_MASK } from "../constants";
+import type { Registry } from "../registry";
 
 interface PhysicsSystem {
-	update: (data: ParticleData, dt: number) => void;
+	update: (registry: Registry, dt: number, bounceTopDistance: number) => void;
 }
 
 export const usePhysicsSystem = (): PhysicsSystem => {
-	const update = (data: ParticleData, dt: number): void => {
-		const count = data.activeCount;
+	const RequiredMask = COMPONENT_MASK.transform | COMPONENT_MASK.physics;
 
-		const { x, y, vx, vy, rotation, gravity, friction, rotationFactor } = data;
+	const update = (registry: Registry, dt: number, bounceTopDistance: number): void => {
+		const { components, entityMasks, activeCount } = registry;
 
-		for (let i = 0; i < count; i++) {
-			vy[i] += gravity[i];
+		for (let i = 0; i < activeCount; i++) {
+			if ((entityMasks[i] & RequiredMask) === RequiredMask) {
+				components.physics.vy[i] += components.physics.gravity[i];
 
-			vx[i] *= friction[i] ** dt;
-			vy[i] *= friction[i] ** dt;
+				components.physics.vx[i] *= components.physics.friction[i] ** dt;
+				components.physics.vy[i] *= components.physics.friction[i] ** dt;
 
-			x[i] += vx[i];
-			y[i] += vy[i];
+				components.transform.x[i] += components.physics.vx[i];
+				components.transform.y[i] += components.physics.vy[i];
 
-			rotation[i] += vx[i] * rotationFactor[i];
+				if (bounceTopDistance > 0) {
+					const topLimit = -Math.abs(bounceTopDistance);
+					if (components.transform.y[i] < topLimit) {
+						components.transform.y[i] = topLimit;
+						components.physics.vy[i] *= -0.7;
+					}
+				}
+
+				components.transform.rotation[i] +=
+					components.physics.vx[i] * components.physics.rotationFactor[i];
+			}
 		}
 	};
 

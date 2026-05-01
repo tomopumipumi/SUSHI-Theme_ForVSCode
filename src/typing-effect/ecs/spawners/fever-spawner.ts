@@ -5,7 +5,8 @@ import lv3 from "@/assets-svg/fever/lv3.svg";
 import lv4 from "@/assets-svg/fever/lv4.svg";
 import lv5 from "@/assets-svg/fever/lv5.svg";
 import type { GraphicData, GraphicLevel } from "@/typing-effect/types";
-import { MAX_PARTICLES, type ParticleData } from "../components/particle-data";
+import { DEFAULT_PARTICLE_MASK } from "../constants";
+import type { Registry } from "../registry";
 
 const FEVER_GRAPHICS: GraphicLevel[] = [
 	{ width: 24, height: 18, svgContent: lv1 },
@@ -37,40 +38,43 @@ const FEVER_PRELOADED_SVGS: GraphicData[] = FEVER_GRAPHICS.map((g) => {
 });
 
 export const spawnFever = (
-	data: ParticleData,
+	registry: Registry,
 	editor: vscode.TextEditor,
 	position: vscode.Position,
+	speedMultiplier: number = 1.0,
 ): void => {
 	const config = vscode.workspace.getConfiguration("sushiTheme");
 	const rawCount = config.get<number>("feverSpawnCount", 5);
 	const baseCount = Math.max(1, Number(rawCount) || 10);
 	const count = Math.floor(Math.random() * 4) + baseCount;
 
+	const { render, transform, physics, lifecycle } = registry.components;
+
 	for (let i = 0; i < count; i++) {
-		if (data.activeCount >= MAX_PARTICLES) return;
-		const idx = data.activeCount;
+		const entity = registry.createEntity(DEFAULT_PARTICLE_MASK);
+		if (entity === -1) return;
 
 		const randomGraphic =
 			FEVER_PRELOADED_SVGS[Math.floor(Math.random() * FEVER_PRELOADED_SVGS.length)];
 
-		data.editors[idx] = editor;
-		data.ranges[idx] = new vscode.Range(position, position);
-		data.svgUrls[idx] = randomGraphic.svgUrl;
-		data.width[idx] = randomGraphic.width;
-		data.height[idx] = randomGraphic.height;
-		data.x[idx] = 0;
-		data.y[idx] = 0;
-		data.rotation[idx] = Math.random() * 360;
+		render.editors[entity] = editor;
+		render.ranges[entity] = new vscode.Range(position, position);
+		render.svgUrls[entity] = randomGraphic.svgUrl;
+		render.width[entity] = randomGraphic.width;
+		render.height[entity] = randomGraphic.height;
 
-		data.vx[idx] = (Math.random() - 0.5) * 30;
-		data.vy[idx] = -(Math.random() * 20 + 10);
-		data.life[idx] = 35;
-		data.maxLife[idx] = 35;
+		transform.x[entity] = 0;
+		transform.y[entity] = 0;
+		transform.rotation[entity] = Math.random() * 360;
 
-		data.gravity[idx] = 1.5;
-		data.friction[idx] = 0.95;
-		data.rotationFactor[idx] = 1.5;
+		physics.vx[entity] = (Math.random() - 0.5) * 30 * speedMultiplier;
+		physics.vy[entity] = -(Math.random() * 20 + 10) * speedMultiplier;
 
-		data.activeCount++;
+		physics.gravity[entity] = 1.5;
+		physics.friction[entity] = 0.95;
+		physics.rotationFactor[entity] = 1.5;
+
+		lifecycle.life[entity] = 35;
+		lifecycle.maxLife[entity] = 35;
 	}
 };
