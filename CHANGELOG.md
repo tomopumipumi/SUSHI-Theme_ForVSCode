@@ -4,6 +4,11 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.4.0] - 2026-05-01
+- Add `Particle Speed Multiplier` setting to allow users to adjust the flying speed of sushi particles
+- Add `Bounce Top Distance` setting to enable a ceiling bounce effect for flying sushi
+- Update the physics system to handle velocity reversal and simulate natural bouncing
+
 ## [1.3.0] - 2026-05-01
 - Add `Throttle Ms` setting to allow users to adjust the effect rendering interval
 - Improve rendering performance by throttling continuous effect updates to prevent editor lag during key holds

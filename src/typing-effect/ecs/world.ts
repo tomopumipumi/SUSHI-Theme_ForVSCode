@@ -1,6 +1,7 @@
-import type * as vscode from "vscode";
+import * as vscode from "vscode";
 import { EffectType } from "../constants";
-import { ParticleData } from "./components/particle-data";
+import { COMPONENT_MASK } from "./constants";
+import { Registry } from "./registry";
 import { spawnEbi, spawnFever, spawnIkura, spawnMaguro, spawnMatcha } from "./spawners";
 import { useLifecycleSystem, usePhysicsSystem, useRenderSystem } from "./systems";
 
@@ -16,7 +17,7 @@ export interface World {
 }
 
 export const useWorld = (): World => {
-	const data = new ParticleData();
+	const registry = new Registry();
 
 	const physicsSystem = usePhysicsSystem();
 	const lifecycleSystem = useLifecycleSystem();
@@ -44,16 +45,19 @@ export const useWorld = (): World => {
 		const now = performance.now();
 		const dt = (now - lastTime) / 30;
 		lastTime = now;
-		if (data.activeCount === 0) {
-			renderSystem.update(data);
+
+		if (registry.activeCount === 0) {
+			renderSystem.update(registry);
 			stopLoop();
 			return;
 		}
 
-		physicsSystem.update(data, dt);
+		const config = vscode.workspace.getConfiguration("sushiTheme");
+		const bounceDistance = config.get<number>("bounceTopDistance", 100);
 
-		lifecycleSystem.update(data);
-		renderSystem.update(data);
+		physicsSystem.update(registry, dt, bounceDistance);
+		lifecycleSystem.update(registry);
+		renderSystem.update(registry);
 	};
 
 	const spawn = (
@@ -62,37 +66,36 @@ export const useWorld = (): World => {
 		position: vscode.Position,
 		level: number,
 	): void => {
+		const config = vscode.workspace.getConfiguration("sushiTheme");
+		const speedMultiplier = config.get<number>("particleSpeedMultiplier", 1.0);
+
 		switch (type) {
 			case EffectType.maguro:
-				spawnMaguro(data, editor, position, level);
+				spawnMaguro(registry, editor, position, level, speedMultiplier);
 				break;
 			case EffectType.ikura:
-				spawnIkura(data, editor, position, level);
+				spawnIkura(registry, editor, position, level, speedMultiplier);
 				break;
 			case EffectType.ebi:
-				spawnEbi(data, editor, position, level);
+				spawnEbi(registry, editor, position, level, speedMultiplier);
 				break;
 			case EffectType.matcha:
-				spawnMatcha(data, editor, position, level);
+				spawnMatcha(registry, editor, position, level, speedMultiplier);
 				break;
 			case EffectType.fever:
-				spawnFever(data, editor, position);
-				break;
-			default:
+				spawnFever(registry, editor, position, speedMultiplier);
 				break;
 		}
-
 		startLoop();
 	};
 
 	const killParticlesByDocument = (closedDoc: vscode.TextDocument): void => {
-		const count = data.activeCount;
-		const { editors, life } = data;
+		const { components, entityMasks, activeCount } = registry;
+		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
 
-		for (let i = 0; i < count; i++) {
-			if (editors[i]?.document === closedDoc) {
-				life[i] = 0;
-			}
+		for (let i = 0; i < activeCount; i++) {
+			if ((entityMasks[i] & RequiredMask) === RequiredMask)
+				if (components.render.editors[i]?.document === closedDoc) components.lifecycle.life[i] = 0;
 		}
 	};
 

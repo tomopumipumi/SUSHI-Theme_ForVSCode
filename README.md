@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.0.0</h1>
+  <h1>🍣 SUSHI-Theme v1.4.0</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.
@@ -75,6 +75,16 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Select the flying sushi effect on typing. (Default: Random)<br><span style="font-size: 0.9em; color: #666;"><i>Options: maguro, ikura, ebi, matcha, random, none</i></span></td>
     </tr>
     <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Speed Multiplier</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>1.3</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Speed multiplier for flying sushi (Default: 1.3. Example: 1.3 is 1.3x speed).<br><span style="font-size: 0.9em; color: #666;"><i>Min: -20 / Max: 20</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Top Distance</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>200</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Distance in pixels the sushi flies upward from the typing cursor before bouncing back (Set to 0 to disable bouncing).<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 1000</i></span></td>
+    </tr>
+    <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Combo Unit</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>5</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Keystrokes to upgrade sushi (Default: 5)<br><span style="font-size: 0.9em; color: #666;"><i>Min: 1 / Max: 10000</i></span></td>
@@ -99,11 +109,10 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>5</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Number of sushi dropped per keystroke in Fever Time.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 1 / Max: 20</i></span></td>
     </tr>
-    <!-- 新規追加: Throttle Ms -->
     <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Throttle Ms</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>80</code></td>
-      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the minimum time (in milliseconds) between effect renders to prevent editor lag during continuous typing. Increase this value if you experience performance issues.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 16 / Max: 1000</i></span></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the minimum time (in milliseconds) between effect renders. Increase this value (e.g., 100-150) if your editor lags during continuous typing. (Default: 80)<br><span style="font-size: 0.9em; color: #666;"><i>Min: 16 / Max: 1000</i></span></td>
     </tr>
   </tbody>
 </table>
