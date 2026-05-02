@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "触发狂热时间（Fever Time）所需的连击数。",
 	"sushiTheme.feverDurationMs.desc": "狂热时间持续的时间（毫秒）（例：10000 = 10秒）。",
 	"sushiTheme.feverSpawnCount.desc": "狂热时间中每次击键掉落的寿司数量。",
-	"sushiTheme.throttleMs.desc": "设置特效渲染之间的最小时间（毫秒）。如果您的编辑器在连续打字时出现卡顿，请增加此值（例如：100-150）。（默认：80）"
+	"sushiTheme.throttleMs.desc": "设置特效渲染之间的最小时间（毫秒）。如果您的编辑器在连续打字时出现卡顿，请增加此值（例如：100-150）。（默认：80）",
+	"sushiTheme.fps.enum.15": "15 FPS (省电/轻量)",
+	"sushiTheme.fps.enum.30": "30 FPS (标准)",
+	"sushiTheme.fps.enum.60": "60 FPS (流畅/高负载)",
+	"sushiTheme.fps.enum.120": "120 FPS (超流畅/极高负载)",
+	"sushiTheme.fps.desc": "设置特效的帧率（每秒渲染次数）。数值越高，动画越流畅，但会增加编辑器的负载。\n*受 VS Code 渲染架构限制，即使设置较高的 FPS，实际帧率也可能受到限制。"
 }

@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "Nombre de combos pour déclencher le mode Fever Time.",
 	"sushiTheme.feverDurationMs.desc": "Durée du mode Fever Time en millisecondes (ex : 10000 = 10 secondes).",
 	"sushiTheme.feverSpawnCount.desc": "Nombre de sushis qui tombent par frappe pendant le mode Fever Time.",
-	"sushiTheme.throttleMs.desc": "Définit le temps minimum (en millisecondes) entre le rendu des effets. Augmentez cette valeur (ex : 100-150) si votre éditeur ralentit lors d'une frappe continue. (Par défaut : 80)"
+	"sushiTheme.throttleMs.desc": "Définit le temps minimum (en millisecondes) entre le rendu des effets. Augmentez cette valeur (ex : 100-150) si votre éditeur ralentit lors d'une frappe continue. (Par défaut : 80)",
+	"sushiTheme.fps.enum.15": "15 FPS (Économie d'énergie / Léger)",
+	"sushiTheme.fps.enum.30": "30 FPS (Standard)",
+	"sushiTheme.fps.enum.60": "60 FPS (Fluide / Charge élevée)",
+	"sushiTheme.fps.enum.120": "120 FPS (Ultra fluide / Charge très élevée)",
+	"sushiTheme.fps.desc": "Définit la fréquence d'images (rendus par seconde) pour les effets. Des valeurs plus élevées offrent plus de fluidité mais augmentent la charge de l'éditeur. \n*En raison des limites de l'architecture de rendu de VS Code, la fréquence réelle peut être limitée même si une valeur élevée est définie."
 }

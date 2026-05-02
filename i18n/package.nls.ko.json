@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "피버 타임을 시작하기 위한 콤보 수.",
 	"sushiTheme.feverDurationMs.desc": "피버 타임 지속 시간(밀리초) (예: 10000 = 10초).",
 	"sushiTheme.feverSpawnCount.desc": "피버 타임 중 키를 누를 때마다 떨어지는 초밥 수.",
-	"sushiTheme.throttleMs.desc": "이펙트 렌더링 사이의 최소 시간(밀리초)을 설정합니다. 연속 타이핑 중 에디터에 렉이 발생하면 이 값을 늘리세요(예: 100-150). (기본값: 80)"
+	"sushiTheme.throttleMs.desc": "이펙트 렌더링 사이의 최소 시간(밀리초)을 설정합니다. 연속 타이핑 중 에디터에 렉이 발생하면 이 값을 늘리세요(예: 100-150). (기본값: 80)",
+	"sushiTheme.fps.15": "15 FPS (절전/경량)",
+	"sushiTheme.fps.30": "30 FPS (표준)",
+	"sushiTheme.fps.60": "60 FPS (부드러움/높은 부하)",
+	"sushiTheme.fps.120": "120 FPS (매우 부드러움/매우 높은 부하)",
+	"sushiTheme.fps.desc": "효과의 프레임 레이트(초당 렌더링 횟수)를 설정합니다. 수치가 높을수록 부드러워지지만 에디터 부하가 증가합니다. \n*VS Code의 렌더링 아키텍처 제한으로 인해 높은 FPS로 설정하더라도 실제 프레임 레이트가 제한될 수 있습니다."
 }

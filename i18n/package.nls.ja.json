@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "フィーバータイムを開始するために必要なコンボ数。",
 	"sushiTheme.feverDurationMs.desc": "フィーバータイムの持続時間（ミリ秒）（例: 10000 = 10秒）。",
 	"sushiTheme.feverSpawnCount.desc": "フィーバータイム中に1回のキーストロークでドロップする寿司の数。",
-	"sushiTheme.throttleMs.desc": "エフェクトが描画される最小間隔（ミリ秒）を設定します。連続タイピング時にエディタが重くなる場合は、この値を増やしてください（例: 100-150）。（デフォルト: 80）"
+	"sushiTheme.throttleMs.desc": "エフェクトが描画される最小間隔（ミリ秒）を設定します。連続タイピング時にエディタが重くなる場合は、この値を増やしてください（例: 100-150）。（デフォルト: 80）",
+	"sushiTheme.fps.enum.15": "15 FPS (省エネ・軽量)",
+	"sushiTheme.fps.enum.30": "30 FPS (標準)",
+	"sushiTheme.fps.enum.60": "60 FPS (滑らか・高負荷)",
+	"sushiTheme.fps.enum.120": "120 FPS (超滑らか・超高負荷)",
+	"sushiTheme.fps.desc": "エフェクトのフレームレート（1秒間の描画回数）を設定します。数値を上げると滑らかになりますが、エディタの負荷が上がります。\n※VS Codeの描画アーキテクチャの制限により、高いFPSに設定しても実際の描画レートが制限される場合があります"
 }

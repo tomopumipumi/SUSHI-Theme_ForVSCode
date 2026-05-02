@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "Number of combos to start Fever Time.",
 	"sushiTheme.feverDurationMs.desc": "How long Fever Time lasts in milliseconds (e.g., 10000 = 10 seconds).",
 	"sushiTheme.feverSpawnCount.desc": "Number of sushi dropped per keystroke in Fever Time.",
-	"sushiTheme.throttleMs.desc": "Set the minimum time (in milliseconds) between effect renders. Increase this value (e.g., 100-150) if your editor lags during continuous typing. (Default: 80)"
+	"sushiTheme.throttleMs.desc": "Set the minimum time (in milliseconds) between effect renders. Increase this value (e.g., 100-150) if your editor lags during continuous typing. (Default: 80)",
+	"sushiTheme.fps.enum.15": "15 FPS (Power-saving / Lightweight)",
+	"sushiTheme.fps.enum.30": "30 FPS (Standard)",
+	"sushiTheme.fps.enum.60": "60 FPS (Smooth / High load)",
+	"sushiTheme.fps.enum.120": "120 FPS (Ultra-smooth / Ultra-high load)",
+	"sushiTheme.fps.desc": "Sets the frame rate (draws per second) for effects. Higher values provide smoother animations but increase editor load. \n*Due to VS Code's rendering architecture limitations, the actual frame rate may be capped even if a higher value is set."
 }

@@ -5,6 +5,10 @@ import { Registry } from "./registry";
 import { spawnEbi, spawnFever, spawnIkura, spawnMaguro, spawnMatcha } from "./spawners";
 import { useLifecycleSystem, usePhysicsSystem, useRenderSystem } from "./systems";
 
+const MS_PER_SECOND = 1000;
+const BASE_FRAME_TIME_MS = 30;
+const MAX_DELTA_TIME = 3.0;
+
 export interface World {
 	spawn: (
 		type: string,
@@ -29,9 +33,19 @@ export const useWorld = (): World => {
 	const startLoop = (): void => {
 		if (timer) return;
 
+		lastTime = performance.now();
+
+		const getIntervalMsFromFPS = (): number => {
+			const config = vscode.workspace.getConfiguration("sushiTheme");
+			const fps = config.get<number>("fps", BASE_FRAME_TIME_MS);
+			return Math.floor(MS_PER_SECOND / fps);
+		};
+
+		const intervalMs = getIntervalMsFromFPS();
+
 		timer = setInterval(() => {
 			update();
-		}, 30);
+		}, intervalMs);
 	};
 
 	const stopLoop = (): void => {
@@ -43,8 +57,11 @@ export const useWorld = (): World => {
 
 	const update = (): void => {
 		const now = performance.now();
-		const dt = (now - lastTime) / 30;
+
+		let dt = (now - lastTime) / BASE_FRAME_TIME_MS;
 		lastTime = now;
+
+		if (dt > MAX_DELTA_TIME) dt = MAX_DELTA_TIME;
 
 		if (registry.activeCount === 0) {
 			renderSystem.update(registry);
@@ -56,7 +73,7 @@ export const useWorld = (): World => {
 		const bounceDistance = config.get<number>("bounceTopDistance", 100);
 
 		physicsSystem.update(registry, dt, bounceDistance);
-		lifecycleSystem.update(registry);
+		lifecycleSystem.update(registry, dt);
 		renderSystem.update(registry);
 	};
 

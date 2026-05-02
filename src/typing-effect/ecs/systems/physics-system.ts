@@ -13,13 +13,13 @@ export const usePhysicsSystem = (): PhysicsSystem => {
 
 		for (let i = 0; i < activeCount; i++) {
 			if ((entityMasks[i] & RequiredMask) === RequiredMask) {
-				components.physics.vy[i] += components.physics.gravity[i];
+				components.physics.vy[i] += components.physics.gravity[i] * dt;
 
 				components.physics.vx[i] *= components.physics.friction[i] ** dt;
 				components.physics.vy[i] *= components.physics.friction[i] ** dt;
 
-				components.transform.x[i] += components.physics.vx[i];
-				components.transform.y[i] += components.physics.vy[i];
+				components.transform.x[i] += components.physics.vx[i] * dt;
+				components.transform.y[i] += components.physics.vy[i] * dt;
 
 				if (bounceTopDistance > 0) {
 					const topLimit = -Math.abs(bounceTopDistance);
@@ -30,7 +30,7 @@ export const usePhysicsSystem = (): PhysicsSystem => {
 				}
 
 				components.transform.rotation[i] +=
-					components.physics.vx[i] * components.physics.rotationFactor[i];
+					components.physics.vx[i] * components.physics.rotationFactor[i] * dt;
 			}
 		}
 	};

@@ -15,5 +15,10 @@
 	"sushiTheme.feverTriggerCombo.desc": "Số lượng combo để bắt đầu Thời gian Sôi động (Fever Time).",
 	"sushiTheme.feverDurationMs.desc": "Thời gian Sôi động kéo dài bao lâu tính bằng mili giây (ví dụ: 10000 = 10 giây).",
 	"sushiTheme.feverSpawnCount.desc": "Số lượng sushi rơi xuống cho mỗi lần gõ phím trong Thời gian Sôi động.",
-	"sushiTheme.throttleMs.desc": "Đặt thời gian tối thiểu (tính bằng mili giây) giữa các lần kết xuất hiệu ứng. Tăng giá trị này (ví dụ: 100-150) nếu trình soạn thảo của bạn bị giật lag khi gõ phím liên tục. (Mặc định: 80)"
+	"sushiTheme.throttleMs.desc": "Đặt thời gian tối thiểu (tính bằng mili giây) giữa các lần kết xuất hiệu ứng. Tăng giá trị này (ví dụ: 100-150) nếu trình soạn thảo của bạn bị giật lag khi gõ phím liên tục. (Mặc định: 80)",
+	"sushiTheme.fps.enum.15": "15 FPS (Tiết kiệm pin / Nhẹ)",
+	"sushiTheme.fps.enum.30": "30 FPS (Tiêu chuẩn)",
+	"sushiTheme.fps.enum.60": "60 FPS (Mượt / Tải cao)",
+	"sushiTheme.fps.enum.120": "120 FPS (Cực mượt / Tải rất cao)",
+	"sushiTheme.fps.desc": "Thiết lập tốc độ khung hình (số lần vẽ mỗi giây) cho các hiệu ứng. Giá trị càng cao thì hiệu ứng càng mượt nhưng tải trọng cho trình chỉnh sửa sẽ tăng lên. \n*Do giới hạn kiến trúc kết xuất của VS Code, tốc độ khung hình thực tế có thể bị giới hạn ngay cả khi được đặt ở mức cao."
 }
