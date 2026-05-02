@@ -128,6 +128,23 @@
 					"minimum": 16,
 					"maximum": 1000,
 					"markdownDescription": "%sushiTheme.throttleMs.desc%"
+				},
+				"sushiTheme.fps": {
+					"type": "number",
+					"enum": [
+						15,
+						30,
+						60,
+						120
+					],
+					"enumItemLabels": [
+						"%sushiTheme.fps.enum.15%",
+						"%sushiTheme.fps.enum.30%",
+						"%sushiTheme.fps.enum.60%",
+						"%sushiTheme.fps.enum.120%"
+					],
+					"default": 30,
+					"description": "%sushiTheme.fps.desc%"
 				}
 			}
 		}

@@ -109,11 +109,17 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>5</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Number of sushi dropped per keystroke in Fever Time.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 1 / Max: 20</i></span></td>
     </tr>
+        <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>FPS (Frame Rate)</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>30</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the frame rate (draws per second) for effects. Higher values provide smoother animations but increase editor load.<br><span style="font-size: 0.9em; color: #666;"><i>Options: 15, 30, 60, 120 (Actual rate may be limited by VS Code architecture)</i></span></td>
+    </tr>
     <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Throttle Ms</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>80</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the minimum time (in milliseconds) between effect renders. Increase this value (e.g., 100-150) if your editor lags during continuous typing. (Default: 80)<br><span style="font-size: 0.9em; color: #666;"><i>Min: 16 / Max: 1000</i></span></td>
     </tr>
+
   </tbody>
 </table>
 
