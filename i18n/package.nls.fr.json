@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "Apportez le meilleur 'Nigiri' à votre code.\nMême lorsque vous êtes bloqué par un bug tenace, regardez les sushis voler à travers votre écran. Cela vous remontera le moral à coup sûr !\nGrâce à sa conception légère ECS (Entity Component System), il ne ralentira pas votre vitesse de codage !",
+	"sushiTheme.enableStatusBar.desc": "Afficher la barre d'état (Indicateur de mémoire Sushi)",
+	"sushiTheme.effectType.maguro": "Thon (Maguro)",
+	"sushiTheme.effectType.ikura": "Œufs de saumon (Ikura)",
+	"sushiTheme.effectType.ebi": "Crevette (Ebi)",
+	"sushiTheme.effectType.matcha": "Thé vert (Matcha)",
+	"sushiTheme.effectType.random": "Aléatoire",
+	"sushiTheme.effectType.none": "Aucun",
+	"sushiTheme.effectType.desc": "Sélectionnez l'effet de sushi volant lors de la frappe. (Par défaut : Aléatoire)",
+	"sushiTheme.particleSpeedMultiplier.desc": "Multiplicateur de vitesse pour le sushi volant (Par défaut : 1.3. Exemple : 1.3 équivaut à 1.3x la vitesse).",
+	"sushiTheme.bounceTopDistance.desc": "Distance en pixels dont le sushi vole vers le haut depuis le curseur avant de rebondir (Régler sur 0 pour désactiver le rebond).",
+	"sushiTheme.comboUnit.desc": "Frappes pour améliorer le sushi (Par défaut : 5)",
+	"sushiTheme.comboTimeoutMs.desc": "Temps (en ms) avant la réinitialisation du combo (Par défaut : 1500)",
+	"sushiTheme.feverTriggerCombo.desc": "Nombre de combos pour déclencher le mode Fever Time.",
+	"sushiTheme.feverDurationMs.desc": "Durée du mode Fever Time en millisecondes (ex : 10000 = 10 secondes).",
+	"sushiTheme.feverSpawnCount.desc": "Nombre de sushis qui tombent par frappe pendant le mode Fever Time.",
+	"sushiTheme.throttleMs.desc": "Définit le temps minimum (en millisecondes) entre le rendu des effets. Augmentez cette valeur (ex : 100-150) si votre éditeur ralentit lors d'une frappe continue. (Par défaut : 80)"
+}

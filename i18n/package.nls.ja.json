@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "コーディングに、極上の「握り」を。\n重いバグで行き詰まった時も、画面を飛び交うお寿司を眺めてください。きっと元気が湧いてくるはずです！\n軽量ECS(Entity Component System)設計であなたのコーディングのスピードを邪魔しません！",
+	"sushiTheme.enableStatusBar.desc": "ステータスバーを表示する（寿司のメモリインジケーター）",
+	"sushiTheme.effectType.maguro": "マグロ",
+	"sushiTheme.effectType.ikura": "イクラ",
+	"sushiTheme.effectType.ebi": "エビ",
+	"sushiTheme.effectType.matcha": "抹茶",
+	"sushiTheme.effectType.random": "ランダム",
+	"sushiTheme.effectType.none": "なし",
+	"sushiTheme.effectType.desc": "タイピング時に飛んでくる寿司のエフェクトを選択します。（デフォルト: ランダム）",
+	"sushiTheme.particleSpeedMultiplier.desc": "飛んでくる寿司の速度倍率（デフォルト: 1.3。例: 1.3は1.3倍速）。",
+	"sushiTheme.bounceTopDistance.desc": "寿司がタイピングカーソルから上に向かって飛び、跳ね返るまでのピクセル距離（0に設定すると跳ね返りを無効化）。",
+	"sushiTheme.comboUnit.desc": "寿司をアップグレードするために必要なキーストローク数（デフォルト: 5）",
+	"sushiTheme.comboTimeoutMs.desc": "コンボがリセットされるまでの時間（ミリ秒）（デフォルト: 1500）",
+	"sushiTheme.feverTriggerCombo.desc": "フィーバータイムを開始するために必要なコンボ数。",
+	"sushiTheme.feverDurationMs.desc": "フィーバータイムの持続時間（ミリ秒）（例: 10000 = 10秒）。",
+	"sushiTheme.feverSpawnCount.desc": "フィーバータイム中に1回のキーストロークでドロップする寿司の数。",
+	"sushiTheme.throttleMs.desc": "エフェクトが描画される最小間隔（ミリ秒）を設定します。連続タイピング時にエディタが重くなる場合は、この値を増やしてください（例: 100-150）。（デフォルト: 80）"
+}

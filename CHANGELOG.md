@@ -4,6 +4,10 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+<!-- ## [1.5.0] - 2026-05-02
+- Add internationalization (i18n) support
+- Add localized translations for Simplified Chinese, Korean, Spanish, French, and Vietnamese -->
+
 ## [1.4.0] - 2026-05-01
 - Add `Particle Speed Multiplier` setting to allow users to adjust the flying speed of sushi particles
 - Add `Bounce Top Distance` setting to enable a ceiling bounce effect for flying sushi

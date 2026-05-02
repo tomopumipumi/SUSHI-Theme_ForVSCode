@@ -4,11 +4,24 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "watch",
+			"type": "npm",
+			"script": "copy-locales",
+			"label": "npm: copy-locales",
+			"presentation": {
+				"reveal": "never"
+			}
+		},
+		{
+			"label": "watch-parallel",
 			"dependsOn": ["npm: watch:tsc", "npm: watch:esbuild"],
 			"presentation": {
 				"reveal": "never"
-			},
+			}
+		},
+		{
+			"label": "watch",
+			"dependsOrder": "sequence",
+			"dependsOn": ["npm: copy-locales", "watch-parallel"],
 			"group": {
 				"kind": "build",
 				"isDefault": true

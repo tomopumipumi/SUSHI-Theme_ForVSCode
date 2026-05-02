@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "Bring the finest 'Nigiri' to your coding.\nEven when you're bogged down by a nasty bug, just watch the sushi flying across your screen. It's sure to lift your spirits!\nThanks to its lightweight ECS (Entity Component System) design, it won't get in the way of your coding speed!",
+	"sushiTheme.enableStatusBar.desc": "Show StatusBar (Sushi memory indicator)",
+	"sushiTheme.effectType.maguro": "Maguro",
+	"sushiTheme.effectType.ikura": "Ikura",
+	"sushiTheme.effectType.ebi": "Ebi",
+	"sushiTheme.effectType.matcha": "Matcha",
+	"sushiTheme.effectType.random": "Random",
+	"sushiTheme.effectType.none": "None",
+	"sushiTheme.effectType.desc": "Select the flying sushi effect on typing. (Default: Random)",
+	"sushiTheme.particleSpeedMultiplier.desc": "Speed multiplier for flying sushi (Default: 1.3. Example: 1.3 is 1.3x speed).",
+	"sushiTheme.bounceTopDistance.desc": "Distance in pixels the sushi flies upward from the typing cursor before bouncing back (Set to 0 to disable bouncing).",
+	"sushiTheme.comboUnit.desc": "Keystrokes to upgrade sushi (Default: 5)",
+	"sushiTheme.comboTimeoutMs.desc": "Time (in ms) before combo resets (Default: 1500)",
+	"sushiTheme.feverTriggerCombo.desc": "Number of combos to start Fever Time.",
+	"sushiTheme.feverDurationMs.desc": "How long Fever Time lasts in milliseconds (e.g., 10000 = 10 seconds).",
+	"sushiTheme.feverSpawnCount.desc": "Number of sushi dropped per keystroke in Fever Time.",
+	"sushiTheme.throttleMs.desc": "Set the minimum time (in milliseconds) between effect renders. Increase this value (e.g., 100-150) if your editor lags during continuous typing. (Default: 80)"
+}
