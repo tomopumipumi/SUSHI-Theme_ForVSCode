@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "Mang 'Nigiri' tuyệt hảo vào việc viết mã của bạn.\nNgay cả khi bạn đang bế tắc vì một lỗi khó nhằn, hãy ngắm nhìn những miếng sushi bay lượn trên màn hình. Chắc chắn nó sẽ vực dậy tinh thần của bạn!\nNhờ thiết kế ECS (Entity Component System) nhẹ nhàng, nó sẽ không làm cản trở tốc độ viết mã của bạn!",
+	"sushiTheme.enableStatusBar.desc": "Hiển thị Thanh trạng thái (Chỉ báo bộ nhớ Sushi)",
+	"sushiTheme.effectType.maguro": "Cá ngừ (Maguro)",
+	"sushiTheme.effectType.ikura": "Trứng cá hồi (Ikura)",
+	"sushiTheme.effectType.ebi": "Tôm (Ebi)",
+	"sushiTheme.effectType.matcha": "Trà xanh (Matcha)",
+	"sushiTheme.effectType.random": "Ngẫu nhiên",
+	"sushiTheme.effectType.none": "Không có",
+	"sushiTheme.effectType.desc": "Chọn hiệu ứng sushi bay khi gõ phím. (Mặc định: Ngẫu nhiên)",
+	"sushiTheme.particleSpeedMultiplier.desc": "Hệ số nhân tốc độ cho sushi bay (Mặc định: 1.3. Ví dụ: 1.3 là tốc độ gấp 1.3 lần).",
+	"sushiTheme.bounceTopDistance.desc": "Khoảng cách (tính bằng pixel) mà sushi bay lên từ con trỏ văn bản trước khi nảy ngược lại (Đặt bằng 0 để vô hiệu hóa độ nảy).",
+	"sushiTheme.comboUnit.desc": "Số lần gõ phím để nâng cấp sushi (Mặc định: 5)",
+	"sushiTheme.comboTimeoutMs.desc": "Thời gian (tính bằng ms) trước khi combo được đặt lại (Mặc định: 1500)",
+	"sushiTheme.feverTriggerCombo.desc": "Số lượng combo để bắt đầu Thời gian Sôi động (Fever Time).",
+	"sushiTheme.feverDurationMs.desc": "Thời gian Sôi động kéo dài bao lâu tính bằng mili giây (ví dụ: 10000 = 10 giây).",
+	"sushiTheme.feverSpawnCount.desc": "Số lượng sushi rơi xuống cho mỗi lần gõ phím trong Thời gian Sôi động.",
+	"sushiTheme.throttleMs.desc": "Đặt thời gian tối thiểu (tính bằng mili giây) giữa các lần kết xuất hiệu ứng. Tăng giá trị này (ví dụ: 100-150) nếu trình soạn thảo của bạn bị giật lag khi gõ phím liên tục. (Mặc định: 80)"
+}

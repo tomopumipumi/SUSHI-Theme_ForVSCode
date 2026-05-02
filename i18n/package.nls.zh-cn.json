@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "为你的编程送上极品的“握寿司”。\n即使在被严重的 Bug 困扰而一筹莫展时，看看在屏幕上飞舞的寿司吧。它一定会让你重新充满活力！\n采用轻量级的 ECS（实体组件系统）设计，绝不会拖慢你的编程速度！",
+	"sushiTheme.enableStatusBar.desc": "显示状态栏（寿司内存指示器）",
+	"sushiTheme.effectType.maguro": "金枪鱼 (Maguro)",
+	"sushiTheme.effectType.ikura": "鲑鱼籽 (Ikura)",
+	"sushiTheme.effectType.ebi": "虾 (Ebi)",
+	"sushiTheme.effectType.matcha": "抹茶 (Matcha)",
+	"sushiTheme.effectType.random": "随机",
+	"sushiTheme.effectType.none": "无",
+	"sushiTheme.effectType.desc": "选择打字时的飞行寿司特效。（默认：随机）",
+	"sushiTheme.particleSpeedMultiplier.desc": "飞行寿司的速度倍率（默认：1.3。例如：1.3表示1.3倍速）。",
+	"sushiTheme.bounceTopDistance.desc": "寿司从打字光标向上飞行并在弹回之前的像素距离（设置为0以禁用弹回）。",
+	"sushiTheme.comboUnit.desc": "升级寿司所需的击键次数（默认：5）",
+	"sushiTheme.comboTimeoutMs.desc": "连击重置前的时间（毫秒）（默认：1500）",
+	"sushiTheme.feverTriggerCombo.desc": "触发狂热时间（Fever Time）所需的连击数。",
+	"sushiTheme.feverDurationMs.desc": "狂热时间持续的时间（毫秒）（例：10000 = 10秒）。",
+	"sushiTheme.feverSpawnCount.desc": "狂热时间中每次击键掉落的寿司数量。",
+	"sushiTheme.throttleMs.desc": "设置特效渲染之间的最小时间（毫秒）。如果您的编辑器在连续打字时出现卡顿，请增加此值（例如：100-150）。（默认：80）"
+}

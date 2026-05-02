@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "코딩에 극상의 '초밥(니기리)'을.\n심각한 버그로 막막할 때도 화면을 날아다니는 초밥을 바라보세요. 분명 기운이 솟아날 것입니다!\n경량 ECS(Entity Component System) 설계로 코딩 속도를 방해하지 않습니다!",
+	"sushiTheme.enableStatusBar.desc": "상태 표시줄 표시 (초밥 메모리 표시기)",
+	"sushiTheme.effectType.maguro": "참치 (Maguro)",
+	"sushiTheme.effectType.ikura": "연어알 (Ikura)",
+	"sushiTheme.effectType.ebi": "새우 (Ebi)",
+	"sushiTheme.effectType.matcha": "녹차 (Matcha)",
+	"sushiTheme.effectType.random": "무작위 (Random)",
+	"sushiTheme.effectType.none": "없음 (None)",
+	"sushiTheme.effectType.desc": "타이핑 시 날아다니는 초밥 이펙트를 선택합니다. (기본값: 무작위)",
+	"sushiTheme.particleSpeedMultiplier.desc": "날아가는 초밥의 속도 배율 (기본값: 1.3. 예: 1.3은 1.3배속).",
+	"sushiTheme.bounceTopDistance.desc": "초밥이 타이핑 커서에서 위로 날아가는 거리(픽셀 단위). 이후 튕겨져 나옵니다(0으로 설정하면 바운스 비활성화).",
+	"sushiTheme.comboUnit.desc": "초밥을 업그레이드하기 위한 키 입력 횟수 (기본값: 5)",
+	"sushiTheme.comboTimeoutMs.desc": "콤보가 초기화되기 전 대기 시간(ms) (기본값: 1500)",
+	"sushiTheme.feverTriggerCombo.desc": "피버 타임을 시작하기 위한 콤보 수.",
+	"sushiTheme.feverDurationMs.desc": "피버 타임 지속 시간(밀리초) (예: 10000 = 10초).",
+	"sushiTheme.feverSpawnCount.desc": "피버 타임 중 키를 누를 때마다 떨어지는 초밥 수.",
+	"sushiTheme.throttleMs.desc": "이펙트 렌더링 사이의 최소 시간(밀리초)을 설정합니다. 연속 타이핑 중 에디터에 렉이 발생하면 이 값을 늘리세요(예: 100-150). (기본값: 80)"
+}

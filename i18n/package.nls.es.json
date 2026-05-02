@@ -1,0 +1,19 @@
+{
+	"sushiTheme.desc": "Trae el mejor 'Nigiri' a tu programación.\nIncluso cuando estés atrapado por un error grave, solo mira el sushi volando por tu pantalla. ¡Seguro que te levantará el ánimo!\n¡Gracias a su diseño ligero ECS (Entity Component System), no ralentizará tu velocidad de codificación!",
+	"sushiTheme.enableStatusBar.desc": "Mostrar barra de estado (Indicador de memoria de Sushi)",
+	"sushiTheme.effectType.maguro": "Atún (Maguro)",
+	"sushiTheme.effectType.ikura": "Huevas de salmón (Ikura)",
+	"sushiTheme.effectType.ebi": "Camarón (Ebi)",
+	"sushiTheme.effectType.matcha": "Té Verde (Matcha)",
+	"sushiTheme.effectType.random": "Aleatorio",
+	"sushiTheme.effectType.none": "Ninguno",
+	"sushiTheme.effectType.desc": "Selecciona el efecto de sushi volador al escribir. (Predeterminado: Aleatorio)",
+	"sushiTheme.particleSpeedMultiplier.desc": "Multiplicador de velocidad para el sushi volador (Predeterminado: 1.3. Ejemplo: 1.3 es velocidad 1.3x).",
+	"sushiTheme.bounceTopDistance.desc": "Distancia en píxeles que el sushi vuela hacia arriba desde el cursor antes de rebotar (Establécelo en 0 para desactivar el rebote).",
+	"sushiTheme.comboUnit.desc": "Pulsaciones de teclas para mejorar el sushi (Predeterminado: 5)",
+	"sushiTheme.comboTimeoutMs.desc": "Tiempo (en ms) antes de que el combo se reinicie (Predeterminado: 1500)",
+	"sushiTheme.feverTriggerCombo.desc": "Número de combos para iniciar el Tiempo de Fiebre (Fever Time).",
+	"sushiTheme.feverDurationMs.desc": "Cuánto dura el Tiempo de Fiebre en milisegundos (ej., 10000 = 10 segundos).",
+	"sushiTheme.feverSpawnCount.desc": "Cantidad de sushi que cae por cada pulsación de tecla durante el Tiempo de Fiebre.",
+	"sushiTheme.throttleMs.desc": "Establece el tiempo mínimo (en milisegundos) entre la renderización de efectos. Aumenta este valor (ej. 100-150) si tu editor se ralentiza al escribir continuamente. (Predeterminado: 80)"
+}
