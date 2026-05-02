@@ -7,7 +7,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 <!-- ## [1.5.0] - 2026-05-02
 - Add internationalization (i18n) support ([#6](https://github.com/tomopumipumi/SUSHI-Theme_ForVSCode/pull/6#issue-4367232946))
 - Add localized translations for Simplified Chinese, Korean, Spanish, French, and Vietnamese ([#6](https://github.com/tomopumipumi/SUSHI-Theme_ForVSCode/pull/6#issue-4367232946))
-- Added a new `sushiTheme.fps` setting. You can now choose between 15, 30 (default), and 60 FPS to prioritize either editor performance or smooth animations. -->
+- Added a new `sushiTheme.fps` setting. You can now choose between 15, 30 (default), and 60 FPS to prioritize either editor performance or smooth animations.([#7](https://github.com/tomopumipumi/SUSHI-Theme_ForVSCode/pull/7#issue-4367507005)) -->
 
 ## [1.4.0] - 2026-05-01
 - Add `Particle Speed Multiplier` setting to allow users to adjust the flying speed of sushi particles
