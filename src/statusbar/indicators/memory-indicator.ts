@@ -83,7 +83,7 @@ export const useMemoryIndicator = (): MemoryIndicator => {
 
 		vscode.window
 			.showInformationMessage(
-				`$🍣 System: ${usedSysGb}GB / ${totalSysGb}GB | Ext: ${extUsedMemory}MB (RSS: ${extRssMemory}MB)`,
+				`🍣 System: ${usedSysGb}GB / ${totalSysGb}GB | Ext: ${extUsedMemory}MB (RSS: ${extRssMemory}MB)`,
 				"Open Setting",
 			)
 			.then((selection) => {
