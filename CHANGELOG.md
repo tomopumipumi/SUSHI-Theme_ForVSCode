@@ -4,6 +4,9 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.5.1] - 2026-05-04
+- Fixed the description property to correctly handle the placeholder for sushiTheme.desc.
+
 ## [1.5.0] - 2026-05-02
 - Add internationalization (i18n) support ([#6](https://github.com/tomopumipumi/SUSHI-Theme_ForVSCode/pull/6#issue-4367232946))
 - Add localized translations for Simplified Chinese, Korean, Spanish, French, and Vietnamese ([#6](https://github.com/tomopumipumi/SUSHI-Theme_ForVSCode/pull/6#issue-4367232946))
