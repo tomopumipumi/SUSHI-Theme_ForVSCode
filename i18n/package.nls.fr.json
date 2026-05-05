@@ -10,6 +10,7 @@
 	"sushiTheme.effectType.desc": "Sélectionnez l'effet de sushi volant lors de la frappe. (Par défaut : Aléatoire)",
 	"sushiTheme.particleSpeedMultiplier.desc": "Multiplicateur de vitesse pour le sushi volant (Par défaut : 1.3. Exemple : 1.3 équivaut à 1.3x la vitesse).",
 	"sushiTheme.bounceTopDistance.desc": "Distance en pixels dont le sushi vole vers le haut depuis le curseur avant de rebondir (Régler sur 0 pour désactiver le rebond).",
+	"sushiTheme.bounceBottomDistance.desc": "Définit la distance jusqu'au mur inférieur (sol). Si défini sur 0, il n'y a pas de sol (chute infinie). Plus la valeur est grande, plus le rebond s'effectuera bas.",
 	"sushiTheme.comboUnit.desc": "Frappes pour améliorer le sushi (Par défaut : 5)",
 	"sushiTheme.comboTimeoutMs.desc": "Temps (en ms) avant la réinitialisation du combo (Par défaut : 1500)",
 	"sushiTheme.feverTriggerCombo.desc": "Nombre de combos pour déclencher le mode Fever Time.",
@@ -20,5 +21,6 @@
 	"sushiTheme.fps.enum.30": "30 FPS (Standard)",
 	"sushiTheme.fps.enum.60": "60 FPS (Fluide / Charge élevée)",
 	"sushiTheme.fps.enum.120": "120 FPS (Ultra fluide / Charge très élevée)",
-	"sushiTheme.fps.desc": "Définit la fréquence d'images (rendus par seconde) pour les effets. Des valeurs plus élevées offrent plus de fluidité mais augmentent la charge de l'éditeur. \n*En raison des limites de l'architecture de rendu de VS Code, la fréquence réelle peut être limitée même si une valeur élevée est définie."
+	"sushiTheme.fps.desc": "Définit la fréquence d'images (rendus par seconde) pour les effets. Des valeurs plus élevées offrent plus de fluidité mais augmentent la charge de l'éditeur. \n*En raison des limites de l'architecture de rendu de VS Code, la fréquence réelle peut être limitée même si une valeur élevée est définie.",
+	"sushiTheme.particleLifespanMultiplier.desc": "Définit le multiplicateur du temps d'affichage (durée de vie) des sushis. Une valeur plus élevée les fera rester plus longtemps à l'écran, mais consommera plus de mémoire."
 }

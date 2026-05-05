@@ -10,6 +10,7 @@
 	"sushiTheme.effectType.desc": "タイピング時に飛んでくる寿司のエフェクトを選択します。（デフォルト: ランダム）",
 	"sushiTheme.particleSpeedMultiplier.desc": "飛んでくる寿司の速度倍率（デフォルト: 1.3。例: 1.3は1.3倍速）。",
 	"sushiTheme.bounceTopDistance.desc": "寿司がタイピングカーソルから上に向かって飛び、跳ね返るまでのピクセル距離（0に設定すると跳ね返りを無効化）。",
+	"sushiTheme.bounceBottomDistance.desc": "下の壁（床）までの距離を設定します。0に設定すると床なし（無限に落下）になります。値を大きくするほど下のほうでバウンドします。",
 	"sushiTheme.comboUnit.desc": "寿司をアップグレードするために必要なキーストローク数（デフォルト: 5）",
 	"sushiTheme.comboTimeoutMs.desc": "コンボがリセットされるまでの時間（ミリ秒）（デフォルト: 1500）",
 	"sushiTheme.feverTriggerCombo.desc": "フィーバータイムを開始するために必要なコンボ数。",
@@ -20,5 +21,6 @@
 	"sushiTheme.fps.enum.30": "30 FPS (標準)",
 	"sushiTheme.fps.enum.60": "60 FPS (滑らか・高負荷)",
 	"sushiTheme.fps.enum.120": "120 FPS (超滑らか・超高負荷)",
-	"sushiTheme.fps.desc": "エフェクトのフレームレート（1秒間の描画回数）を設定します。数値を上げると滑らかになりますが、エディタの負荷が上がります。\n※VS Codeの描画アーキテクチャの制限により、高いFPSに設定しても実際の描画レートが制限される場合があります"
+	"sushiTheme.fps.desc": "エフェクトのフレームレート（1秒間の描画回数）を設定します。数値を上げると滑らかになりますが、エディタの負荷が上がります。\n※VS Codeの描画アーキテクチャの制限により、高いFPSに設定しても実際の描画レートが制限される場合があります",
+	"sushiTheme.particleLifespanMultiplier.desc": "お寿司の表示時間（寿命）の倍率を設定します。数値を大きくすると長く画面に残りますが、その分メモリを消費します。"
 }

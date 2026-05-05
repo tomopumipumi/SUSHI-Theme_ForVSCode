@@ -4,6 +4,13 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.6.1] - 2026-05-05
+- Add a new "Chopsticks" interaction: chopsticks will occasionally spawn, track flying sushi, and trigger a multi-frame explosion animation upon impact
+- Add `Bounce Bottom Distance` setting to simulate a floor collision and bouncing effect
+- Add `Particle Lifespan Multiplier` setting to allow users to scale the display duration of particles
+- Refactor the ECS (Entity Component System) to use a Generational ID management architecture for safer and more robust entity lifecycle tracking
+- Update localization files (i18n) to support the newly added settings
+
 ## [1.5.1] - 2026-05-04
 - Fixed the description property to correctly handle the placeholder for sushiTheme.desc.
 

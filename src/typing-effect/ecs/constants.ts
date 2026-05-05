@@ -6,6 +6,8 @@ export const COMPONENT_MASK = {
 	physics: 1 << 1,
 	render: 1 << 2,
 	lifecycle: 1 << 3,
+	targeting: 1 << 4,
+	animation: 1 << 5,
 } as const;
 
 export const DEFAULT_PARTICLE_MASK =

@@ -2,12 +2,28 @@ import * as vscode from "vscode";
 import { EffectType } from "../constants";
 import { COMPONENT_MASK } from "./constants";
 import { Registry } from "./registry";
-import { spawnEbi, spawnFever, spawnIkura, spawnMaguro, spawnMatcha } from "./spawners";
-import { useLifecycleSystem, usePhysicsSystem, useRenderSystem } from "./systems";
+import {
+	spawnChopsticks,
+	spawnEbi,
+	spawnExplosion,
+	spawnFever,
+	spawnIkura,
+	spawnMaguro,
+	spawnMatcha,
+} from "./spawners";
+import {
+	useAnimationSystem,
+	useLifecycleSystem,
+	usePhysicsSystem,
+	useRenderSystem,
+} from "./systems";
+import { useTrackingSystem } from "./systems/tracking-system";
 
 const MS_PER_SECOND = 1000;
 const BASE_FRAME_TIME_MS = 30;
 const MAX_DELTA_TIME = 3.0;
+const CHOPSTICKS_SPAWN_PROBABILITY = 0.05;
+const CHOPSTICKS_SPAWN_DELAY_MS = 400;
 
 export interface World {
 	spawn: (
@@ -26,6 +42,17 @@ export const useWorld = (): World => {
 	const physicsSystem = usePhysicsSystem();
 	const lifecycleSystem = useLifecycleSystem();
 	const renderSystem = useRenderSystem();
+	const trackingSystem = useTrackingSystem();
+	const animationSystem = useAnimationSystem();
+
+	const handleExplosion = (
+		editor: vscode.TextEditor,
+		range: vscode.Range,
+		x: number,
+		y: number,
+	) => {
+		spawnExplosion(registry, editor, range, x, y);
+	};
 
 	let timer: NodeJS.Timeout | undefined;
 	let lastTime = performance.now();
@@ -70,10 +97,13 @@ export const useWorld = (): World => {
 		}
 
 		const config = vscode.workspace.getConfiguration("sushiTheme");
-		const bounceDistance = config.get<number>("bounceTopDistance", 100);
+		const bounceTopDistance = config.get<number>("bounceTopDistance", 100);
+		const bounceBottomDistance = config.get<number>("bounceBottomDistance", 0);
 
-		physicsSystem.update(registry, dt, bounceDistance);
+		trackingSystem.update(registry, dt, handleExplosion);
+		physicsSystem.update(registry, dt, bounceTopDistance, bounceBottomDistance);
 		lifecycleSystem.update(registry, dt);
+		animationSystem.update(registry);
 		renderSystem.update(registry);
 	};
 
@@ -85,24 +115,38 @@ export const useWorld = (): World => {
 	): void => {
 		const config = vscode.workspace.getConfiguration("sushiTheme");
 		const speedMultiplier = config.get<number>("particleSpeedMultiplier", 1.0);
+		const lifeMultiplier = config.get<number>("particleLifespanMultiplier", 1.0);
 
 		switch (type) {
 			case EffectType.maguro:
-				spawnMaguro(registry, editor, position, level, speedMultiplier);
+				spawnMaguro(registry, editor, position, level, speedMultiplier, lifeMultiplier);
 				break;
 			case EffectType.ikura:
-				spawnIkura(registry, editor, position, level, speedMultiplier);
+				spawnIkura(registry, editor, position, level, speedMultiplier, lifeMultiplier);
 				break;
 			case EffectType.ebi:
-				spawnEbi(registry, editor, position, level, speedMultiplier);
+				spawnEbi(registry, editor, position, level, speedMultiplier, lifeMultiplier);
 				break;
 			case EffectType.matcha:
-				spawnMatcha(registry, editor, position, level, speedMultiplier);
+				spawnMatcha(registry, editor, position, level, speedMultiplier, lifeMultiplier);
 				break;
 			case EffectType.fever:
-				spawnFever(registry, editor, position, speedMultiplier);
+				spawnFever(registry, editor, position, speedMultiplier, lifeMultiplier);
 				break;
 		}
+
+		if (Math.random() < CHOPSTICKS_SPAWN_PROBABILITY) {
+			const targetId = registry.getRandomAliveEntityId();
+			if (registry.isValid(targetId)) {
+				setTimeout(() => {
+					if (registry.isValid(targetId)) {
+						spawnChopsticks(registry, editor, position, targetId);
+						startLoop();
+					}
+				}, CHOPSTICKS_SPAWN_DELAY_MS);
+			}
+		}
+
 		startLoop();
 	};
 
