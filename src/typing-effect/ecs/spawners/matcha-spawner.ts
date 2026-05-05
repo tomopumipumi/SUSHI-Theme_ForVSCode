@@ -23,6 +23,7 @@ export const spawnMatcha = (
 	position: vscode.Position,
 	level: number,
 	speedMultiplier: number = 1.0,
+	lifeMultiplier: number = 1.0,
 ): void => {
 	const graphic = getGraphicData(MATCHA_GRAPHICS, level);
 	const count = Math.floor(Math.random() * 2) + 1;
@@ -48,8 +49,8 @@ export const spawnMatcha = (
 		physics.vx[dataIdx] = (Math.random() - 0.5) * 5 * speedMultiplier;
 		physics.vy[dataIdx] = -(Math.random() * 3 + 2) * speedMultiplier;
 
-		lifecycle.life[dataIdx] = 30;
-		lifecycle.maxLife[dataIdx] = 30;
+		lifecycle.life[dataIdx] = 30 * lifeMultiplier;
+		lifecycle.maxLife[dataIdx] = 30 * lifeMultiplier;
 
 		physics.gravity[dataIdx] = -0.5;
 		physics.friction[dataIdx] = 0.9;

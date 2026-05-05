@@ -1,9 +1,11 @@
 import {
+	AnimationComponent,
 	LifecycleComponent,
 	PhysicsComponent,
 	RenderComponent,
 	TransformComponent,
 } from "./components";
+import { TargetingComponent } from "./components/targeting-component";
 import { COMPONENT_MASK, MAX_PARTICLES } from "./constants";
 
 const INDEX_MASK = 0xffff;
@@ -24,6 +26,8 @@ export class Registry {
 		physics: new PhysicsComponent(),
 		render: new RenderComponent(),
 		lifecycle: new LifecycleComponent(),
+		targeting: new TargetingComponent(),
+		animation: new AnimationComponent(),
 	};
 
 	public createEntity(mask: number): number {
@@ -52,7 +56,7 @@ export class Registry {
 		const lastDenseIndex = this.activeCount - 1;
 
 		const { components, entityMasks } = this;
-		const { transform, physics, render, lifecycle } = components;
+		const { transform, physics, render, lifecycle, targeting, animation } = components;
 
 		if (denseIndex !== lastDenseIndex) {
 			const lastIndex = this.dense[lastDenseIndex];
@@ -78,6 +82,9 @@ export class Registry {
 			lifecycle.life[denseIndex] = lifecycle.life[lastDenseIndex];
 			lifecycle.maxLife[denseIndex] = lifecycle.maxLife[lastDenseIndex];
 
+			targeting.targetEntityId[denseIndex] = targeting.targetEntityId[lastDenseIndex];
+			animation.frames[denseIndex] = animation.frames[lastDenseIndex];
+
 			this.dense[denseIndex] = lastIndex;
 			this.sparse[lastIndex] = denseIndex;
 		}
@@ -86,6 +93,7 @@ export class Registry {
 		render.editors[lastDenseIndex] = undefined;
 		render.ranges[lastDenseIndex] = undefined;
 		render.svgUrls[lastDenseIndex] = "";
+		animation.frames[lastDenseIndex] = undefined;
 
 		this.activeCount--;
 
@@ -104,6 +112,12 @@ export class Registry {
 			this.generations[index] === generation &&
 			this.sparse[index] !== -1
 		);
+	}
+
+	public getRandomAliveEntityId(): number {
+		if (this.activeCount === 0) return -1;
+		const randomDenseIndex = Math.floor(Math.random() * this.activeCount);
+		return this.getEntityIdFromIndex(randomDenseIndex);
 	}
 
 	public getComponentIndex(entityId: number): number {

@@ -23,6 +23,7 @@ export const spawnEbi = (
 	position: vscode.Position,
 	level: number,
 	speedMultiplier: number = 1.0,
+	lifeMultiplier: number = 1.0,
 ): void => {
 	const graphic = getGraphicData(EBI_GRAPHICS, level);
 	const count = Math.floor(Math.random() * 2) + 2;
@@ -48,8 +49,8 @@ export const spawnEbi = (
 		physics.vx[dataIdx] = (Math.random() - 0.5) * 15 * speedMultiplier;
 		physics.vy[dataIdx] = -(Math.random() * 15 + 10) * speedMultiplier;
 
-		lifecycle.life[dataIdx] = 20;
-		lifecycle.maxLife[dataIdx] = 20;
+		lifecycle.life[dataIdx] = 20 * lifeMultiplier;
+		lifecycle.maxLife[dataIdx] = 20 * lifeMultiplier;
 
 		physics.gravity[dataIdx] = 1.2;
 		physics.friction[dataIdx] = 0.98;

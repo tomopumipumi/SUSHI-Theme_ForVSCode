@@ -23,6 +23,7 @@ export const spawnIkura = (
 	position: vscode.Position,
 	level: number,
 	speedMultiplier: number = 1.0,
+	lifeMultiplier: number = 1.0,
 ): void => {
 	const graphic = getGraphicData(IKURA_GRAPHICS, level);
 	const count = Math.floor(Math.random() * 3) + 4;
@@ -48,8 +49,8 @@ export const spawnIkura = (
 		physics.vx[dataIdx] = (Math.random() - 0.5) * 20 * speedMultiplier;
 		physics.vy[dataIdx] = (Math.random() - 0.7) * 15 * speedMultiplier;
 
-		lifecycle.life[dataIdx] = 30;
-		lifecycle.maxLife[dataIdx] = 30;
+		lifecycle.life[dataIdx] = 30 * lifeMultiplier;
+		lifecycle.maxLife[dataIdx] = 30 * lifeMultiplier;
 
 		physics.gravity[dataIdx] = 1.0;
 		physics.friction[dataIdx] = 0.95;

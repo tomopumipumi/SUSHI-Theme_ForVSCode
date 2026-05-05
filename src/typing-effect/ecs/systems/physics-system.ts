@@ -2,13 +2,23 @@ import { COMPONENT_MASK } from "../constants";
 import type { Registry } from "../registry";
 
 interface PhysicsSystem {
-	update: (registry: Registry, dt: number, bounceTopDistance: number) => void;
+	update: (
+		registry: Registry,
+		dt: number,
+		bounceTopDistance: number,
+		bounceBottomDistance: number,
+	) => void;
 }
 
 export const usePhysicsSystem = (): PhysicsSystem => {
 	const RequiredMask = COMPONENT_MASK.transform | COMPONENT_MASK.physics;
 
-	const update = (registry: Registry, dt: number, bounceTopDistance: number): void => {
+	const update = (
+		registry: Registry,
+		dt: number,
+		bounceTopDistance: number,
+		bounceBottomDistance: number,
+	): void => {
 		const { components, entityMasks, activeCount } = registry;
 
 		for (let i = 0; i < activeCount; i++) {
@@ -26,6 +36,15 @@ export const usePhysicsSystem = (): PhysicsSystem => {
 					if (components.transform.y[i] < topLimit) {
 						components.transform.y[i] = topLimit;
 						components.physics.vy[i] *= -0.7;
+					}
+				}
+
+				if (bounceBottomDistance > 0) {
+					const bottomLimit = Math.abs(bounceBottomDistance);
+					if (components.transform.y[i] > bottomLimit) {
+						components.transform.y[i] = bottomLimit;
+						components.physics.vy[i] *= -0.6;
+						components.physics.vx[i] *= 0.8;
 					}
 				}
 

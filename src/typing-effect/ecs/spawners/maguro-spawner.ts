@@ -23,6 +23,7 @@ export const spawnMaguro = (
 	position: vscode.Position,
 	level: number,
 	speedMultiplier: number = 1.0,
+	lifeMultiplier: number = 1.0,
 ): void => {
 	const graphic = getGraphicData(MAGURO_GRAPHICS, level);
 	const count = Math.floor(Math.random() * 2) + 2;
@@ -48,8 +49,8 @@ export const spawnMaguro = (
 		physics.vx[dataIdx] = (Math.random() - 0.5) * 15 * speedMultiplier;
 		physics.vy[dataIdx] = -(Math.random() * 10 + 5) * speedMultiplier;
 
-		lifecycle.life[dataIdx] = 20;
-		lifecycle.maxLife[dataIdx] = 20;
+		lifecycle.life[dataIdx] = 20 * lifeMultiplier;
+		lifecycle.maxLife[dataIdx] = 20 * lifeMultiplier;
 
 		physics.gravity[dataIdx] = 1.0;
 		physics.friction[dataIdx] = 1.0;

@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.5.1</h1>
+  <h1>🍣 SUSHI-Theme v1.6.1</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.
@@ -80,9 +80,19 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Speed multiplier for flying sushi (Default: 1.3. Example: 1.3 is 1.3x speed).<br><span style="font-size: 0.9em; color: #666;"><i>Min: -20 / Max: 20</i></span></td>
     </tr>
     <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Lifespan Multiplier</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>1.0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sets the multiplier for the sushi's display time (lifespan). A larger value keeps it on the screen longer, but consumes more memory.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0.1 / Max: 10.0</i></span></td>
+    </tr>
+    <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Top Distance</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>200</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Distance in pixels the sushi flies upward from the typing cursor before bouncing back (Set to 0 to disable bouncing).<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 1000</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Bottom Distance</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sets the distance to the bottom wall (floor). Set to 0 for no floor (infinite fall). The larger the value, the lower it will bounce.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 1000</i></span></td>
     </tr>
     <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Combo Unit</code></td>
@@ -109,7 +119,7 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>5</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Number of sushi dropped per keystroke in Fever Time.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 1 / Max: 20</i></span></td>
     </tr>
-        <tr>
+    <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>FPS (Frame Rate)</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>30</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Set the frame rate (draws per second) for effects. Higher values provide smoother animations but increase editor load.<br><span style="font-size: 0.9em; color: #666;"><i>Options: 15, 30, 60, 120 (Actual rate may be limited by VS Code architecture)</i></span></td>

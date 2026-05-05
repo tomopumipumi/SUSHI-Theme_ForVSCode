@@ -10,6 +10,7 @@
 	"sushiTheme.effectType.desc": "选择打字时的飞行寿司特效。（默认：随机）",
 	"sushiTheme.particleSpeedMultiplier.desc": "飞行寿司的速度倍率（默认：1.3。例如：1.3表示1.3倍速）。",
 	"sushiTheme.bounceTopDistance.desc": "寿司从打字光标向上飞行并在弹回之前的像素距离（设置为0以禁用弹回）。",
+	"sushiTheme.bounceBottomDistance.desc": "设置到下方墙壁（地板）的距离。设为 0 表示没有地板（无限下落）。数值越大，弹跳的位置越低。",
 	"sushiTheme.comboUnit.desc": "升级寿司所需的击键次数（默认：5）",
 	"sushiTheme.comboTimeoutMs.desc": "连击重置前的时间（毫秒）（默认：1500）",
 	"sushiTheme.feverTriggerCombo.desc": "触发狂热时间（Fever Time）所需的连击数。",
@@ -20,5 +21,6 @@
 	"sushiTheme.fps.enum.30": "30 FPS (标准)",
 	"sushiTheme.fps.enum.60": "60 FPS (流畅/高负载)",
 	"sushiTheme.fps.enum.120": "120 FPS (超流畅/极高负载)",
-	"sushiTheme.fps.desc": "设置特效的帧率（每秒渲染次数）。数值越高，动画越流畅，但会增加编辑器的负载。\n*受 VS Code 渲染架构限制，即使设置较高的 FPS，实际帧率也可能受到限制。"
+	"sushiTheme.fps.desc": "设置特效的帧率（每秒渲染次数）。数值越高，动画越流畅，但会增加编辑器的负载。\n*受 VS Code 渲染架构限制，即使设置较高的 FPS，实际帧率也可能受到限制。",
+	"sushiTheme.particleLifespanMultiplier.desc": "设置寿司显示时间（寿命）的倍率。数值越大，在屏幕上停留的时间越长，但相应地也会消耗更多内存。"
 }

@@ -42,6 +42,7 @@ export const spawnFever = (
 	editor: vscode.TextEditor,
 	position: vscode.Position,
 	speedMultiplier: number = 1.0,
+	lifeMultiplier: number = 1.0,
 ): void => {
 	const config = vscode.workspace.getConfiguration("sushiTheme");
 	const rawCount = config.get<number>("feverSpawnCount", 5);
@@ -77,7 +78,7 @@ export const spawnFever = (
 		physics.friction[dataIdx] = 0.95;
 		physics.rotationFactor[dataIdx] = 1.5;
 
-		lifecycle.life[dataIdx] = 35;
-		lifecycle.maxLife[dataIdx] = 35;
+		lifecycle.life[dataIdx] = 35 * lifeMultiplier;
+		lifecycle.maxLife[dataIdx] = 35 * lifeMultiplier;
 	}
 };
