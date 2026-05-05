@@ -16,7 +16,10 @@ export const useLifecycleSystem = (): LifecycleSystem => {
 
 			components.lifecycle.life[i] -= dt;
 
-			if (components.lifecycle.life[i] <= 0) registry.destroyEntity(i);
+			if (components.lifecycle.life[i] <= 0) {
+				const entityId = registry.getEntityIdFromIndex(i);
+				registry.destroyEntity(entityId);
+			}
 		}
 	};
 

@@ -51,30 +51,33 @@ export const spawnFever = (
 	const { render, transform, physics, lifecycle } = registry.components;
 
 	for (let i = 0; i < count; i++) {
-		const entity = registry.createEntity(DEFAULT_PARTICLE_MASK);
-		if (entity === -1) return;
+		const entityId = registry.createEntity(DEFAULT_PARTICLE_MASK);
+		if (entityId === -1) return;
+
+		const dataIdx = registry.getComponentIndex(entityId);
+		if (dataIdx === -1) continue;
 
 		const randomGraphic =
 			FEVER_PRELOADED_SVGS[Math.floor(Math.random() * FEVER_PRELOADED_SVGS.length)];
 
-		render.editors[entity] = editor;
-		render.ranges[entity] = new vscode.Range(position, position);
-		render.svgUrls[entity] = randomGraphic.svgUrl;
-		render.width[entity] = randomGraphic.width;
-		render.height[entity] = randomGraphic.height;
+		render.editors[dataIdx] = editor;
+		render.ranges[dataIdx] = new vscode.Range(position, position);
+		render.svgUrls[dataIdx] = randomGraphic.svgUrl;
+		render.width[dataIdx] = randomGraphic.width;
+		render.height[dataIdx] = randomGraphic.height;
 
-		transform.x[entity] = 0;
-		transform.y[entity] = 0;
-		transform.rotation[entity] = Math.random() * 360;
+		transform.x[dataIdx] = 0;
+		transform.y[dataIdx] = 0;
+		transform.rotation[dataIdx] = Math.random() * 360;
 
-		physics.vx[entity] = (Math.random() - 0.5) * 30 * speedMultiplier;
-		physics.vy[entity] = -(Math.random() * 20 + 10) * speedMultiplier;
+		physics.vx[dataIdx] = (Math.random() - 0.5) * 30 * speedMultiplier;
+		physics.vy[dataIdx] = -(Math.random() * 20 + 10) * speedMultiplier;
 
-		physics.gravity[entity] = 1.5;
-		physics.friction[entity] = 0.95;
-		physics.rotationFactor[entity] = 1.5;
+		physics.gravity[dataIdx] = 1.5;
+		physics.friction[dataIdx] = 0.95;
+		physics.rotationFactor[dataIdx] = 1.5;
 
-		lifecycle.life[entity] = 35;
-		lifecycle.maxLife[entity] = 35;
+		lifecycle.life[dataIdx] = 35;
+		lifecycle.maxLife[dataIdx] = 35;
 	}
 };

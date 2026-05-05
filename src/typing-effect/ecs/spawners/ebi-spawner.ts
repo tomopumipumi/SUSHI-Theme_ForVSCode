@@ -29,27 +29,30 @@ export const spawnEbi = (
 	const { render, transform, physics, lifecycle } = registry.components;
 
 	for (let i = 0; i < count; i++) {
-		const entity = registry.createEntity(DEFAULT_PARTICLE_MASK);
-		if (entity === -1) return;
+		const entityId = registry.createEntity(DEFAULT_PARTICLE_MASK);
+		if (entityId === -1) return;
 
-		render.editors[entity] = editor;
-		render.ranges[entity] = new vscode.Range(position, position);
-		render.svgUrls[entity] = graphic.svgUrl;
-		render.width[entity] = graphic.width;
-		render.height[entity] = graphic.height;
+		const dataIdx = registry.getComponentIndex(entityId);
+		if (dataIdx === -1) continue;
 
-		transform.x[entity] = 0;
-		transform.y[entity] = 0;
-		transform.rotation[entity] = Math.random() * 360;
+		render.editors[dataIdx] = editor;
+		render.ranges[dataIdx] = new vscode.Range(position, position);
+		render.svgUrls[dataIdx] = graphic.svgUrl;
+		render.width[dataIdx] = graphic.width;
+		render.height[dataIdx] = graphic.height;
 
-		physics.vx[entity] = (Math.random() - 0.5) * 15 * speedMultiplier;
-		physics.vy[entity] = -(Math.random() * 15 + 10) * speedMultiplier;
+		transform.x[dataIdx] = 0;
+		transform.y[dataIdx] = 0;
+		transform.rotation[dataIdx] = Math.random() * 360;
 
-		lifecycle.life[entity] = 20;
-		lifecycle.maxLife[entity] = 20;
+		physics.vx[dataIdx] = (Math.random() - 0.5) * 15 * speedMultiplier;
+		physics.vy[dataIdx] = -(Math.random() * 15 + 10) * speedMultiplier;
 
-		physics.gravity[entity] = 1.2;
-		physics.friction[entity] = 0.98;
-		physics.rotationFactor[entity] = 1.5;
+		lifecycle.life[dataIdx] = 20;
+		lifecycle.maxLife[dataIdx] = 20;
+
+		physics.gravity[dataIdx] = 1.2;
+		physics.friction[dataIdx] = 0.98;
+		physics.rotationFactor[dataIdx] = 1.5;
 	}
 };

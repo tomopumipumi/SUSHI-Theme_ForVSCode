@@ -6,9 +6,18 @@ import {
 } from "./components";
 import { COMPONENT_MASK, MAX_PARTICLES } from "./constants";
 
+const INDEX_MASK = 0xffff;
+const GENERATION_SHIFT = 16;
+
 export class Registry {
 	public activeCount: number = 0;
 	public entityMasks: Uint32Array = new Uint32Array(MAX_PARTICLES);
+
+	private generations = new Uint16Array(MAX_PARTICLES);
+	private freeIndices: number[] = [];
+
+	private sparse = new Int32Array(MAX_PARTICLES).fill(-1);
+	private dense = new Int32Array(MAX_PARTICLES).fill(-1);
 
 	public components = {
 		transform: new TransformComponent(),
@@ -19,45 +28,93 @@ export class Registry {
 
 	public createEntity(mask: number): number {
 		if (this.activeCount >= MAX_PARTICLES) return -1;
-		const entity = this.activeCount;
-		this.entityMasks[entity] = mask;
+
+		const index = this.freeIndices.pop() ?? this.activeCount;
+
+		const generation = this.generations[index];
+		const entityId = (generation << GENERATION_SHIFT) | index;
+
+		const denseIndex = this.activeCount;
+		this.sparse[index] = denseIndex;
+		this.dense[denseIndex] = index;
+
+		this.entityMasks[denseIndex] = mask;
 		this.activeCount++;
-		return entity;
+
+		return entityId;
 	}
 
-	public destroyEntity(entity: number): void {
-		const last = this.activeCount - 1;
+	public destroyEntity(entityId: number): void {
+		if (!this.isValid(entityId)) return;
+
+		const index = entityId & INDEX_MASK;
+		const denseIndex = this.sparse[index];
+		const lastDenseIndex = this.activeCount - 1;
+
 		const { components, entityMasks } = this;
 		const { transform, physics, render, lifecycle } = components;
 
-		if (entity !== last) {
-			entityMasks[entity] = entityMasks[last];
+		if (denseIndex !== lastDenseIndex) {
+			const lastIndex = this.dense[lastDenseIndex];
 
-			transform.x[entity] = transform.x[last];
-			transform.y[entity] = transform.y[last];
-			transform.rotation[entity] = transform.rotation[last];
+			entityMasks[denseIndex] = entityMasks[lastDenseIndex];
 
-			physics.vx[entity] = physics.vx[last];
-			physics.vy[entity] = physics.vy[last];
-			physics.gravity[entity] = physics.gravity[last];
-			physics.friction[entity] = physics.friction[last];
-			physics.rotationFactor[entity] = physics.rotationFactor[last];
+			transform.x[denseIndex] = transform.x[lastDenseIndex];
+			transform.y[denseIndex] = transform.y[lastDenseIndex];
+			transform.rotation[denseIndex] = transform.rotation[lastDenseIndex];
 
-			render.editors[entity] = render.editors[last];
-			render.ranges[entity] = render.ranges[last];
-			render.svgUrls[entity] = render.svgUrls[last];
-			render.width[entity] = render.width[last];
-			render.height[entity] = render.height[last];
+			physics.vx[denseIndex] = physics.vx[lastDenseIndex];
+			physics.vy[denseIndex] = physics.vy[lastDenseIndex];
+			physics.gravity[denseIndex] = physics.gravity[lastDenseIndex];
+			physics.friction[denseIndex] = physics.friction[lastDenseIndex];
+			physics.rotationFactor[denseIndex] = physics.rotationFactor[lastDenseIndex];
 
-			lifecycle.life[entity] = lifecycle.life[last];
-			lifecycle.maxLife[entity] = lifecycle.maxLife[last];
+			render.editors[denseIndex] = render.editors[lastDenseIndex];
+			render.ranges[denseIndex] = render.ranges[lastDenseIndex];
+			render.svgUrls[denseIndex] = render.svgUrls[lastDenseIndex];
+			render.width[denseIndex] = render.width[lastDenseIndex];
+			render.height[denseIndex] = render.height[lastDenseIndex];
+
+			lifecycle.life[denseIndex] = lifecycle.life[lastDenseIndex];
+			lifecycle.maxLife[denseIndex] = lifecycle.maxLife[lastDenseIndex];
+
+			this.dense[denseIndex] = lastIndex;
+			this.sparse[lastIndex] = denseIndex;
 		}
 
-		entityMasks[last] = COMPONENT_MASK.none;
-		render.editors[last] = undefined;
-		render.ranges[last] = undefined;
-		render.svgUrls[last] = "";
+		entityMasks[lastDenseIndex] = COMPONENT_MASK.none;
+		render.editors[lastDenseIndex] = undefined;
+		render.ranges[lastDenseIndex] = undefined;
+		render.svgUrls[lastDenseIndex] = "";
 
 		this.activeCount--;
+
+		this.generations[index]++;
+		this.sparse[index] = -1;
+		this.dense[lastDenseIndex] = -1;
+		this.freeIndices.push(index);
+	}
+
+	public isValid(entityId: number): boolean {
+		const index = entityId & INDEX_MASK;
+		const generation = entityId >>> GENERATION_SHIFT;
+		return (
+			index >= 0 &&
+			index < MAX_PARTICLES &&
+			this.generations[index] === generation &&
+			this.sparse[index] !== -1
+		);
+	}
+
+	public getComponentIndex(entityId: number): number {
+		if (!this.isValid(entityId)) return -1;
+		return this.sparse[entityId & INDEX_MASK];
+	}
+
+	public getEntityIdFromIndex(denseIndex: number): number {
+		if (denseIndex < 0 || denseIndex >= this.activeCount) return -1;
+		const index = this.dense[denseIndex];
+		const generation = this.generations[index];
+		return (generation << GENERATION_SHIFT) | index;
 	}
 }
