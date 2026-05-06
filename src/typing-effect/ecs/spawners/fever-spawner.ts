@@ -4,6 +4,7 @@ import lv2 from "@/assets-svg/fever/lv2.svg";
 import lv3 from "@/assets-svg/fever/lv3.svg";
 import lv4 from "@/assets-svg/fever/lv4.svg";
 import lv5 from "@/assets-svg/fever/lv5.svg";
+import { useGameSettings } from "@/game-settings";
 import type { GraphicData, GraphicLevel } from "@/typing-effect/types";
 import { DEFAULT_PARTICLE_MASK } from "../constants";
 import type { Registry } from "../registry";
@@ -41,20 +42,13 @@ export const spawnFever = (
 	registry: Registry,
 	editor: vscode.TextEditor,
 	position: vscode.Position,
-	speedMultiplier: number = 1.0,
-	lifeMultiplier: number = 1.0,
 ): void => {
-	const config = vscode.workspace.getConfiguration("sushiTheme");
-	const rawCount = config.get<number>("feverSpawnCount", 5);
-	const baseCount = Math.max(1, Number(rawCount) || 10);
-	const count = Math.floor(Math.random() * 4) + baseCount;
-
+	const { settings } = useGameSettings();
 	const { render, transform, physics, lifecycle } = registry.components;
 
-	for (let i = 0; i < count; i++) {
+	for (let i = 0; i < settings.feverSpawnCount; i++) {
 		const entityId = registry.createEntity(DEFAULT_PARTICLE_MASK);
 		if (entityId === -1) return;
-
 		const dataIdx = registry.getComponentIndex(entityId);
 		if (dataIdx === -1) continue;
 
@@ -71,14 +65,14 @@ export const spawnFever = (
 		transform.y[dataIdx] = 0;
 		transform.rotation[dataIdx] = Math.random() * 360;
 
-		physics.vx[dataIdx] = (Math.random() - 0.5) * 30 * speedMultiplier;
-		physics.vy[dataIdx] = -(Math.random() * 20 + 10) * speedMultiplier;
+		physics.vx[dataIdx] = (Math.random() - 0.5) * 30 * settings.particleSpeedMultiplier;
+		physics.vy[dataIdx] = -(Math.random() * 20 + 10) * settings.particleSpeedMultiplier;
 
 		physics.gravity[dataIdx] = 1.5;
 		physics.friction[dataIdx] = 0.95;
 		physics.rotationFactor[dataIdx] = 1.5;
 
-		lifecycle.life[dataIdx] = 35 * lifeMultiplier;
-		lifecycle.maxLife[dataIdx] = 35 * lifeMultiplier;
+		lifecycle.life[dataIdx] = 35 * settings.particleLifespanMultiplier;
+		lifecycle.maxLife[dataIdx] = 35 * settings.particleLifespanMultiplier;
 	}
 };

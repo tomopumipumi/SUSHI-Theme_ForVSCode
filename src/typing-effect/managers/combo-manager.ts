@@ -1,4 +1,5 @@
-import * as vscode from "vscode";
+import type * as vscode from "vscode";
+import { useGameSettings } from "@/game-settings";
 
 export interface ComboManager {
 	registerKeystroke(editor: vscode.TextEditor, position: vscode.Position): void;
@@ -10,6 +11,8 @@ interface UseComboManagerProps {
 }
 
 export const useComboManager = ({ onUpdate }: UseComboManagerProps): ComboManager => {
+	const { settings } = useGameSettings();
+
 	let comboCount = 0;
 	let comboTimeout: NodeJS.Timeout | undefined;
 
@@ -23,17 +26,9 @@ export const useComboManager = ({ onUpdate }: UseComboManagerProps): ComboManage
 		comboCount++;
 		if (comboTimeout) clearTimeout(comboTimeout);
 
-		const config = vscode.workspace.getConfiguration("sushiTheme");
-		const defaultRawResetMs = 1500;
-		const rawResetMs = config.get<number>("comboTimeoutMs", defaultRawResetMs);
-		const resetMs = Math.max(1, Number(rawResetMs) || defaultRawResetMs);
-
-		const throttleMs = config.get<number>("throttleMs", 80);
+		comboTimeout = setTimeout(resetCombo, settings.comboTimeoutMs);
 		const now = Date.now();
-
-		comboTimeout = setTimeout(() => resetCombo(), resetMs);
-
-		if (now - lastUpdateTime >= throttleMs) {
+		if (now - lastUpdateTime >= settings.throttleMs) {
 			lastUpdateTime = now;
 			onUpdate(comboCount, position, editor);
 		}

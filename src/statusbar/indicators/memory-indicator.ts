@@ -1,5 +1,6 @@
 import * as os from "node:os";
 import * as vscode from "vscode";
+import { useGameSettings } from "@/game-settings";
 
 const MAX_SUSHI = 15;
 
@@ -11,6 +12,7 @@ export interface MemoryIndicator {
 }
 
 export const useMemoryIndicator = (): MemoryIndicator => {
+	const { settings } = useGameSettings();
 	let intervalId: NodeJS.Timeout | undefined;
 
 	const isWeb = vscode.env.uiKind === vscode.UIKind.Web;
@@ -28,8 +30,7 @@ export const useMemoryIndicator = (): MemoryIndicator => {
 	};
 
 	const update = (statusBarItem: vscode.StatusBarItem): void => {
-		const config = vscode.workspace.getConfiguration("sushiTheme");
-		if (!config.get<boolean>("enableStatusBar")) {
+		if (!settings.enableStatusBar) {
 			statusBarItem.hide();
 			return;
 		}

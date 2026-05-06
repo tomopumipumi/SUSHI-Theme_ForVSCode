@@ -1,7 +1,9 @@
-import * as vscode from "vscode";
-import { EffectType, MAX_EFFECT_LEVEL, RANDOM_POOL } from "../constants";
+import type * as vscode from "vscode";
+import { useGameSettings } from "@/game-settings";
+import { EffectType, RANDOM_POOL } from "../constants";
 import { useWorld } from "../ecs";
 import { useLineHighlight } from "../effects";
+import type { EffectTypeKey } from "../types";
 import { type FeverManager, useFeverManager } from "./fever-manager";
 
 export interface EffectManager {
@@ -12,13 +14,14 @@ export interface EffectManager {
 }
 
 export const useEffectManager = (): EffectManager => {
+	const { settings } = useGameSettings();
 	const world = useWorld();
 	const lineHighlight = useLineHighlight();
-	let activeRandomType: string = EffectType.maguro;
+	let activeRandomType: EffectTypeKey = EffectType.maguro;
 
 	const feverManager = useFeverManager();
 
-	feverManager.onFeverStateChanged((isFever) => {
+	const feverDisposable = feverManager.onFeverStateChanged((isFever) => {
 		if (isFever) {
 			lineHighlight.start();
 		} else {
@@ -27,31 +30,15 @@ export const useEffectManager = (): EffectManager => {
 	});
 
 	const trigger = (combo: number, position: vscode.Position, editor: vscode.TextEditor): void => {
-		const config = vscode.workspace.getConfiguration("sushiTheme");
-		const effectType = config.get<string>("effectType", EffectType.random);
+		if (settings.effectType === EffectType.none) return;
+		if (combo >= settings.feverTriggerCombo && !feverManager.isFever) feverManager.start();
 
-		if (effectType === EffectType.none) return;
-
-		const defaultRawComboUnit = 10;
-		const rawComboUnit = config.get<number>("comboUnit", defaultRawComboUnit);
-		const comboUnit = Math.max(1, Number(rawComboUnit) || defaultRawComboUnit);
-		const rawLevel = Math.floor(combo / comboUnit) + 1;
-		const safeLevel = Math.min(rawLevel, MAX_EFFECT_LEVEL);
-
-		const defaultRawFeverTriggerCombo = 50;
-		const rawFeverTriggerCombo = config.get<number>(
-			"feverTriggerCombo",
-			defaultRawFeverTriggerCombo,
-		);
-		const feverTriggerCombo = Math.max(
-			1,
-			Number(rawFeverTriggerCombo) || defaultRawFeverTriggerCombo,
-		);
-		if (combo >= feverTriggerCombo && !feverManager.isFever) feverManager.start();
+		const rawLevel = Math.floor(combo / settings.comboUnit) + 1;
+		const safeLevel = Math.min(rawLevel, 5);
 
 		const feverProcess = () => world.spawn(EffectType.fever, editor, position, safeLevel);
 		const normalProcess = () => {
-			let targetType = effectType;
+			let targetType: EffectTypeKey = settings.effectType;
 
 			if (targetType === EffectType.random) {
 				if (combo === 1) {
@@ -71,14 +58,14 @@ export const useEffectManager = (): EffectManager => {
 		}
 	};
 
-	const clearParticlesForDocument = (doc: vscode.TextDocument): void => {
+	const clearParticlesForDocument = (doc: vscode.TextDocument): void =>
 		world.killParticlesByDocument(doc);
-	};
 
 	const dispose = (): void => {
 		world.dispose();
 		lineHighlight.dispose();
 		feverManager.dispose();
+		feverDisposable.dispose();
 	};
 
 	return { feverManager, trigger, clearParticlesForDocument, dispose };

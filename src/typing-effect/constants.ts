@@ -1,3 +1,5 @@
+import type { EffectTypeKey } from "./types";
+
 export const EffectType = {
 	maguro: "maguro",
 	ikura: "ikura",
@@ -9,7 +11,7 @@ export const EffectType = {
 	none: "none",
 } as const;
 
-export const RANDOM_POOL = [
+export const RANDOM_POOL: EffectTypeKey[] = [
 	EffectType.maguro,
 	EffectType.ikura,
 	EffectType.ebi,

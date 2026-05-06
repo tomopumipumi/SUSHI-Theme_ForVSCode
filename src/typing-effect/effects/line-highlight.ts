@@ -18,6 +18,7 @@ export const useLineHighlight = (): LineHighlight => {
 	});
 
 	const updateLineHighlight = (): void => {
+		clearLineHighlight();
 		const editor = vscode.window.activeTextEditor;
 		if (editor) {
 			const position = editor.selection.active;
@@ -33,10 +34,9 @@ export const useLineHighlight = (): LineHighlight => {
 	};
 
 	const start = (): void => {
+		if (selectionDisposable) return;
 		updateLineHighlight();
-		selectionDisposable = vscode.window.onDidChangeTextEditorSelection(() => {
-			updateLineHighlight();
-		});
+		selectionDisposable = vscode.window.onDidChangeTextEditorSelection(updateLineHighlight);
 	};
 
 	const stop = (): void => {
