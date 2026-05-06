@@ -10,6 +10,7 @@
 		"paths": {
 			"@/typing-effect/*": ["./src/typing-effect/*"],
 			"@/statusbar/*": ["./src/statusbar/*"],
+			"@/game-settings": ["./src/game-settings"],
 			"@/assets-svg/*": ["./assets/svg/*"]
 		}
 	}

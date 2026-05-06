@@ -1,4 +1,5 @@
-import * as vscode from "vscode";
+import type * as vscode from "vscode";
+import { useGameSettings } from "@/game-settings";
 import { EffectType } from "../constants";
 import { COMPONENT_MASK } from "./constants";
 import { Registry } from "./registry";
@@ -37,13 +38,22 @@ export interface World {
 }
 
 export const useWorld = (): World => {
+	const { settings } = useGameSettings();
+
 	const registry = new Registry();
 
-	const physicsSystem = usePhysicsSystem();
-	const lifecycleSystem = useLifecycleSystem();
-	const renderSystem = useRenderSystem();
-	const trackingSystem = useTrackingSystem();
-	const animationSystem = useAnimationSystem();
+	const systems = {
+		physicsSystem: usePhysicsSystem(),
+		lifecycleSystem: useLifecycleSystem(),
+		renderSystem: useRenderSystem(),
+		trackingSystem: useTrackingSystem(),
+		animationSystem: useAnimationSystem(),
+	};
+
+	const activeTimeouts = new Set<NodeJS.Timeout>();
+
+	let timer: NodeJS.Timeout | undefined;
+	let lastTime = performance.now();
 
 	const handleExplosion = (
 		editor: vscode.TextEditor,
@@ -54,32 +64,17 @@ export const useWorld = (): World => {
 		spawnExplosion(registry, editor, range, x, y);
 	};
 
-	let timer: NodeJS.Timeout | undefined;
-	let lastTime = performance.now();
-
 	const startLoop = (): void => {
 		if (timer) return;
-
 		lastTime = performance.now();
-
-		const getIntervalMsFromFPS = (): number => {
-			const config = vscode.workspace.getConfiguration("sushiTheme");
-			const fps = config.get<number>("fps", BASE_FRAME_TIME_MS);
-			return Math.floor(MS_PER_SECOND / fps);
-		};
-
-		const intervalMs = getIntervalMsFromFPS();
-
-		timer = setInterval(() => {
-			update();
-		}, intervalMs);
+		const intervalMs = Math.floor(MS_PER_SECOND / settings.fps);
+		timer = setInterval(update, intervalMs);
 	};
 
 	const stopLoop = (): void => {
-		if (timer) {
-			clearInterval(timer);
-			timer = undefined;
-		}
+		if (timer === undefined) return;
+		clearInterval(timer);
+		timer = undefined;
 	};
 
 	const update = (): void => {
@@ -91,20 +86,21 @@ export const useWorld = (): World => {
 		if (dt > MAX_DELTA_TIME) dt = MAX_DELTA_TIME;
 
 		if (registry.activeCount === 0) {
-			renderSystem.update(registry);
+			systems.renderSystem.update(registry);
 			stopLoop();
 			return;
 		}
 
-		const config = vscode.workspace.getConfiguration("sushiTheme");
-		const bounceTopDistance = config.get<number>("bounceTopDistance", 100);
-		const bounceBottomDistance = config.get<number>("bounceBottomDistance", 0);
-
-		trackingSystem.update(registry, dt, handleExplosion);
-		physicsSystem.update(registry, dt, bounceTopDistance, bounceBottomDistance);
-		lifecycleSystem.update(registry, dt);
-		animationSystem.update(registry);
-		renderSystem.update(registry);
+		systems.trackingSystem.update(registry, dt, handleExplosion);
+		systems.physicsSystem.update(
+			registry,
+			dt,
+			settings.bounceTopDistance,
+			settings.bounceBottomDistance,
+		);
+		systems.lifecycleSystem.update(registry, dt);
+		systems.animationSystem.update(registry);
+		systems.renderSystem.update(registry);
 	};
 
 	const spawn = (
@@ -113,37 +109,35 @@ export const useWorld = (): World => {
 		position: vscode.Position,
 		level: number,
 	): void => {
-		const config = vscode.workspace.getConfiguration("sushiTheme");
-		const speedMultiplier = config.get<number>("particleSpeedMultiplier", 1.0);
-		const lifeMultiplier = config.get<number>("particleLifespanMultiplier", 1.0);
-
 		switch (type) {
 			case EffectType.maguro:
-				spawnMaguro(registry, editor, position, level, speedMultiplier, lifeMultiplier);
+				spawnMaguro(registry, editor, position, level);
 				break;
 			case EffectType.ikura:
-				spawnIkura(registry, editor, position, level, speedMultiplier, lifeMultiplier);
+				spawnIkura(registry, editor, position, level);
 				break;
 			case EffectType.ebi:
-				spawnEbi(registry, editor, position, level, speedMultiplier, lifeMultiplier);
+				spawnEbi(registry, editor, position, level);
 				break;
 			case EffectType.matcha:
-				spawnMatcha(registry, editor, position, level, speedMultiplier, lifeMultiplier);
+				spawnMatcha(registry, editor, position, level);
 				break;
 			case EffectType.fever:
-				spawnFever(registry, editor, position, speedMultiplier, lifeMultiplier);
+				spawnFever(registry, editor, position);
 				break;
 		}
 
 		if (Math.random() < CHOPSTICKS_SPAWN_PROBABILITY) {
 			const targetId = registry.getRandomAliveEntityId();
 			if (registry.isValid(targetId)) {
-				setTimeout(() => {
+				const t = setTimeout(() => {
+					activeTimeouts.delete(t);
 					if (registry.isValid(targetId)) {
 						spawnChopsticks(registry, editor, position, targetId);
 						startLoop();
 					}
 				}, CHOPSTICKS_SPAWN_DELAY_MS);
+				activeTimeouts.add(t);
 			}
 		}
 
@@ -154,15 +148,16 @@ export const useWorld = (): World => {
 		const { components, entityMasks, activeCount } = registry;
 		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
 
-		for (let i = 0; i < activeCount; i++) {
+		for (let i = 0; i < activeCount; i++)
 			if ((entityMasks[i] & RequiredMask) === RequiredMask)
 				if (components.render.editors[i]?.document === closedDoc) components.lifecycle.life[i] = 0;
-		}
 	};
 
 	const dispose = (): void => {
 		stopLoop();
-		renderSystem.dispose();
+		systems.renderSystem.dispose();
+		for (const t of activeTimeouts) clearTimeout(t);
+		activeTimeouts.clear();
 	};
 
 	return { spawn, dispose, killParticlesByDocument };

@@ -4,6 +4,7 @@ import lv2 from "@/assets-svg/matcha/lv2.svg";
 import lv3 from "@/assets-svg/matcha/lv3.svg";
 import lv4 from "@/assets-svg/matcha/lv4.svg";
 import lv5 from "@/assets-svg/matcha/lv5.svg";
+import { useGameSettings } from "@/game-settings";
 import type { GraphicLevel } from "@/typing-effect/types";
 import { DEFAULT_PARTICLE_MASK } from "../constants";
 import type { Registry } from "../registry";
@@ -22,9 +23,8 @@ export const spawnMatcha = (
 	editor: vscode.TextEditor,
 	position: vscode.Position,
 	level: number,
-	speedMultiplier: number = 1.0,
-	lifeMultiplier: number = 1.0,
 ): void => {
+	const { settings } = useGameSettings();
 	const graphic = getGraphicData(MATCHA_GRAPHICS, level);
 	const count = Math.floor(Math.random() * 2) + 1;
 	const { render, transform, physics, lifecycle } = registry.components;
@@ -46,11 +46,11 @@ export const spawnMatcha = (
 		transform.y[dataIdx] = 0;
 		transform.rotation[dataIdx] = Math.random() * 360;
 
-		physics.vx[dataIdx] = (Math.random() - 0.5) * 5 * speedMultiplier;
-		physics.vy[dataIdx] = -(Math.random() * 3 + 2) * speedMultiplier;
+		physics.vx[dataIdx] = (Math.random() - 0.5) * 5 * settings.particleSpeedMultiplier;
+		physics.vy[dataIdx] = -(Math.random() * 3 + 2) * settings.particleSpeedMultiplier;
 
-		lifecycle.life[dataIdx] = 30 * lifeMultiplier;
-		lifecycle.maxLife[dataIdx] = 30 * lifeMultiplier;
+		lifecycle.life[dataIdx] = 30 * settings.particleLifespanMultiplier;
+		lifecycle.maxLife[dataIdx] = 30 * settings.particleLifespanMultiplier;
 
 		physics.gravity[dataIdx] = -0.5;
 		physics.friction[dataIdx] = 0.9;

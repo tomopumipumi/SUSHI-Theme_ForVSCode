@@ -20,9 +20,7 @@ export const useStatusBarManager = (ctx: vscode.ExtensionContext): StatusBarMana
 
 	statusBarItem.command = COMMAND_ID;
 
-	ctx.subscriptions.push(
-		vscode.commands.registerCommand(COMMAND_ID, () => memoryIndicator.showDetails()),
-	);
+	ctx.subscriptions.push(vscode.commands.registerCommand(COMMAND_ID, memoryIndicator.showDetails));
 
 	ctx.subscriptions.push(
 		vscode.workspace.onDidChangeConfiguration((e) => {

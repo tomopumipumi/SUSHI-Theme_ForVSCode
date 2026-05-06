@@ -23,7 +23,7 @@ export const useTrackingSystem = () => {
 		const { components, entityMasks, activeCount } = registry;
 		const { transform, physics, targeting, render } = components;
 
-		for (let i = 0; i < activeCount; i++) {
+		for (let i = activeCount - 1; i >= 0; i--) {
 			if ((entityMasks[i] & RequiredMask) !== RequiredMask) continue;
 
 			const targetId = targeting.targetEntityId[i];
@@ -46,8 +46,8 @@ export const useTrackingSystem = () => {
 
 				if (editor && range) onExplode(editor, range, transform.x[i], transform.y[i]);
 
-				registry.destroyEntity(registry.getEntityIdFromIndex(i));
-				registry.destroyEntity(targetId);
+				components.lifecycle.life[i] = 0;
+				components.lifecycle.life[targetIdx] = 0;
 				continue;
 			}
 

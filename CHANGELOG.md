@@ -4,6 +4,19 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.6.2] - 2026-05-06
+
+### Performance
+- Implemented a centralized configuration caching system to drastically reduce overhead from querying the VS Code API every frame.
+- Mitigated GC (Garbage Collection) spikes by reusing array instances and optimizing loop iterations in the rendering system.
+
+### Fixed
+- Fixed a critical memory leak caused by uncleared timeouts during particle spawning.
+- Fixed an ECS logic bug where tracking particles were immediately destroyed, causing potential visual glitches.
+- Fixed a visual bug where fever line highlights would incorrectly persist when switching between editor tabs.
+- Restored the particle level scaling logic so particle sizes correctly increase based on the combo count.
+- Added strict validation and clamping to user settings to prevent crashes caused by invalid `settings.json` values.
+
 ## [1.6.1] - 2026-05-05
 - Add a new "Chopsticks" interaction: chopsticks will occasionally spawn, track flying sushi, and trigger a multi-frame explosion animation upon impact
 - Add `Bounce Bottom Distance` setting to simulate a floor collision and bouncing effect

@@ -31,17 +31,17 @@ export const useRenderSystem = (): RenderSystem => {
 
 			const style = `
 			none;
-			position: absolute;
-			display: inline-block;
-			width: ${render.width[i]}px;
-			height: ${render.height[i]}px;
-			background-image: ${render.svgUrls[i]};
-			background-size: contain;
-			background-repeat: no-repeat;
-			transform: translate(${transform.x[i].toFixed(1)}px, ${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg);
-			opacity: ${opacity.toFixed(2)};
-			pointer-events: none;
-			z-index: 999;
+			position:absolute;
+			display:inline-block;
+			width:${render.width[i]}px;
+			height:${render.height[i]}px;
+			background-image:${render.svgUrls[i]};
+			background-size:contain;
+			background-repeat:no-repeat;
+			transform:translate(${transform.x[i].toFixed(1)}px,${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg);
+			opacity:${opacity.toFixed(2)};
+			pointer-events:none;
+			z-index:999;
 			`;
 
 			const decoration: vscode.DecorationOptions = {
@@ -59,6 +59,12 @@ export const useRenderSystem = (): RenderSystem => {
 			decos.push(decoration);
 		}
 
+		const visibleEditors = vscode.window.visibleTextEditors;
+		for (const editor of editorDecorations.keys()) {
+			if (!visibleEditors.includes(editor)) {
+				editorDecorations.delete(editor);
+			}
+		}
 		for (const editor of vscode.window.visibleTextEditors) {
 			const decos = editorDecorations.get(editor) || [];
 			editor.setDecorations(decorationType, decos);
@@ -66,9 +72,8 @@ export const useRenderSystem = (): RenderSystem => {
 	};
 
 	const dispose = (): void => {
-		for (const editor of vscode.window.visibleTextEditors) {
+		for (const editor of vscode.window.visibleTextEditors)
 			editor.setDecorations(decorationType, []);
-		}
 		decorationType.dispose();
 		editorDecorations.clear();
 	};
