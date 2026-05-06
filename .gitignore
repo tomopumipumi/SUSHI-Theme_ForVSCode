@@ -1,9 +1,9 @@
 out
 dist
-node_modules
+**/node_modules/
 .vscode-test/
 *.vsix
 repomix.config.json
 repomix-output.xml
 *.cpuprofile
-/package.nls*.json
+**/package.nls*.json
