@@ -61,22 +61,31 @@ export const updatePhysicsSystem = (
 
 export const updateAnimationSystem = (registry: Registry): void => {
 	const { components, entityMasks, activeCount } = registry;
-	const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle | COMPONENT_MASK.animation;
+	const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
 
 	for (let i = 0; i < activeCount; i++) {
 		if ((entityMasks[i] & RequiredMask) !== RequiredMask) continue;
 
-		const frames = components.animation.frames[i];
-		if (!frames || frames.length === 0) continue;
-
 		const lifeRatio = Math.max(0, components.lifecycle.life[i] / components.lifecycle.maxLife[i]);
 		const progress = 1.0 - lifeRatio;
-		const frameIndex = Math.min(frames.length - 1, Math.floor(progress * frames.length));
-		const currentFrame = frames[frameIndex];
 
-		components.render.svgUrls[i] = currentFrame.svgUrl;
-		components.render.width[i] = currentFrame.width;
-		components.render.height[i] = currentFrame.height;
+		const initScale = components.render.initialScale[i];
+		const targetScale = components.render.targetScale[i];
+		if (initScale !== targetScale) {
+			components.render.currentScale[i] = initScale + (targetScale - initScale) * progress;
+		}
+
+		if ((entityMasks[i] & COMPONENT_MASK.animation) === COMPONENT_MASK.animation) {
+			const frames = components.animation.frames[i];
+			if (frames && frames.length > 0) {
+				const frameIndex = Math.min(frames.length - 1, Math.floor(progress * frames.length));
+				const currentFrame = frames[frameIndex];
+
+				components.render.svgUrls[i] = currentFrame.svgUrl;
+				components.render.width[i] = currentFrame.width;
+				components.render.height[i] = currentFrame.height;
+			}
+		}
 	}
 };
 

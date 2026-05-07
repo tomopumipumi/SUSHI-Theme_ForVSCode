@@ -1,4 +1,4 @@
-import { type CoreSettings, useWorld } from "@typing-fx/core";
+import { type CoreSettings, type ParticleThemeConfig, useWorld } from "@typing-fx/core";
 import type * as vscode from "vscode";
 import { useGameSettings } from "@/game-settings";
 import { useRenderAdapter } from "../adapters/render-adapter";
@@ -7,6 +7,7 @@ import { useLineHighlight } from "../effects/line-highlight";
 import {
 	getChopsticksConfig,
 	getEbiConfig,
+	getExplosionConfig,
 	getFeverConfig,
 	getIkuraConfig,
 	getMaguroConfig,
@@ -40,20 +41,35 @@ export const useEffectManager = (): EffectManager => {
 	});
 
 	const coreSettings: CoreSettings = {
-		bounceTopDistance: settings.bounceTopDistance,
-		bounceBottomDistance: settings.bounceBottomDistance,
-		particleSpeedMultiplier: settings.particleSpeedMultiplier,
-		particleLifespanMultiplier: settings.particleLifespanMultiplier,
+		get bounceTopDistance() {
+			return settings.bounceTopDistance;
+		},
+		get bounceBottomDistance() {
+			return settings.bounceBottomDistance;
+		},
+		get particleSpeedMultiplier() {
+			return settings.particleSpeedMultiplier;
+		},
+		get particleLifespanMultiplier() {
+			return settings.particleLifespanMultiplier;
+		},
 	};
 
 	const world = useWorld({
 		settings: coreSettings,
-		fps: settings.fps,
+		get fps() {
+			return settings.fps;
+		},
 		onRender: (registry) => {
 			renderAdapter.updateDecorations(registry);
 		},
 		onExplode: (targetId, anchorLine, anchorChar, x, y) => {
-			const explodeConfig = getMaguroConfig(1);
+			const randomLevel = Math.floor(Math.random() * 5) + 1;
+			const explodeConfig = getExplosionConfig(randomLevel);
+
+			explodeConfig.spawnSpreadX = [x, x];
+			explodeConfig.spawnSpreadY = [y, y];
+
 			world.spawn(explodeConfig, targetId, anchorLine, anchorChar);
 		},
 	});
@@ -72,7 +88,7 @@ export const useEffectManager = (): EffectManager => {
 		const anchorLine = position.line;
 		const anchorChar = position.character;
 
-		let config;
+		let config: ParticleThemeConfig;
 		if (feverManager.isFever) {
 			config = getFeverConfig(settings.feverSpawnCount);
 		} else {

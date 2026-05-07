@@ -4,6 +4,15 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.6.3] - 2026-05-07
+
+### Changed
+- Internal Improvements: Upgraded the internal animation engine to be more robust and flexible. This under-the-hood change improves stability and lays the groundwork for richer visual effects in the future.
+
+### Fixed
+- Settings Update: Fixed an issue where changing certain configurations (especially "Bounce Top Distance", "Bounce Bottom Distance", and FPS) did not take effect until VS Code was reloaded. All settings now apply instantly!
+- Explosion Animation: Fixed a visual bug where chopsticks catching a flying sushi would incorrectly drop a "Maguro" at the text cursor. It now correctly displays a proper explosion animation exactly where the mid-air collision happens.
+
 ## [1.6.2] - 2026-05-06
 
 ### Performance

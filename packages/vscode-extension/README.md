@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.6.2</h1>
+  <h1>🍣 SUSHI-Theme v1.6.3</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.

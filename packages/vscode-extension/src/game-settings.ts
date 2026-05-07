@@ -18,7 +18,7 @@ export interface SushiSettings {
 	enableStatusBar: boolean;
 }
 
-let currentConfig: SushiSettings = {
+const currentConfig: SushiSettings = {
 	fps: 30,
 	bounceTopDistance: 100,
 	bounceBottomDistance: 0,
@@ -53,30 +53,30 @@ export const useGameSettings = (): GameSettings => {
 		const isValidEffect = Object.values(EffectType).includes(rawEffect as EffectTypeKey);
 		const safeEffectType = isValidEffect ? (rawEffect as EffectTypeKey) : EffectType.random;
 
-		currentConfig = {
+		Object.assign(currentConfig, {
 			fps: clamp(rawSettings.get("fps"), 1, 120, 30),
 			feverSpawnCount: clamp(rawSettings.get("feverSpawnCount"), 1, 50, 5),
 
-			bounceTopDistance: Number(rawSettings.get("bounceTopDistance")) || 100,
+			bounceTopDistance: Number(rawSettings.get("bounceTopDistance")) || 200,
 			bounceBottomDistance: Number(rawSettings.get("bounceBottomDistance")) || 0,
-			particleSpeedMultiplier: clamp(rawSettings.get("particleSpeedMultiplier"), 0.1, 5.0, 1.0),
+			particleSpeedMultiplier: clamp(rawSettings.get("particleSpeedMultiplier"), 0.1, 5.0, 1.3),
 			particleLifespanMultiplier: clamp(
 				rawSettings.get("particleLifespanMultiplier"),
 				0.1,
-				5.0,
+				10.0,
 				1.0,
 			),
 
 			effectType: safeEffectType,
 
-			comboUnit: clamp(rawSettings.get("comboUnit"), 1, 1000, 10),
+			comboUnit: clamp(rawSettings.get("comboUnit"), 1, 1000, 5),
 			feverTriggerCombo: clamp(rawSettings.get("feverTriggerCombo"), 1, 1000, 50),
 			feverDurationMs: clamp(rawSettings.get("feverDurationMs"), 1000, 60000, 10000),
 			comboTimeoutMs: clamp(rawSettings.get("comboTimeoutMs"), 100, 10000, 1500),
 			throttleMs: clamp(rawSettings.get("throttleMs"), 16, 1000, 80),
 
 			enableStatusBar: Boolean(rawSettings.get("enableStatusBar", true)),
-		};
+		});
 	};
 
 	const register = (context: vscode.ExtensionContext): void => {

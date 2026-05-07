@@ -2,7 +2,7 @@
 	"name": "sushitheme",
 	"displayName": "SUSHI Theme",
 	"description": "%sushiTheme.desc%",
-	"version": "1.6.2",
+	"version": "1.6.3",
 	"publisher": "ichimura-tomoo",
 	"icon": "icon.png",
 	"repository": {
@@ -170,7 +170,7 @@
 		"watch:esbuild": "node esbuild.js --watch",
 		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
 		"package": "pnpm run lint && pnpm run check-types && node esbuild.js --production",
-		"build:vsix": "pnpm run copy-locales && pnpm dlx @vscode/vsce package",
+		"build:vsix": "pnpm run copy-locales && pnpm dlx @vscode/vsce package --no-dependencies",
 		"compile-tests": "tsc -p . --outDir out",
 		"watch-tests": "tsc -p . -w --outDir out",
 		"pretest": "pnpm run copy-locales && pnpm run compile-tests && pnpm run compile",

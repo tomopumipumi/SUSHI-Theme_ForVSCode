@@ -13,10 +13,12 @@ export const spawnGenericParticles = (
 	anchorChar: number,
 	targetEntityId?: number,
 ): void => {
-	const { render, transform, physics, lifecycle, targeting } = registry.components;
+	const { render, transform, physics, lifecycle, targeting, animation } = registry.components;
 
 	let mask = DEFAULT_PARTICLE_MASK;
 	if (config.isTracking) mask |= COMPONENT_MASK.targeting;
+
+	if (config.isAnimation && Array.isArray(config.graphic)) mask |= COMPONENT_MASK.animation;
 
 	for (let i = 0; i < config.count; i++) {
 		const entityId = registry.createEntity(mask);
@@ -25,20 +27,39 @@ export const spawnGenericParticles = (
 		const dataIdx = registry.getComponentIndex(entityId);
 		if (dataIdx === -1) continue;
 
-		const graphic = Array.isArray(config.graphic)
-			? config.graphic[Math.floor(Math.random() * config.graphic.length)]
-			: config.graphic;
+		let initialSvgUrl = "";
+		let initialWidth = 0;
+		let initialHeight = 0;
 
+		if (config.isAnimation && Array.isArray(config.graphic)) {
+			animation.frames[dataIdx] = config.graphic;
+			initialSvgUrl = config.graphic[0].svgUrl;
+			initialWidth = config.graphic[0].width;
+			initialHeight = config.graphic[0].height;
+		} else {
+			const graphic = Array.isArray(config.graphic)
+				? config.graphic[Math.floor(Math.random() * config.graphic.length)]
+				: config.graphic;
+			initialSvgUrl = graphic.svgUrl;
+			initialWidth = graphic.width;
+			initialHeight = graphic.height;
+		}
 		render.targetIds[dataIdx] = targetId;
 		render.anchorLine[dataIdx] = anchorLine;
 		render.anchorChar[dataIdx] = anchorChar;
-		render.svgUrls[dataIdx] = graphic.svgUrl;
-		render.width[dataIdx] = graphic.width;
-		render.height[dataIdx] = graphic.height;
+		render.svgUrls[dataIdx] = initialSvgUrl;
+		render.width[dataIdx] = initialWidth;
+		render.height[dataIdx] = initialHeight;
 
-		transform.x[dataIdx] = config.isTracking ? randomInRange(-50, 50) : 0;
-		transform.y[dataIdx] = config.isTracking ? -50 : 0;
-		transform.rotation[dataIdx] = config.isTracking ? 0 : Math.random() * 360;
+		transform.x[dataIdx] = config.spawnSpreadX
+			? randomInRange(config.spawnSpreadX[0], config.spawnSpreadX[1])
+			: 0;
+		transform.y[dataIdx] = config.spawnSpreadY
+			? randomInRange(config.spawnSpreadY[0], config.spawnSpreadY[1])
+			: 0;
+		transform.rotation[dataIdx] = config.initialRotationRange
+			? randomInRange(config.initialRotationRange[0], config.initialRotationRange[1])
+			: 0;
 
 		physics.vx[dataIdx] =
 			randomInRange(config.vxRange[0], config.vxRange[1]) * settings.particleSpeedMultiplier;
@@ -47,6 +68,13 @@ export const spawnGenericParticles = (
 		physics.gravity[dataIdx] = config.gravity;
 		physics.friction[dataIdx] = config.friction;
 		physics.rotationFactor[dataIdx] = config.rotationFactor;
+
+		const initScale = config.initialScaleRange
+			? randomInRange(config.initialScaleRange[0], config.initialScaleRange[1])
+			: 1.0;
+		render.initialScale[dataIdx] = initScale;
+		render.currentScale[dataIdx] = initScale;
+		render.targetScale[dataIdx] = config.targetScale !== undefined ? config.targetScale : initScale;
 
 		const life = config.baseLife * settings.particleLifespanMultiplier;
 		lifecycle.life[dataIdx] = life;

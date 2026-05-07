@@ -26,6 +26,10 @@ export class RenderComponent {
 	public svgUrls: string[] = new Array(MAX_PARTICLES).fill("");
 	public width = new Uint16Array(MAX_PARTICLES);
 	public height = new Uint16Array(MAX_PARTICLES);
+
+	public initialScale = new Float32Array(MAX_PARTICLES).fill(1.0);
+	public targetScale = new Float32Array(MAX_PARTICLES).fill(1.0);
+	public currentScale = new Float32Array(MAX_PARTICLES).fill(1.0);
 }
 
 export class TargetingComponent {

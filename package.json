@@ -5,7 +5,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build:extension": "pnpm --filter typing-fx-vscode run build:vsix",
+		"build:core":"cd ./packages/core && pnpm build",
 		"load:core":"pnpm --filter \"@sushi/vscode-extension\" add \"@sushi/core@workspace:*\""
 	},
 	"keywords": [],

@@ -1,14 +1,5 @@
-import { EffectType, type EffectTypeKey } from "../types";
-
 export const MAX_PARTICLES = 2000;
 export const MAX_EFFECT_LEVEL = 5;
-
-export const RANDOM_POOL: EffectTypeKey[] = [
-	EffectType.maguro,
-	EffectType.ikura,
-	EffectType.ebi,
-	EffectType.matcha,
-];
 
 export const COMPONENT_MASK = {
 	none: 0,

@@ -77,6 +77,9 @@ export class Registry {
 			render.svgUrls[denseIndex] = render.svgUrls[lastDenseIndex];
 			render.width[denseIndex] = render.width[lastDenseIndex];
 			render.height[denseIndex] = render.height[lastDenseIndex];
+			render.initialScale[denseIndex] = render.initialScale[lastDenseIndex];
+			render.targetScale[denseIndex] = render.targetScale[lastDenseIndex];
+			render.currentScale[denseIndex] = render.currentScale[lastDenseIndex];
 
 			lifecycle.life[denseIndex] = lifecycle.life[lastDenseIndex];
 			lifecycle.maxLife[denseIndex] = lifecycle.maxLife[lastDenseIndex];
@@ -93,6 +96,9 @@ export class Registry {
 		render.anchorLine[lastDenseIndex] = 0;
 		render.anchorChar[lastDenseIndex] = 0;
 		render.svgUrls[lastDenseIndex] = "";
+		render.initialScale[lastDenseIndex] = 1.0;
+		render.targetScale[lastDenseIndex] = 1.0;
+		render.currentScale[lastDenseIndex] = 1.0;
 		animation.frames[lastDenseIndex] = undefined;
 
 		this.activeCount--;

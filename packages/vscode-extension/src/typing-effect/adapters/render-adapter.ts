@@ -40,7 +40,7 @@ export const useRenderAdapter = () => {
             background-image:${render.svgUrls[i]};
             background-size:contain;
             background-repeat:no-repeat;
-            transform:translate(${transform.x[i].toFixed(1)}px,${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg);
+            transform:translate(${transform.x[i].toFixed(1)}px,${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg) scale(${render.currentScale[i].toFixed(2)});
             opacity:${opacity.toFixed(2)};
             pointer-events:none;
             z-index:999;
@@ -61,9 +61,9 @@ export const useRenderAdapter = () => {
 			decos.push(decoration);
 		}
 
-		for (const editor of editorDecorations.keys()) {
+		for (const editor of editorDecorations.keys())
 			if (!visibleEditors.includes(editor)) editorDecorations.delete(editor);
-		}
+
 		for (const editor of visibleEditors) {
 			const decos = editorDecorations.get(editor) || [];
 			editor.setDecorations(decorationType, decos);
@@ -71,9 +71,8 @@ export const useRenderAdapter = () => {
 	};
 
 	const dispose = (): void => {
-		for (const editor of vscode.window.visibleTextEditors) {
+		for (const editor of vscode.window.visibleTextEditors)
 			editor.setDecorations(decorationType, []);
-		}
 		decorationType.dispose();
 		editorDecorations.clear();
 	};

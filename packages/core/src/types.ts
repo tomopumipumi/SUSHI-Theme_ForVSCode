@@ -1,15 +1,3 @@
-export const EffectType = {
-	maguro: "maguro",
-	ikura: "ikura",
-	ebi: "ebi",
-	matcha: "matcha",
-	fever: "fever",
-	random: "random",
-	none: "none",
-} as const;
-
-export type EffectTypeKey = (typeof EffectType)[keyof typeof EffectType];
-
 export interface GraphicLevel {
 	width: number;
 	height: number;
@@ -44,4 +32,10 @@ export interface ParticleThemeConfig {
 	rotationFactor: number;
 	baseLife: number;
 	isTracking?: boolean;
+	isAnimation?: boolean;
+	spawnSpreadX?: [number, number];
+	spawnSpreadY?: [number, number];
+	initialRotationRange?: [number, number];
+	initialScaleRange?: [number, number];
+	targetScale?: number;
 }

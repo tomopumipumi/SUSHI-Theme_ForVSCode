@@ -38,21 +38,25 @@ export interface World {
 
 export const useWorld = (options: WorldOptions): World => {
 	const registry = new Registry();
-	const fps = options.fps || 30;
-	const intervalMs = Math.floor(1000 / fps);
 
-	let timer: ReturnType<typeof setInterval> | undefined;
+	let timer: ReturnType<typeof setTimeout> | undefined;
 	let lastTime = Date.now();
+
+	const scheduleNext = (): void => {
+		const currentFps = options.fps || 30;
+		const intervalMs = Math.floor(1000 / currentFps);
+		timer = setTimeout(update, intervalMs);
+	};
 
 	const startLoop = (): void => {
 		if (timer) return;
 		lastTime = Date.now();
-		timer = setInterval(update, intervalMs);
+		scheduleNext();
 	};
 
 	const stopLoop = (): void => {
 		if (timer === undefined) return;
-		clearInterval(timer);
+		clearTimeout(timer);
 		timer = undefined;
 	};
 
@@ -77,6 +81,8 @@ export const useWorld = (options: WorldOptions): World => {
 		updateAnimationSystem(registry);
 
 		options.onRender(registry);
+
+		scheduleNext();
 	};
 
 	const spawn = (
