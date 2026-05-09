@@ -4,7 +4,12 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-<!-- ## [1.6.4] - 2026-05-10
+## [1.7.0] - 2026-05-10
+
+### Added
+- Particle Collision: Introduce physics-based particle collisions! Sushi pieces can now interact and bounce off each other mid-air.
+- Add `Enable Particle Collision` setting to toggle the new physics effect (default: `false`).
+- Add `Particle Restitution` setting to adjust how bouncy the sushi particles are when they collide with each other.
 
 ### Changed
 - Internal Architecture: Renamed particle definition objects from `Config` to `Profile` (e.g., `ParticleProfile`) to better align with standard Game Engine and ECS terminology, distinguishing them from global extension settings.
@@ -12,7 +17,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Refactored
 - Separation of Concerns: Extracted the complex particle spawning and explosion logic out of the effect manager into a dedicated `particle-effect` module.
 - Event Routing: Streamlined `effect-manager` to act purely as a lifecycle and event router, drastically improving code readability and making future visual effects much easier to implement.
-- Dependency Injection: Resolved circular dependencies between the ECS collision system and the visual effect spawners using delayed binding. -->
+- Dependency Injection: Resolved circular dependencies between the ECS collision system and the visual effect spawners using delayed binding.
 
 ## [1.6.3] - 2026-05-07
 

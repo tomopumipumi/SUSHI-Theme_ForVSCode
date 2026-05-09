@@ -22,5 +22,7 @@
 	"sushiTheme.fps.enum.60": "60 FPS (滑らか・高負荷)",
 	"sushiTheme.fps.enum.120": "120 FPS (超滑らか・超高負荷)",
 	"sushiTheme.fps.desc": "エフェクトのフレームレート（1秒間の描画回数）を設定します。数値を上げると滑らかになりますが、エディタの負荷が上がります。\n※VS Codeの描画アーキテクチャの制限により、高いFPSに設定しても実際の描画レートが制限される場合があります",
-	"sushiTheme.particleLifespanMultiplier.desc": "お寿司の表示時間（寿命）の倍率を設定します。数値を大きくすると長く画面に残りますが、その分メモリを消費します。"
+	"sushiTheme.particleLifespanMultiplier.desc": "お寿司の表示時間（寿命）の倍率を設定します。数値を大きくすると長く画面に残りますが、その分メモリを消費します。",
+	"sushiTheme.enableParticleCollision.desc": "寿司パーティクル間の物理衝突判定を有効にします。（大量にスポーンさせた場合、パフォーマンスに影響を与える可能性があります）",
+	"sushiTheme.particleRestitution.desc": "パーティクルが衝突した際の反発係数を設定します。1.0で完全弾性衝突、0で非弾性衝突となります。"
 }

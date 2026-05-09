@@ -22,5 +22,7 @@
 	"sushiTheme.fps.enum.60": "60 FPS (Mượt / Tải cao)",
 	"sushiTheme.fps.enum.120": "120 FPS (Cực mượt / Tải rất cao)",
 	"sushiTheme.fps.desc": "Thiết lập tốc độ khung hình (số lần vẽ mỗi giây) cho các hiệu ứng. Giá trị càng cao thì hiệu ứng càng mượt nhưng tải trọng cho trình chỉnh sửa sẽ tăng lên. \n*Do giới hạn kiến trúc kết xuất của VS Code, tốc độ khung hình thực tế có thể bị giới hạn ngay cả khi được đặt ở mức cao.",
-	"sushiTheme.particleLifespanMultiplier.desc": "Đặt hệ số nhân cho thời gian hiển thị (tuổi thọ) của sushi. Giá trị càng lớn thì sushi ở lại trên màn hình càng lâu, nhưng sẽ tiêu tốn nhiều bộ nhớ hơn."
+	"sushiTheme.particleLifespanMultiplier.desc": "Đặt hệ số nhân cho thời gian hiển thị (tuổi thọ) của sushi. Giá trị càng lớn thì sushi ở lại trên màn hình càng lâu, nhưng sẽ tiêu tốn nhiều bộ nhớ hơn.",
+	"sushiTheme.enableParticleCollision.desc": "Bật va chạm vật lý giữa các hạt sushi. (Có thể ảnh hưởng đến hiệu suất nếu tạo ra nhiều hạt)",
+	"sushiTheme.particleRestitution.desc": "Hệ số nảy khi các hạt va chạm. 1.0 là đàn hồi hoàn toàn, 0 là không đàn hồi."
 }
