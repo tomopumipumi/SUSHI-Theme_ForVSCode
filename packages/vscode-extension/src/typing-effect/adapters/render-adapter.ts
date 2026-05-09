@@ -1,7 +1,12 @@
 import { COMPONENT_MASK, type Registry } from "@typing-fx/core";
 import * as vscode from "vscode";
 
-export const useRenderAdapter = () => {
+export interface RenderAdapter {
+	updateDecorations: (registry: Registry) => void;
+	dispose: () => void;
+}
+
+export const useRenderAdapter = (): RenderAdapter => {
 	const decorationType = vscode.window.createTextEditorDecorationType({});
 	const editorDecorations = new Map<vscode.TextEditor, vscode.DecorationOptions[]>();
 

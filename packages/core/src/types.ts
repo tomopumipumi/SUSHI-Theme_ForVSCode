@@ -22,7 +22,7 @@ export interface CoreSettings {
 	particleLifespanMultiplier: number;
 }
 
-export interface ParticleThemeConfig {
+export interface ParticleProfile {
 	graphic: GraphicData | GraphicData[];
 	count: number;
 	vxRange: [number, number];

@@ -1,4 +1,4 @@
-import type { CoreSettings, ParticleThemeConfig } from "../types";
+import type { CoreSettings, ParticleProfile } from "../types";
 import { COMPONENT_MASK, DEFAULT_PARTICLE_MASK } from "./constants";
 import type { Registry } from "./registry";
 
@@ -7,7 +7,7 @@ const randomInRange = (min: number, max: number) => Math.random() * (max - min) 
 export const spawnGenericParticles = (
 	registry: Registry,
 	settings: CoreSettings,
-	config: ParticleThemeConfig,
+	profile: ParticleProfile,
 	targetId: string,
 	anchorLine: number,
 	anchorChar: number,
@@ -16,11 +16,11 @@ export const spawnGenericParticles = (
 	const { render, transform, physics, lifecycle, targeting, animation } = registry.components;
 
 	let mask = DEFAULT_PARTICLE_MASK;
-	if (config.isTracking) mask |= COMPONENT_MASK.targeting;
+	if (profile.isTracking) mask |= COMPONENT_MASK.targeting;
 
-	if (config.isAnimation && Array.isArray(config.graphic)) mask |= COMPONENT_MASK.animation;
+	if (profile.isAnimation && Array.isArray(profile.graphic)) mask |= COMPONENT_MASK.animation;
 
-	for (let i = 0; i < config.count; i++) {
+	for (let i = 0; i < profile.count; i++) {
 		const entityId = registry.createEntity(mask);
 		if (entityId === -1) return;
 
@@ -31,15 +31,15 @@ export const spawnGenericParticles = (
 		let initialWidth = 0;
 		let initialHeight = 0;
 
-		if (config.isAnimation && Array.isArray(config.graphic)) {
-			animation.frames[dataIdx] = config.graphic;
-			initialSvgUrl = config.graphic[0].svgUrl;
-			initialWidth = config.graphic[0].width;
-			initialHeight = config.graphic[0].height;
+		if (profile.isAnimation && Array.isArray(profile.graphic)) {
+			animation.frames[dataIdx] = profile.graphic;
+			initialSvgUrl = profile.graphic[0].svgUrl;
+			initialWidth = profile.graphic[0].width;
+			initialHeight = profile.graphic[0].height;
 		} else {
-			const graphic = Array.isArray(config.graphic)
-				? config.graphic[Math.floor(Math.random() * config.graphic.length)]
-				: config.graphic;
+			const graphic = Array.isArray(profile.graphic)
+				? profile.graphic[Math.floor(Math.random() * profile.graphic.length)]
+				: profile.graphic;
 			initialSvgUrl = graphic.svgUrl;
 			initialWidth = graphic.width;
 			initialHeight = graphic.height;
@@ -51,37 +51,37 @@ export const spawnGenericParticles = (
 		render.width[dataIdx] = initialWidth;
 		render.height[dataIdx] = initialHeight;
 
-		transform.x[dataIdx] = config.spawnSpreadX
-			? randomInRange(config.spawnSpreadX[0], config.spawnSpreadX[1])
+		transform.x[dataIdx] = profile.spawnSpreadX
+			? randomInRange(profile.spawnSpreadX[0], profile.spawnSpreadX[1])
 			: 0;
-		transform.y[dataIdx] = config.spawnSpreadY
-			? randomInRange(config.spawnSpreadY[0], config.spawnSpreadY[1])
+		transform.y[dataIdx] = profile.spawnSpreadY
+			? randomInRange(profile.spawnSpreadY[0], profile.spawnSpreadY[1])
 			: 0;
-		transform.rotation[dataIdx] = config.initialRotationRange
-			? randomInRange(config.initialRotationRange[0], config.initialRotationRange[1])
+		transform.rotation[dataIdx] = profile.initialRotationRange
+			? randomInRange(profile.initialRotationRange[0], profile.initialRotationRange[1])
 			: 0;
 
 		physics.vx[dataIdx] =
-			randomInRange(config.vxRange[0], config.vxRange[1]) * settings.particleSpeedMultiplier;
+			randomInRange(profile.vxRange[0], profile.vxRange[1]) * settings.particleSpeedMultiplier;
 		physics.vy[dataIdx] =
-			randomInRange(config.vyRange[0], config.vyRange[1]) * settings.particleSpeedMultiplier;
-		physics.gravity[dataIdx] = config.gravity;
-		physics.friction[dataIdx] = config.friction;
-		physics.rotationFactor[dataIdx] = config.rotationFactor;
+			randomInRange(profile.vyRange[0], profile.vyRange[1]) * settings.particleSpeedMultiplier;
+		physics.gravity[dataIdx] = profile.gravity;
+		physics.friction[dataIdx] = profile.friction;
+		physics.rotationFactor[dataIdx] = profile.rotationFactor;
 
-		const initScale = config.initialScaleRange
-			? randomInRange(config.initialScaleRange[0], config.initialScaleRange[1])
+		const initScale = profile.initialScaleRange
+			? randomInRange(profile.initialScaleRange[0], profile.initialScaleRange[1])
 			: 1.0;
 		render.initialScale[dataIdx] = initScale;
 		render.currentScale[dataIdx] = initScale;
-		render.targetScale[dataIdx] = config.targetScale !== undefined ? config.targetScale : initScale;
+		render.targetScale[dataIdx] =
+			profile.targetScale !== undefined ? profile.targetScale : initScale;
 
-		const life = config.baseLife * settings.particleLifespanMultiplier;
+		const life = profile.baseLife * settings.particleLifespanMultiplier;
 		lifecycle.life[dataIdx] = life;
 		lifecycle.maxLife[dataIdx] = life;
 
-		if (config.isTracking && targetEntityId !== undefined) {
+		if (profile.isTracking && targetEntityId !== undefined)
 			targeting.targetEntityId[dataIdx] = targetEntityId;
-		}
 	}
 };

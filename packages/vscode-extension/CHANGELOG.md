@@ -4,6 +4,16 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+<!-- ## [1.6.4] - 2026-05-10
+
+### Changed
+- Internal Architecture: Renamed particle definition objects from `Config` to `Profile` (e.g., `ParticleProfile`) to better align with standard Game Engine and ECS terminology, distinguishing them from global extension settings.
+
+### Refactored
+- Separation of Concerns: Extracted the complex particle spawning and explosion logic out of the effect manager into a dedicated `particle-effect` module.
+- Event Routing: Streamlined `effect-manager` to act purely as a lifecycle and event router, drastically improving code readability and making future visual effects much easier to implement.
+- Dependency Injection: Resolved circular dependencies between the ECS collision system and the visual effect spawners using delayed binding. -->
+
 ## [1.6.3] - 2026-05-07
 
 ### Changed
