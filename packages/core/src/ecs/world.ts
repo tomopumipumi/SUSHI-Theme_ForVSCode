@@ -1,4 +1,4 @@
-import type { CoreSettings, ParticleThemeConfig } from "../types";
+import type { CoreSettings, ParticleProfile } from "../types";
 import { COMPONENT_MASK } from "./constants";
 import { Registry } from "./registry";
 import { spawnGenericParticles } from "./spawner";
@@ -25,7 +25,7 @@ export interface WorldOptions {
 export interface World {
 	registry: Registry;
 	spawn: (
-		config: ParticleThemeConfig,
+		profile: ParticleProfile,
 		targetId: string,
 		anchorLine: number,
 		anchorChar: number,
@@ -86,7 +86,7 @@ export const useWorld = (options: WorldOptions): World => {
 	};
 
 	const spawn = (
-		config: ParticleThemeConfig,
+		profile: ParticleProfile,
 		targetId: string,
 		anchorLine: number,
 		anchorChar: number,
@@ -95,7 +95,7 @@ export const useWorld = (options: WorldOptions): World => {
 		spawnGenericParticles(
 			registry,
 			options.settings,
-			config,
+			profile,
 			targetId,
 			anchorLine,
 			anchorChar,
@@ -108,13 +108,9 @@ export const useWorld = (options: WorldOptions): World => {
 		const { components, entityMasks, activeCount } = registry;
 		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
 
-		for (let i = 0; i < activeCount; i++) {
-			if ((entityMasks[i] & RequiredMask) === RequiredMask) {
-				if (components.render.targetIds[i] === targetId) {
-					components.lifecycle.life[i] = 0;
-				}
-			}
-		}
+		for (let i = 0; i < activeCount; i++)
+			if ((entityMasks[i] & RequiredMask) === RequiredMask)
+				if (components.render.targetIds[i] === targetId) components.lifecycle.life[i] = 0;
 	};
 
 	const getRandomAliveEntityId = (): number => {

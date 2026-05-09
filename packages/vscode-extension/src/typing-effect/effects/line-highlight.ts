@@ -28,9 +28,7 @@ export const useLineHighlight = (): LineHighlight => {
 	};
 
 	const clearLineHighlight = (): void => {
-		vscode.window.visibleTextEditors.forEach((editor) => {
-			editor.setDecorations(feverLineDeco, []);
-		});
+		for (const editor of vscode.window.visibleTextEditors) editor.setDecorations(feverLineDeco, []);
 	};
 
 	const start = (): void => {
