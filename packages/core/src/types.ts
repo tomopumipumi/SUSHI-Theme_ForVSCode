@@ -20,6 +20,8 @@ export interface CoreSettings {
 	bounceBottomDistance: number;
 	particleSpeedMultiplier: number;
 	particleLifespanMultiplier: number;
+	enableParticleCollision: boolean;
+	particleRestitution: number;
 }
 
 export interface ParticleProfile {

@@ -22,5 +22,7 @@
 	"sushiTheme.fps.enum.60": "60 FPS (Fluide / Charge élevée)",
 	"sushiTheme.fps.enum.120": "120 FPS (Ultra fluide / Charge très élevée)",
 	"sushiTheme.fps.desc": "Définit la fréquence d'images (rendus par seconde) pour les effets. Des valeurs plus élevées offrent plus de fluidité mais augmentent la charge de l'éditeur. \n*En raison des limites de l'architecture de rendu de VS Code, la fréquence réelle peut être limitée même si une valeur élevée est définie.",
-	"sushiTheme.particleLifespanMultiplier.desc": "Définit le multiplicateur du temps d'affichage (durée de vie) des sushis. Une valeur plus élevée les fera rester plus longtemps à l'écran, mais consommera plus de mémoire."
+	"sushiTheme.particleLifespanMultiplier.desc": "Définit le multiplicateur du temps d'affichage (durée de vie) des sushis. Une valeur plus élevée les fera rester plus longtemps à l'écran, mais consommera plus de mémoire.",
+	"sushiTheme.enableParticleCollision.desc": "Active les collisions physiques entre les particules de sushi. (Peut avoir un impact sur les performances si de nombreuses particules sont générées)",
+	"sushiTheme.particleRestitution.desc": "Facteur de rebond lorsque les particules entrent en collision. 1.0 est parfaitement élastique, 0 est inélastique."
 }

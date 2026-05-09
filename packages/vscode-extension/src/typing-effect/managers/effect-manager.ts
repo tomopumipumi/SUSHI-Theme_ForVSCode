@@ -41,6 +41,12 @@ export const useEffectManager = (): EffectManager => {
 		get particleLifespanMultiplier() {
 			return settings.particleLifespanMultiplier;
 		},
+		get enableParticleCollision() {
+			return settings.enableParticleCollision;
+		},
+		get particleRestitution() {
+			return settings.particleRestitution;
+		},
 	};
 
 	let onExplodeCallback: (

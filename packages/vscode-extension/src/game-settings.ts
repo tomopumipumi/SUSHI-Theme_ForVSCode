@@ -8,6 +8,8 @@ export interface SushiSettings {
 	bounceBottomDistance: number;
 	particleSpeedMultiplier: number;
 	particleLifespanMultiplier: number;
+	enableParticleCollision: boolean;
+	particleRestitution: number;
 	effectType: EffectTypeKey;
 	comboUnit: number;
 	feverTriggerCombo: number;
@@ -24,6 +26,8 @@ const currentConfig: SushiSettings = {
 	bounceBottomDistance: 0,
 	particleSpeedMultiplier: 1.0,
 	particleLifespanMultiplier: 1.0,
+	enableParticleCollision: false,
+	particleRestitution: 0.8,
 	effectType: EffectType.random,
 	comboUnit: 10,
 	feverTriggerCombo: 50,
@@ -66,6 +70,9 @@ export const useGameSettings = (): GameSettings => {
 				10.0,
 				1.0,
 			),
+
+			enableParticleCollision: Boolean(rawSettings.get("enableParticleCollision", false)),
+			particleRestitution: clamp(rawSettings.get("particleRestitution"), 0.0, 2.0, 0.8),
 
 			effectType: safeEffectType,
 

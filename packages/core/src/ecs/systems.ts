@@ -57,6 +57,58 @@ export const updatePhysicsSystem = (
 				components.physics.vx[i] * components.physics.rotationFactor[i] * dt;
 		}
 	}
+
+	if (settings.enableParticleCollision) {
+		const CollisionMask = RequiredMask | COMPONENT_MASK.render;
+
+		for (let i = 0; i < activeCount; i++) {
+			if ((entityMasks[i] & CollisionMask) !== CollisionMask) continue;
+
+			const r1 = (components.render.width[i] * components.render.currentScale[i]) / 2;
+
+			for (let j = i + 1; j < activeCount; j++) {
+				if ((entityMasks[j] & CollisionMask) !== CollisionMask) continue;
+
+				const r2 = (components.render.width[j] * components.render.currentScale[j]) / 2;
+
+				const dx = components.transform.x[j] - components.transform.x[i];
+				const dy = components.transform.y[j] - components.transform.y[i];
+				const distSq = dx * dx + dy * dy;
+				const minDist = r1 + r2;
+
+				if (distSq < minDist * minDist) {
+					const dist = Math.sqrt(distSq);
+					if (dist === 0) continue;
+
+					const nx = dx / dist;
+					const ny = dy / dist;
+
+					const overlap = minDist - dist;
+					const moveX = nx * (overlap / 2);
+					const moveY = ny * (overlap / 2);
+
+					components.transform.x[i] -= moveX;
+					components.transform.y[i] -= moveY;
+					components.transform.x[j] += moveX;
+					components.transform.y[j] += moveY;
+
+					const dvx = components.physics.vx[j] - components.physics.vx[i];
+					const dvy = components.physics.vy[j] - components.physics.vy[i];
+
+					const velAlongNormal = dvx * nx + dvy * ny;
+					if (velAlongNormal > 0) continue;
+
+					const restitution = settings.particleRestitution;
+					const impulse = (-(1 + restitution) * velAlongNormal) / 2;
+
+					components.physics.vx[i] -= impulse * nx;
+					components.physics.vy[i] -= impulse * ny;
+					components.physics.vx[j] += impulse * nx;
+					components.physics.vy[j] += impulse * ny;
+				}
+			}
+		}
+	}
 };
 
 export const updateAnimationSystem = (registry: Registry): void => {
@@ -71,9 +123,8 @@ export const updateAnimationSystem = (registry: Registry): void => {
 
 		const initScale = components.render.initialScale[i];
 		const targetScale = components.render.targetScale[i];
-		if (initScale !== targetScale) {
+		if (initScale !== targetScale)
 			components.render.currentScale[i] = initScale + (targetScale - initScale) * progress;
-		}
 
 		if ((entityMasks[i] & COMPONENT_MASK.animation) === COMPONENT_MASK.animation) {
 			const frames = components.animation.frames[i];
@@ -117,7 +168,7 @@ export const updateTrackingSystem = (
 
 		if (!registry.isValid(targetId)) {
 			components.targeting.targetEntityId[i] = INVALID_TARGET_ID;
-			components.physics.gravity[i] = 1.5; // Target lost
+			components.physics.gravity[i] = 1.5;
 			continue;
 		}
 
