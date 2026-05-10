@@ -8,7 +8,42 @@ importers:
 
   .: {}
 
-  packages/core:
+  packages/typing-fx/core:
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^2.4.14
+        version: 2.4.14
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
+  packages/typing-fx/physics-2d:
+    dependencies:
+      '@typing-fx/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      '@biomejs/biome':
+        specifier: ^2.4.14
+        version: 2.4.14
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.0
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
+  packages/typing-fx/tracking:
+    dependencies:
+      '@typing-fx/core':
+        specifier: workspace:*
+        version: link:../core
+      '@typing-fx/physics-2d':
+        specifier: workspace:*
+        version: link:../physics-2d
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.14
@@ -24,7 +59,13 @@ importers:
     dependencies:
       '@typing-fx/core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../typing-fx/core
+      '@typing-fx/physics-2d':
+        specifier: workspace:*
+        version: link:../typing-fx/physics-2d
+      '@typing-fx/tracking':
+        specifier: workspace:*
+        version: link:../typing-fx/tracking
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.13

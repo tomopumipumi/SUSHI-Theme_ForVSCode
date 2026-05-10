@@ -1,0 +1,25 @@
+{
+	"files.exclude": {
+		"out": false,
+		"dist": false,
+		"node_modules": true
+	},
+	"files.eol": "\n",
+	"search.exclude": {
+		"out": true,
+		"dist": true
+	},
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	},
+	"js/ts.tsc.autoDetect": "off",
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
+}

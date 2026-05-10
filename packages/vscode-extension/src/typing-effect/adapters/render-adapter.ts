@@ -1,5 +1,14 @@
-import { COMPONENT_MASK, type Registry } from "@typing-fx/core";
+import type {
+	LifecycleComponent,
+	Registry,
+	RenderComponent,
+	TransformComponent,
+} from "@typing-fx/core";
 import * as vscode from "vscode";
+import { COMPONENT_NAME } from "../constants";
+
+const defaultCSS =
+	"none;position:absolute;display:inline-block;background-size:contain;background-repeat:no-repeat;pointer-events:none;z-index:999;";
 
 export interface RenderAdapter {
 	updateDecorations: (registry: Registry) => void;
@@ -13,10 +22,17 @@ export const useRenderAdapter = (): RenderAdapter => {
 	const updateDecorations = (registry: Registry): void => {
 		for (const decos of editorDecorations.values()) decos.length = 0;
 
-		const { components, entityMasks, activeCount } = registry;
-		const { render, lifecycle, transform } = components;
+		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
+		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
+		const transform = registry.getComponent<TransformComponent>(COMPONENT_NAME.transform);
+
+		if (!render || !lifecycle || !transform) return;
+
+		const { entityMasks, activeCount } = registry;
 		const RequiredMask =
-			COMPONENT_MASK.transform | COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
+			registry.getComponentMask(COMPONENT_NAME.transform) |
+			registry.getComponentMask(COMPONENT_NAME.render) |
+			registry.getComponentMask(COMPONENT_NAME.lifecycle);
 
 		const visibleEditors = vscode.window.visibleTextEditors;
 
@@ -37,18 +53,12 @@ export const useRenderAdapter = (): RenderAdapter => {
 			const opacity = Math.max(0, lifecycle.life[i] / lifecycle.maxLife[i]);
 
 			const style = `
-            none;
-            position:absolute;
-            display:inline-block;
+			${defaultCSS}
             width:${render.width[i]}px;
             height:${render.height[i]}px;
             background-image:${render.svgUrls[i]};
-            background-size:contain;
-            background-repeat:no-repeat;
             transform:translate(${transform.x[i].toFixed(1)}px,${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg) scale(${render.currentScale[i].toFixed(2)});
             opacity:${opacity.toFixed(2)};
-            pointer-events:none;
-            z-index:999;
             `;
 
 			const decoration: vscode.DecorationOptions = {

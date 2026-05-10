@@ -1,35 +1,24 @@
-import type { CoreSettings } from "../types";
-import { Registry } from "./registry";
-import {
-	updateAnimationSystem,
-	updateCollisionSystem,
-	updateLifecycleSystem,
-	updatePhysicsSystem,
-	updateTrackingSystem,
-} from "./systems";
+import type { Registry } from "./registry";
+
+export type System = (registry: Registry, dt: number) => void;
 
 export interface WorldOptions {
-	settings: CoreSettings;
 	fps?: number;
+	registry: Registry;
+	systems: System[];
 	onRender: (registry: Registry) => void;
-	onExplode?: (
-		targetId: string,
-		anchorLine: number,
-		anchorChar: number,
-		x: number,
-		y: number,
-	) => void;
 }
 
 export interface World {
 	registry: Registry;
 	startLoop: () => void;
+	stopLoop: () => void;
 	getRandomAliveEntityId: () => number;
 	dispose: () => void;
 }
 
 export const useWorld = (options: WorldOptions): World => {
-	const registry = new Registry();
+	const registry = options.registry;
 
 	let timer: ReturnType<typeof setTimeout> | undefined;
 	let lastTime = Date.now();
@@ -65,15 +54,11 @@ export const useWorld = (options: WorldOptions): World => {
 			return;
 		}
 
-		if (options.onExplode) updateTrackingSystem(registry, dt, options.onExplode);
-
-		updatePhysicsSystem(registry, dt, options.settings);
-		if (options.settings.enableParticleCollision) updateCollisionSystem(registry);
-		updateLifecycleSystem(registry, dt);
-		updateAnimationSystem(registry);
+		for (const system of options.systems) {
+			system(registry, dt);
+		}
 
 		options.onRender(registry);
-
 		scheduleNext();
 	};
 
@@ -83,11 +68,19 @@ export const useWorld = (options: WorldOptions): World => {
 
 	const dispose = (): void => {
 		stopLoop();
+		if (registry.activeCount > 0) {
+			for (let i = registry.activeCount - 1; i >= 0; i--) {
+				const entityId = registry.getEntityIdFromIndex(i);
+				registry.destroyEntity(entityId);
+			}
+		}
+		options.systems = [];
 	};
 
 	return {
 		registry,
 		startLoop,
+		stopLoop,
 		getRandomAliveEntityId,
 		dispose,
 	};

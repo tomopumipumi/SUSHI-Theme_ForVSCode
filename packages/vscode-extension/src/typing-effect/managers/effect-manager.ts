@@ -1,10 +1,28 @@
-import { COMPONENT_MASK, type CoreSettings, useWorld } from "@typing-fx/core";
+import {
+	AnimationComponent,
+	type CoreSettings,
+	createAnimationSystem,
+	createLifecycleSystem,
+	LifecycleComponent,
+	Registry,
+	RenderComponent,
+	TransformComponent,
+	useWorld,
+} from "@typing-fx/core";
+import {
+	ColliderComponent,
+	createCollisionSystem,
+	createPhysicsSystem,
+	PhysicsComponent,
+} from "@typing-fx/physics-2d";
+import { createTrackingSystem, TrackingComponent } from "@typing-fx/tracking";
 import type * as vscode from "vscode";
+
 import { useGameSettings } from "@/game-settings";
 import { useRenderAdapter } from "../adapters/render-adapter";
-import { EffectType } from "../constants";
-import { useParticleEffect } from "../effects";
+import { COMPONENT_NAME, type ComponentNameKey, EffectType } from "../constants";
 import { useLineHighlight } from "../effects/line-highlight";
+import { useParticleEffect } from "../effects/particle-effect";
 import { type FeverManager, useFeverManager } from "./fever-manager";
 
 export interface EffectManager {
@@ -21,11 +39,7 @@ export const useEffectManager = (): EffectManager => {
 	const renderAdapter = useRenderAdapter();
 
 	const feverDisposable = feverManager.onFeverStateChanged((isFever) => {
-		if (isFever) {
-			lineHighlight.start();
-		} else {
-			lineHighlight.stop();
-		}
+		isFever ? lineHighlight.start() : lineHighlight.stop();
 	});
 
 	const coreSettings: CoreSettings = {
@@ -49,22 +63,33 @@ export const useEffectManager = (): EffectManager => {
 		},
 	};
 
-	let onExplodeCallback: (
-		targetId: string,
-		anchorLine: number,
-		anchorChar: number,
-		x: number,
-		y: number,
-	) => void = () => {};
+	const registry = new Registry<ComponentNameKey>();
+	registry.registerComponent(COMPONENT_NAME.transform, new TransformComponent());
+	registry.registerComponent(COMPONENT_NAME.lifecycle, new LifecycleComponent());
+	registry.registerComponent(COMPONENT_NAME.render, new RenderComponent());
+	registry.registerComponent(COMPONENT_NAME.animation, new AnimationComponent());
+	registry.registerComponent(COMPONENT_NAME.physics, new PhysicsComponent());
+	registry.registerComponent(COMPONENT_NAME.collider, new ColliderComponent());
+	registry.registerComponent(COMPONENT_NAME.tracking, new TrackingComponent());
+
+	let onExplodeCallback: (tId: string, line: number, char: number, x: number, y: number) => void =
+		() => {};
 
 	const world = useWorld({
-		settings: coreSettings,
+		registry,
 		get fps() {
 			return settings.fps;
 		},
-		onRender: (registry) => renderAdapter.updateDecorations(registry),
-		onExplode: (targetId, anchorLine, anchorChar, x, y) =>
-			onExplodeCallback(targetId, anchorLine, anchorChar, x, y),
+		onRender: (reg) => renderAdapter.updateDecorations(reg),
+		systems: [
+			createPhysicsSystem(coreSettings),
+			...(settings.enableParticleCollision ? [createCollisionSystem()] : []),
+			createTrackingSystem({
+				onCapture: (id, line, char, x, y) => onExplodeCallback(id, line, char, x, y),
+			}),
+			createLifecycleSystem(),
+			createAnimationSystem(),
+		],
 	});
 
 	const particleEffect = useParticleEffect(world);
@@ -78,12 +103,17 @@ export const useEffectManager = (): EffectManager => {
 
 	const clearParticlesForDocument = (doc: vscode.TextDocument): void => {
 		const targetId = doc.uri.toString();
-		const { components, entityMasks, activeCount } = world.registry;
-		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
+		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
+		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
+		if (!render || !lifecycle) return;
 
-		for (let i = 0; i < activeCount; i++)
-			if ((entityMasks[i] & RequiredMask) === RequiredMask)
-				if (components.render.targetIds[i] === targetId) components.lifecycle.life[i] = 0;
+		const RequiredMask =
+			registry.getComponentMask(COMPONENT_NAME.render) |
+			registry.getComponentMask(COMPONENT_NAME.lifecycle);
+
+		for (let i = 0; i < registry.activeCount; i++)
+			if ((registry.entityMasks[i] & RequiredMask) === RequiredMask)
+				if (render.targetIds[i] === targetId) lifecycle.life[i] = 0;
 	};
 
 	const dispose = (): void => {

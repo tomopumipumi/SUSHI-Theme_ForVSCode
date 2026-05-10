@@ -9,7 +9,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Refactored
 - ECS Architecture: Extracted collision logic into a dedicated `CollisionSystem` and introduced a `ColliderComponent` with mass and restitution properties for more accurate, impulse-based physics resolution.
 - Architecture: Decoupled the particle spawning logic and `ParticleProfile` definitions from the ECS core package. The core is now strictly a data-driven entity manager, while the VS Code extension securely handles its own visual spawning logic and configurations.
-- Tooling: Added an `install:core` script to simplify local workspace setup and dependency linking. -->
+- Tooling: Added an `install:core` script to simplify local workspace setup and dependency linking.
+- ECS Architecture: Overhauled the Entity Component System. The Registry now supports dynamic component registration, and systems are completely decoupled, making the architecture much cleaner and highly scalable.
+- Physics Pipeline: Decoupled the tracking logic from the physics engine. Tracking now cleanly applies directional "Forces" rather than overriding velocities, resolving potential state conflicts and making movement more natural.
+- Type Safety: Replaced magic strings with a centralized component mapping for safer and more robust component queries.
+
+### Changed
+- Monorepo Structure: Reorganized internal packages under the `packages/typing-fx/` namespace to strictly separate the engine's core, physics, and tracking modules.
+
+### Performance
+- Render Optimization: Extracted static CSS properties to drastically reduce dynamic string allocations per frame. This significantly mitigates Garbage Collection (GC) spikes, ensuring buttery-smooth 60+ FPS even during intense typing and Fever Mode. -->
 
 ## [1.7.0] - 2026-05-10
 
