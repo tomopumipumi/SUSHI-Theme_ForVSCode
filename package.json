@@ -5,9 +5,20 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build:core":"cd ./packages/core && pnpm build",
-		"load:core":"pnpm --filter \"@sushi/vscode-extension\" add \"@sushi/core@workspace:*\"",
-		"install:core":"pnpm build:core && pnpm load:core"
+		"build:core":"cd ./packages/typing-fx/core && pnpm build",
+		"build:physics-2d":"cd ./packages/typing-fx/physics-2d && pnpm build",
+		"build:tracking":"cd ./packages/typing-fx/tracking && pnpm build",
+		"load-fx:physics-2d": "pnpm --filter \"@typing-fx/physics-2d\" add \"@typing-fx/core@workspace:*\"",
+		"load-fx:tracking":"pnpm --filter \"@typing-fx/tracking\" add \"@typing-fx/core@workspace:*\" \"@typing-fx/physics-2d@workspace:*\"",
+		"load:core":"pnpm --filter \"sushitheme\" add \"@typing-fx/core@workspace:*\"",
+		"load:physics-2d":"pnpm --filter \"sushitheme\" add \"@typing-fx/physics-2d@workspace:*\"",
+		"load:tracking":"pnpm --filter \"sushitheme\" add \"@typing-fx/tracking@workspace:*\"",
+
+		"load-fx":"pnpm load-fx:physics-2d && pnpm load-fx:tracking",
+		"build:typing-fx":"pnpm build:core && pnpm build:physics-2d && pnpm build:tracking",
+		"load:typing-fx":"pnpm load:core && pnpm load:physics-2d && pnpm load:tracking",
+
+		"resetup":"pnpm load-fx && pnpm build:typing-fx && pnpm load:typing-fx"
 	},
 	"keywords": [],
 	"author": "",

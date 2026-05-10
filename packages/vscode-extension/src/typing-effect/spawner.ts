@@ -1,5 +1,14 @@
-import { COMPONENT_MASK, DEFAULT_PARTICLE_MASK, type Registry } from "@typing-fx/core";
+import type {
+	AnimationComponent,
+	LifecycleComponent,
+	Registry,
+	RenderComponent,
+	TransformComponent,
+} from "@typing-fx/core";
+import type { ColliderComponent, PhysicsComponent } from "@typing-fx/physics-2d";
+import type { TrackingComponent } from "@typing-fx/tracking";
 import type { SushiSettings } from "@/game-settings";
+import { COMPONENT_NAME } from "./constants";
 import type { ParticleProfile } from "./types";
 
 const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
@@ -13,14 +22,27 @@ export const spawnParticles = (
 	anchorChar: number,
 	targetEntityId?: number,
 ): void => {
-	const { render, transform, physics, lifecycle, targeting, animation, collider } =
-		registry.components;
+	const transform = registry.getComponent<TransformComponent>(COMPONENT_NAME.transform);
+	const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
+	const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
+	const physics = registry.getComponent<PhysicsComponent>(COMPONENT_NAME.physics);
+	const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
+	const collider = registry.getComponent<ColliderComponent>(COMPONENT_NAME.collider);
+	const targeting = registry.getComponent<TrackingComponent>(COMPONENT_NAME.tracking);
 
-	let mask = DEFAULT_PARTICLE_MASK;
-	if (profile.isTracking) mask |= COMPONENT_MASK.targeting;
-	if (profile.isAnimation && Array.isArray(profile.graphic)) mask |= COMPONENT_MASK.animation;
+	if (!transform || !lifecycle || !render || !physics) return;
 
-	if (settings.enableParticleCollision) mask |= COMPONENT_MASK.collider;
+	let mask =
+		registry.getComponentMask(COMPONENT_NAME.transform) |
+		registry.getComponentMask(COMPONENT_NAME.lifecycle) |
+		registry.getComponentMask(COMPONENT_NAME.render) |
+		registry.getComponentMask(COMPONENT_NAME.physics);
+
+	if (profile.isTracking && targeting) mask |= registry.getComponentMask(COMPONENT_NAME.tracking);
+	if (profile.isAnimation && Array.isArray(profile.graphic) && animation)
+		mask |= registry.getComponentMask(COMPONENT_NAME.animation);
+	if (settings.enableParticleCollision && collider)
+		mask |= registry.getComponentMask(COMPONENT_NAME.collider);
 
 	for (let i = 0; i < profile.count; i++) {
 		const entityId = registry.createEntity(mask);
@@ -33,7 +55,7 @@ export const spawnParticles = (
 		let initialWidth = 0;
 		let initialHeight = 0;
 
-		if (profile.isAnimation && Array.isArray(profile.graphic)) {
+		if (profile.isAnimation && Array.isArray(profile.graphic) && animation) {
 			animation.frames[dataIdx] = profile.graphic;
 			initialSvgUrl = profile.graphic[0].svgUrl;
 			initialWidth = profile.graphic[0].width;
@@ -46,6 +68,7 @@ export const spawnParticles = (
 			initialWidth = graphic.width;
 			initialHeight = graphic.height;
 		}
+
 		render.targetIds[dataIdx] = targetId;
 		render.anchorLine[dataIdx] = anchorLine;
 		render.anchorChar[dataIdx] = anchorChar;
@@ -71,7 +94,7 @@ export const spawnParticles = (
 		physics.friction[dataIdx] = profile.friction;
 		physics.rotationFactor[dataIdx] = profile.rotationFactor;
 
-		if (settings.enableParticleCollision) {
+		if (settings.enableParticleCollision && collider) {
 			collider.radius[dataIdx] = Math.max(initialWidth, initialHeight) / 2;
 			collider.restitution[dataIdx] = settings.particleRestitution;
 			collider.mass[dataIdx] = 1.0;
@@ -89,7 +112,7 @@ export const spawnParticles = (
 		lifecycle.life[dataIdx] = life;
 		lifecycle.maxLife[dataIdx] = life;
 
-		if (profile.isTracking && targetEntityId !== undefined)
+		if (profile.isTracking && targeting && targetEntityId !== undefined)
 			targeting.targetEntityId[dataIdx] = targetEntityId;
 	}
 };

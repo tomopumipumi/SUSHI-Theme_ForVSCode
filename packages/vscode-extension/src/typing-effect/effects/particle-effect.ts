@@ -41,7 +41,6 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 		y: number,
 	): void => {
 		const { settings } = useGameSettings();
-
 		const randomLevel = Math.floor(Math.random() * 5) + 1;
 		const explodeProfile = getExplosionProfile(randomLevel);
 
@@ -80,7 +79,6 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 				}
 				targetType = activeRandomType;
 			}
-
 			profile = createParticleProfile(targetType, safeLevel);
 		}
 

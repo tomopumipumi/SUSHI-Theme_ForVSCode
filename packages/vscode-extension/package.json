@@ -103,8 +103,8 @@
 					"type": "number",
 					"description": "%sushiTheme.particleRestitution.desc%",
 					"default": 0.8,
-					"minimum": 0.0,
-					"maximum": 2.0
+					"minimum": 0,
+					"maximum": 2
 				},
 				"sushiTheme.comboUnit": {
 					"type": "number",
@@ -168,9 +168,9 @@
 				"sushiTheme.particleLifespanMultiplier": {
 					"type": "number",
 					"description": "%sushiTheme.particleLifespanMultiplier.desc%",
-					"default": 1.0,
+					"default": 1,
 					"minimum": 0.1,
-					"maximum": 10.0
+					"maximum": 10
 				}
 			}
 		}
@@ -193,7 +193,9 @@
 		"copy-locales": "copyfiles -u 1 \"i18n/package.nls*.json\" ."
 	},
 	"dependencies": {
-		"@typing-fx/core": "workspace:*"
+		"@typing-fx/core": "workspace:*",
+		"@typing-fx/physics-2d": "workspace:*",
+		"@typing-fx/tracking": "workspace:*"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.13",
