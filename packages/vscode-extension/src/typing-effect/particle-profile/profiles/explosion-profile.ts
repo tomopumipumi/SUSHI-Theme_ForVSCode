@@ -1,9 +1,9 @@
-import type { ParticleProfile } from "@typing-fx/core";
 import explosionLv1 from "@/assets-svg/explosion/lv1.svg";
 import explosionLv2 from "@/assets-svg/explosion/lv2.svg";
 import explosionLv3 from "@/assets-svg/explosion/lv3.svg";
 import explosionLv4 from "@/assets-svg/explosion/lv4.svg";
 import explosionLv5 from "@/assets-svg/explosion/lv5.svg";
+import type { ParticleProfile } from "@/typing-effect/types";
 import { getLevelData } from "../utils";
 
 export const getExplosionProfile = (level: number = 1): ParticleProfile => {

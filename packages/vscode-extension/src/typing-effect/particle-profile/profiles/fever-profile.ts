@@ -1,9 +1,10 @@
-import type { GraphicData, ParticleProfile } from "@typing-fx/core";
+import type { GraphicData } from "@typing-fx/core";
 import feverLv1 from "@/assets-svg/fever/lv1.svg";
 import feverLv2 from "@/assets-svg/fever/lv2.svg";
 import feverLv3 from "@/assets-svg/fever/lv3.svg";
 import feverLv4 from "@/assets-svg/fever/lv4.svg";
 import feverLv5 from "@/assets-svg/fever/lv5.svg";
+import type { ParticleProfile } from "@/typing-effect/types";
 
 const createFeverGlowSvgUrl = (svgContent: string, width: number, height: number): GraphicData => {
 	const w = width + 10;

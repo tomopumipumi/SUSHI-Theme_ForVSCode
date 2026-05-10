@@ -1,4 +1,4 @@
-import { type CoreSettings, useWorld } from "@typing-fx/core";
+import { COMPONENT_MASK, type CoreSettings, useWorld } from "@typing-fx/core";
 import type * as vscode from "vscode";
 import { useGameSettings } from "@/game-settings";
 import { useRenderAdapter } from "../adapters/render-adapter";
@@ -77,7 +77,13 @@ export const useEffectManager = (): EffectManager => {
 	};
 
 	const clearParticlesForDocument = (doc: vscode.TextDocument): void => {
-		world.clearParticlesByTarget(doc.uri.toString());
+		const targetId = doc.uri.toString();
+		const { components, entityMasks, activeCount } = world.registry;
+		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
+
+		for (let i = 0; i < activeCount; i++)
+			if ((entityMasks[i] & RequiredMask) === RequiredMask)
+				if (components.render.targetIds[i] === targetId) components.lifecycle.life[i] = 0;
 	};
 
 	const dispose = (): void => {

@@ -1,4 +1,3 @@
-import type { ParticleProfile } from "@typing-fx/core";
 import ebiLv1 from "@/assets-svg/ebi/lv1.svg";
 import ebiLv2 from "@/assets-svg/ebi/lv2.svg";
 import ebiLv3 from "@/assets-svg/ebi/lv3.svg";
@@ -19,6 +18,7 @@ import matchaLv2 from "@/assets-svg/matcha/lv2.svg";
 import matchaLv3 from "@/assets-svg/matcha/lv3.svg";
 import matchaLv4 from "@/assets-svg/matcha/lv4.svg";
 import matchaLv5 from "@/assets-svg/matcha/lv5.svg";
+import type { ParticleProfile } from "@/typing-effect/types";
 import { getLevelData } from "../utils";
 
 export const getMaguroProfile = (level: number): ParticleProfile => {

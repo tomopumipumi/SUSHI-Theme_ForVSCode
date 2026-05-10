@@ -1,12 +1,12 @@
-import type { CoreSettings, ParticleProfile } from "../types";
-import { COMPONENT_MASK, DEFAULT_PARTICLE_MASK } from "./constants";
-import type { Registry } from "./registry";
+import { COMPONENT_MASK, DEFAULT_PARTICLE_MASK, type Registry } from "@typing-fx/core";
+import type { SushiSettings } from "@/game-settings";
+import type { ParticleProfile } from "./types";
 
 const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-export const spawnGenericParticles = (
+export const spawnParticles = (
 	registry: Registry,
-	settings: CoreSettings,
+	settings: SushiSettings,
 	profile: ParticleProfile,
 	targetId: string,
 	anchorLine: number,

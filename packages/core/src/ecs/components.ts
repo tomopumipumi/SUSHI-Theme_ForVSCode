@@ -47,5 +47,3 @@ export class TransformComponent {
 	public y = new Float32Array(MAX_PARTICLES);
 	public rotation = new Float32Array(MAX_PARTICLES);
 }
-
-

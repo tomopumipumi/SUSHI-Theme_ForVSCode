@@ -7,7 +7,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 <!-- ## [1.7.1] - 2026-05-10
 
 ### Refactored
-- ECS Architecture: Extracted collision logic into a dedicated `CollisionSystem` and introduced a `ColliderComponent` with mass and restitution properties for more accurate, impulse-based physics resolution. -->
+- ECS Architecture: Extracted collision logic into a dedicated `CollisionSystem` and introduced a `ColliderComponent` with mass and restitution properties for more accurate, impulse-based physics resolution.
+- Architecture: Decoupled the particle spawning logic and `ParticleProfile` definitions from the ECS core package. The core is now strictly a data-driven entity manager, while the VS Code extension securely handles its own visual spawning logic and configurations.
+- Tooling: Added an `install:core` script to simplify local workspace setup and dependency linking. -->
 
 ## [1.7.0] - 2026-05-10
 

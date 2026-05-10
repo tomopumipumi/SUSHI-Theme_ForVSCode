@@ -1,7 +1,5 @@
-import type { CoreSettings, ParticleProfile } from "../types";
-import { COMPONENT_MASK } from "./constants";
+import type { CoreSettings } from "../types";
 import { Registry } from "./registry";
-import { spawnGenericParticles } from "./spawner";
 import {
 	updateAnimationSystem,
 	updateCollisionSystem,
@@ -25,14 +23,7 @@ export interface WorldOptions {
 
 export interface World {
 	registry: Registry;
-	spawn: (
-		profile: ParticleProfile,
-		targetId: string,
-		anchorLine: number,
-		anchorChar: number,
-		targetEntityId?: number,
-	) => void;
-	clearParticlesByTarget: (targetId: string) => void;
+	startLoop: () => void;
 	getRandomAliveEntityId: () => number;
 	dispose: () => void;
 }
@@ -86,34 +77,6 @@ export const useWorld = (options: WorldOptions): World => {
 		scheduleNext();
 	};
 
-	const spawn = (
-		profile: ParticleProfile,
-		targetId: string,
-		anchorLine: number,
-		anchorChar: number,
-		targetEntityId?: number,
-	): void => {
-		spawnGenericParticles(
-			registry,
-			options.settings,
-			profile,
-			targetId,
-			anchorLine,
-			anchorChar,
-			targetEntityId,
-		);
-		startLoop();
-	};
-
-	const clearParticlesByTarget = (targetId: string): void => {
-		const { components, entityMasks, activeCount } = registry;
-		const RequiredMask = COMPONENT_MASK.render | COMPONENT_MASK.lifecycle;
-
-		for (let i = 0; i < activeCount; i++)
-			if ((entityMasks[i] & RequiredMask) === RequiredMask)
-				if (components.render.targetIds[i] === targetId) components.lifecycle.life[i] = 0;
-	};
-
 	const getRandomAliveEntityId = (): number => {
 		return registry.getRandomAliveEntityId();
 	};
@@ -124,8 +87,7 @@ export const useWorld = (options: WorldOptions): World => {
 
 	return {
 		registry,
-		spawn,
-		clearParticlesByTarget,
+		startLoop,
 		getRandomAliveEntityId,
 		dispose,
 	};
