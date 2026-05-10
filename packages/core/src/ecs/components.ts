@@ -18,6 +18,12 @@ export class PhysicsComponent {
 	public rotationFactor = new Float32Array(MAX_PARTICLES);
 }
 
+export class ColliderComponent {
+	public radius = new Float32Array(MAX_PARTICLES);
+	public mass = new Float32Array(MAX_PARTICLES).fill(1.0);
+	public restitution = new Float32Array(MAX_PARTICLES).fill(0.8);
+}
+
 export class RenderComponent {
 	public targetIds: string[] = new Array(MAX_PARTICLES).fill("");
 	public anchorLine = new Uint32Array(MAX_PARTICLES);
@@ -41,3 +47,5 @@ export class TransformComponent {
 	public y = new Float32Array(MAX_PARTICLES);
 	public rotation = new Float32Array(MAX_PARTICLES);
 }
+
+

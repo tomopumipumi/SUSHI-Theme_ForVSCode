@@ -1,5 +1,6 @@
 import {
 	AnimationComponent,
+	ColliderComponent,
 	LifecycleComponent,
 	PhysicsComponent,
 	RenderComponent,
@@ -28,6 +29,7 @@ export class Registry {
 		lifecycle: new LifecycleComponent(),
 		targeting: new TargetingComponent(),
 		animation: new AnimationComponent(),
+		collider: new ColliderComponent(),
 	};
 
 	public createEntity(mask: number): number {
@@ -55,7 +57,7 @@ export class Registry {
 		const lastDenseIndex = this.activeCount - 1;
 
 		const { components, entityMasks } = this;
-		const { transform, physics, render, lifecycle, targeting, animation } = components;
+		const { transform, physics, render, lifecycle, targeting, animation, collider } = components;
 
 		if (denseIndex !== lastDenseIndex) {
 			const lastIndex = this.dense[lastDenseIndex];
@@ -86,6 +88,10 @@ export class Registry {
 
 			targeting.targetEntityId[denseIndex] = targeting.targetEntityId[lastDenseIndex];
 			animation.frames[denseIndex] = animation.frames[lastDenseIndex];
+
+			collider.radius[denseIndex] = collider.radius[lastDenseIndex];
+			collider.mass[denseIndex] = collider.mass[lastDenseIndex];
+			collider.restitution[denseIndex] = collider.restitution[lastDenseIndex];
 
 			this.dense[denseIndex] = lastIndex;
 			this.sparse[lastIndex] = denseIndex;
