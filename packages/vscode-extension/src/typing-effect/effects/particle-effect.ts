@@ -1,6 +1,6 @@
-import type { ParticleProfile, World } from "@typing-fx/core";
+import type { World } from "@typing-fx/core";
 import type * as vscode from "vscode";
-import type { SushiSettings } from "@/game-settings";
+import { type SushiSettings, useGameSettings } from "@/game-settings";
 import { EffectType, RANDOM_POOL } from "../constants";
 import {
 	createParticleProfile,
@@ -8,7 +8,8 @@ import {
 	getExplosionProfile,
 	getFeverProfile,
 } from "../particle-profile";
-import type { EffectTypeKey } from "../types";
+import { spawnParticles } from "../spawner";
+import type { EffectTypeKey, ParticleProfile } from "../types";
 
 export interface ParticleEffect {
 	spawnExplosion: (
@@ -39,13 +40,16 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 		x: number,
 		y: number,
 	): void => {
+		const { settings } = useGameSettings();
+
 		const randomLevel = Math.floor(Math.random() * 5) + 1;
 		const explodeProfile = getExplosionProfile(randomLevel);
 
 		explodeProfile.spawnSpreadX = [x, x];
 		explodeProfile.spawnSpreadY = [y, y];
 
-		world.spawn(explodeProfile, targetId, anchorLine, anchorChar);
+		spawnParticles(world.registry, settings, explodeProfile, targetId, anchorLine, anchorChar);
+		world.startLoop();
 	};
 
 	const trigger = (
@@ -80,14 +84,24 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 			profile = createParticleProfile(targetType, safeLevel);
 		}
 
-		world.spawn(profile, targetId, anchorLine, anchorChar);
+		spawnParticles(world.registry, settings, profile, targetId, anchorLine, anchorChar);
+		world.startLoop();
 
 		if (Math.random() < 0.05) {
 			const targetEntityId = world.getRandomAliveEntityId();
 			if (targetEntityId !== -1) {
 				const t = setTimeout(() => {
 					activeTimeouts.delete(t);
-					world.spawn(getChopsticksProfile(), targetId, anchorLine, anchorChar, targetEntityId);
+					spawnParticles(
+						world.registry,
+						settings,
+						getChopsticksProfile(),
+						targetId,
+						anchorLine,
+						anchorChar,
+						targetEntityId,
+					);
+					world.startLoop();
 				}, 400);
 				activeTimeouts.add(t);
 			}

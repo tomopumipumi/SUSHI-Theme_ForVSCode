@@ -6,7 +6,8 @@
 	"main": "index.js",
 	"scripts": {
 		"build:core":"cd ./packages/core && pnpm build",
-		"load:core":"pnpm --filter \"@sushi/vscode-extension\" add \"@sushi/core@workspace:*\""
+		"load:core":"pnpm --filter \"@sushi/vscode-extension\" add \"@sushi/core@workspace:*\"",
+		"install:core":"pnpm build:core && pnpm load:core"
 	},
 	"keywords": [],
 	"author": "",
