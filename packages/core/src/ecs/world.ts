@@ -4,6 +4,7 @@ import { Registry } from "./registry";
 import { spawnGenericParticles } from "./spawner";
 import {
 	updateAnimationSystem,
+	updateCollisionSystem,
 	updateLifecycleSystem,
 	updatePhysicsSystem,
 	updateTrackingSystem,
@@ -73,10 +74,10 @@ export const useWorld = (options: WorldOptions): World => {
 			return;
 		}
 
-		if (options.onExplode) {
-			updateTrackingSystem(registry, dt, options.onExplode);
-		}
+		if (options.onExplode) updateTrackingSystem(registry, dt, options.onExplode);
+
 		updatePhysicsSystem(registry, dt, options.settings);
+		if (options.settings.enableParticleCollision) updateCollisionSystem(registry);
 		updateLifecycleSystem(registry, dt);
 		updateAnimationSystem(registry);
 

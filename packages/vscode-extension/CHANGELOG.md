@@ -4,6 +4,11 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+<!-- ## [1.7.1] - 2026-05-10
+
+### Refactored
+- ECS Architecture: Extracted collision logic into a dedicated `CollisionSystem` and introduced a `ColliderComponent` with mass and restitution properties for more accurate, impulse-based physics resolution. -->
+
 ## [1.7.0] - 2026-05-10
 
 ### Added

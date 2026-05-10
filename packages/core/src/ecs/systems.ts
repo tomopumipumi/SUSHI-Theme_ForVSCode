@@ -57,55 +57,66 @@ export const updatePhysicsSystem = (
 				components.physics.vx[i] * components.physics.rotationFactor[i] * dt;
 		}
 	}
+};
 
-	if (settings.enableParticleCollision) {
-		const CollisionMask = RequiredMask | COMPONENT_MASK.render;
+export const updateCollisionSystem = (registry: Registry): void => {
+	const { components, entityMasks, activeCount } = registry;
+	const RequiredMask = COMPONENT_MASK.transform | COMPONENT_MASK.physics | COMPONENT_MASK.collider;
 
-		for (let i = 0; i < activeCount; i++) {
-			if ((entityMasks[i] & CollisionMask) !== CollisionMask) continue;
+	for (let i = 0; i < activeCount; i++) {
+		if ((entityMasks[i] & RequiredMask) !== RequiredMask) continue;
 
-			const r1 = (components.render.width[i] * components.render.currentScale[i]) / 2;
+		const scaleI = entityMasks[i] & COMPONENT_MASK.render ? components.render.currentScale[i] : 1.0;
+		const r1 = components.collider.radius[i] * scaleI;
+		const m1 = components.collider.mass[i];
 
-			for (let j = i + 1; j < activeCount; j++) {
-				if ((entityMasks[j] & CollisionMask) !== CollisionMask) continue;
+		for (let j = i + 1; j < activeCount; j++) {
+			if ((entityMasks[j] & RequiredMask) !== RequiredMask) continue;
 
-				const r2 = (components.render.width[j] * components.render.currentScale[j]) / 2;
+			const scaleJ =
+				entityMasks[j] & COMPONENT_MASK.render ? components.render.currentScale[j] : 1.0;
+			const r2 = components.collider.radius[j] * scaleJ;
+			const m2 = components.collider.mass[j];
 
-				const dx = components.transform.x[j] - components.transform.x[i];
-				const dy = components.transform.y[j] - components.transform.y[i];
-				const distSq = dx * dx + dy * dy;
-				const minDist = r1 + r2;
+			const dx = components.transform.x[j] - components.transform.x[i];
+			const dy = components.transform.y[j] - components.transform.y[i];
+			const distSq = dx * dx + dy * dy;
+			const minDist = r1 + r2;
 
-				if (distSq < minDist * minDist) {
-					const dist = Math.sqrt(distSq);
-					if (dist === 0) continue;
+			if (distSq < minDist * minDist) {
+				const dist = Math.sqrt(distSq);
+				if (dist === 0) continue;
 
-					const nx = dx / dist;
-					const ny = dy / dist;
+				const nx = dx / dist;
+				const ny = dy / dist;
 
-					const overlap = minDist - dist;
-					const moveX = nx * (overlap / 2);
-					const moveY = ny * (overlap / 2);
+				const overlap = minDist - dist;
+				const totalMass = m1 + m2;
+				const moveRatio1 = m2 / totalMass;
+				const moveRatio2 = m1 / totalMass;
 
-					components.transform.x[i] -= moveX;
-					components.transform.y[i] -= moveY;
-					components.transform.x[j] += moveX;
-					components.transform.y[j] += moveY;
+				components.transform.x[i] -= nx * overlap * moveRatio1;
+				components.transform.y[i] -= ny * overlap * moveRatio1;
+				components.transform.x[j] += nx * overlap * moveRatio2;
+				components.transform.y[j] += ny * overlap * moveRatio2;
 
-					const dvx = components.physics.vx[j] - components.physics.vx[i];
-					const dvy = components.physics.vy[j] - components.physics.vy[i];
+				const dvx = components.physics.vx[j] - components.physics.vx[i];
+				const dvy = components.physics.vy[j] - components.physics.vy[i];
 
-					const velAlongNormal = dvx * nx + dvy * ny;
-					if (velAlongNormal > 0) continue;
+				const velAlongNormal = dvx * nx + dvy * ny;
+				if (velAlongNormal > 0) continue;
 
-					const restitution = settings.particleRestitution;
-					const impulse = (-(1 + restitution) * velAlongNormal) / 2;
+				const restitution = Math.min(
+					components.collider.restitution[i],
+					components.collider.restitution[j],
+				);
 
-					components.physics.vx[i] -= impulse * nx;
-					components.physics.vy[i] -= impulse * ny;
-					components.physics.vx[j] += impulse * nx;
-					components.physics.vy[j] += impulse * ny;
-				}
+				const jImpulse = (-(1 + restitution) * velAlongNormal) / (1 / m1 + 1 / m2);
+
+				components.physics.vx[i] -= (jImpulse / m1) * nx;
+				components.physics.vy[i] -= (jImpulse / m1) * ny;
+				components.physics.vx[j] += (jImpulse / m2) * nx;
+				components.physics.vy[j] += (jImpulse / m2) * ny;
 			}
 		}
 	}

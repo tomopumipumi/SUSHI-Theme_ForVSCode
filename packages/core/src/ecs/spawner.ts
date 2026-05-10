@@ -13,12 +13,14 @@ export const spawnGenericParticles = (
 	anchorChar: number,
 	targetEntityId?: number,
 ): void => {
-	const { render, transform, physics, lifecycle, targeting, animation } = registry.components;
+	const { render, transform, physics, lifecycle, targeting, animation, collider } =
+		registry.components;
 
 	let mask = DEFAULT_PARTICLE_MASK;
 	if (profile.isTracking) mask |= COMPONENT_MASK.targeting;
-
 	if (profile.isAnimation && Array.isArray(profile.graphic)) mask |= COMPONENT_MASK.animation;
+
+	if (settings.enableParticleCollision) mask |= COMPONENT_MASK.collider;
 
 	for (let i = 0; i < profile.count; i++) {
 		const entityId = registry.createEntity(mask);
@@ -68,6 +70,12 @@ export const spawnGenericParticles = (
 		physics.gravity[dataIdx] = profile.gravity;
 		physics.friction[dataIdx] = profile.friction;
 		physics.rotationFactor[dataIdx] = profile.rotationFactor;
+
+		if (settings.enableParticleCollision) {
+			collider.radius[dataIdx] = Math.max(initialWidth, initialHeight) / 2;
+			collider.restitution[dataIdx] = settings.particleRestitution;
+			collider.mass[dataIdx] = 1.0;
+		}
 
 		const initScale = profile.initialScaleRange
 			? randomInRange(profile.initialScaleRange[0], profile.initialScaleRange[1])

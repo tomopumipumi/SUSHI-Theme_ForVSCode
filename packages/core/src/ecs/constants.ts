@@ -9,6 +9,7 @@ export const COMPONENT_MASK = {
 	lifecycle: 1 << 3,
 	targeting: 1 << 4,
 	animation: 1 << 5,
+	collider: 1 << 6,
 } as const;
 
 export const DEFAULT_PARTICLE_MASK =
