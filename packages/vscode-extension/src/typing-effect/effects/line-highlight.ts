@@ -9,6 +9,8 @@ export interface LineHighlight {
 export const useLineHighlight = (): LineHighlight => {
 	let selectionDisposable: vscode.Disposable | undefined;
 
+	let lastHighlightedLine: number | undefined;
+
 	const feverLineDeco = vscode.window.createTextEditorDecorationType({
 		isWholeLine: true,
 		backgroundColor: "rgba(255, 215, 0, 0.15)",
@@ -18,17 +20,25 @@ export const useLineHighlight = (): LineHighlight => {
 	});
 
 	const updateLineHighlight = (): void => {
-		clearLineHighlight();
 		const editor = vscode.window.activeTextEditor;
-		if (editor) {
-			const position = editor.selection.active;
-			const range = new vscode.Range(position, position);
-			editor.setDecorations(feverLineDeco, [{ range }]);
-		}
+		if (!editor) return;
+
+		const position = editor.selection.active;
+
+		if (lastHighlightedLine === position.line) return;
+
+		clearLineHighlight();
+
+		const range = new vscode.Range(position, position);
+
+		editor.setDecorations(feverLineDeco, [range]);
+
+		lastHighlightedLine = position.line;
 	};
 
 	const clearLineHighlight = (): void => {
 		for (const editor of vscode.window.visibleTextEditors) editor.setDecorations(feverLineDeco, []);
+		lastHighlightedLine = undefined;
 	};
 
 	const start = (): void => {

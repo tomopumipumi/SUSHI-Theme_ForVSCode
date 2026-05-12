@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.7.0</h1>
+  <h1>🍣 SUSHI-Theme v1.7.1</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.
@@ -48,6 +48,28 @@
     </td>
   </tr>
 </table>
+
+<br><br>
+
+<tr>
+    <td style="width: 45%; padding: 20px; vertical-align: middle;">
+      <h3>💥 Physics: Stack 'em or Bounce 'em!</h3>
+      <p>Turn on <b>Enable Particle Collision</b> to give your sushi real-world physics! Depending on your settings, you can completely change how they interact:</p>
+      <ul>
+        <li><b>Sushi Mountain:</b> Set <b>Particle Restitution</b> to <code>0</code> and watch the fresh sushi pile up at the bottom of your screen.</li>
+        <li><b>Sushi Pinball:</b> Maximize <b>Particle Restitution</b> and <b>Particle Speed Multiplier</b> to trigger explosive, bouncing chaos!</li>
+      </ul>
+      <p><i>Tip: Increase the <b>Particle Lifespan Multiplier</b> to keep the party going longer!</i></p>
+      <blockquote style="font-size: 0.9em; border-left: 3px solid #ff9800; padding-left: 10px; margin-left: 0; margin-top: 15px;">
+        🍣 <b>Chef's Warning:</b> Just like a real all-you-can-eat buffet, keeping too many bouncing sushis on screen might give your editor a "food coma" (lag). If your VS Code feels a bit stuffed, try lowering the lifespan or turning off collisions!
+      </blockquote>
+    </td>
+    <td style="width: 55%; text-align: center; padding: 20px; vertical-align: middle;">
+      <img width="426" height="240" alt="Sushi Piling Up" src="./images/collision.gif" style="margin-bottom: 10px;" />
+      <br>
+      <img width="426" height="240" alt="Sushi Bouncing" src="./images/collision-rebound.gif" />
+    </td>
+  </tr>
 
 <br><br>
 

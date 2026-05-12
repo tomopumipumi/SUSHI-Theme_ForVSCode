@@ -4,9 +4,9 @@ import { type SushiSettings, useGameSettings } from "@/game-settings";
 import { EffectType, RANDOM_POOL } from "../constants";
 import {
 	createParticleProfile,
-	getChopsticksProfile,
-	getExplosionProfile,
-	getFeverProfile,
+	useChopsticksProfile,
+	useExplosionProfile,
+	useFeverProfile,
 } from "../particle-profile";
 import { spawnParticles } from "../spawner";
 import type { EffectTypeKey, ParticleProfile } from "../types";
@@ -42,7 +42,7 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 	): void => {
 		const { settings } = useGameSettings();
 		const randomLevel = Math.floor(Math.random() * 5) + 1;
-		const explodeProfile = getExplosionProfile(randomLevel);
+		const explodeProfile = useExplosionProfile(randomLevel);
 
 		explodeProfile.spawnSpreadX = [x, x];
 		explodeProfile.spawnSpreadY = [y, y];
@@ -68,7 +68,7 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 		let profile: ParticleProfile;
 
 		if (isFever) {
-			profile = getFeverProfile(settings.feverSpawnCount);
+			profile = useFeverProfile(settings.feverSpawnCount);
 		} else {
 			let targetType: EffectTypeKey = settings.effectType;
 
@@ -93,7 +93,7 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 					spawnParticles(
 						world.registry,
 						settings,
-						getChopsticksProfile(),
+						useChopsticksProfile(),
 						targetId,
 						anchorLine,
 						anchorChar,

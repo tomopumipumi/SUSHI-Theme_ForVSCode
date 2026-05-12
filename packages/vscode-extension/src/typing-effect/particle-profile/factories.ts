@@ -1,27 +1,27 @@
 import { EffectType } from "../constants";
 import type { EffectTypeKey } from "../types";
 import {
-	getEbiProfile,
-	getIkuraProfile,
-	getMaguroProfile,
-	getMatchaProfile,
+	useEbiProfile,
+	useIkuraProfile,
+	useMaguroProfile,
+	useMatchaProfile,
 } from "./profiles/theme-profile";
 
 export const createParticleProfile = (targetType: EffectTypeKey, level: number) => {
 	switch (targetType) {
 		case EffectType.maguro:
-			return getMaguroProfile(level);
+			return useMaguroProfile(level);
 
 		case EffectType.ikura:
-			return getIkuraProfile(level);
+			return useIkuraProfile(level);
 
 		case EffectType.ebi:
-			return getEbiProfile(level);
+			return useEbiProfile(level);
 
 		case EffectType.matcha:
-			return getMatchaProfile(level);
+			return useMatchaProfile(level);
 
 		default:
-			return getMaguroProfile(level);
+			return useMaguroProfile(level);
 	}
 };

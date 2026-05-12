@@ -1,3 +1,4 @@
 packages:
   - 'packages/vscode-extension'
   - 'packages/typing-fx/*'
+  - 'packages/basketball'

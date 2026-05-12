@@ -1,3 +1,6 @@
+import { COMPONENT_NAME as COMPONENT_NAME_CORE } from "@typing-fx/core";
+import { COMPONENT_NAME as COMPONENT_NAME_PHYSICS2D } from "@typing-fx/physics-2d";
+import { COMPONENT_NAME as COMPONENT_NAME_TRACKING } from "@typing-fx/tracking";
 import type { EffectTypeKey } from "./types";
 
 export const EffectType = {
@@ -21,12 +24,11 @@ export const RANDOM_POOL: EffectTypeKey[] = [
 export const MAX_EFFECT_LEVEL: number = 5;
 
 export const COMPONENT_NAME = {
-	transform: "transform",
-	lifecycle: "lifecycle",
-	render: "render",
-	animation: "animation",
-	physics: "physics",
-	collider: "collider",
-	tracking: "tracking",
+	...COMPONENT_NAME_CORE,
+	...COMPONENT_NAME_PHYSICS2D,
+	...COMPONENT_NAME_TRACKING,
 } as const;
-export type ComponentNameKey = (typeof COMPONENT_NAME)[keyof typeof COMPONENT_NAME];
+export type ComponentNameKey =
+	| (typeof COMPONENT_NAME_CORE)[keyof typeof COMPONENT_NAME_CORE]
+	| (typeof COMPONENT_NAME_PHYSICS2D)[keyof typeof COMPONENT_NAME_PHYSICS2D]
+	| (typeof COMPONENT_NAME_TRACKING)[keyof typeof COMPONENT_NAME_TRACKING];

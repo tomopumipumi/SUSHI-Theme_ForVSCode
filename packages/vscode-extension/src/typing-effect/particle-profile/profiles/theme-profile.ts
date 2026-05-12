@@ -21,7 +21,7 @@ import matchaLv5 from "@/assets-svg/matcha/lv5.svg";
 import type { ParticleProfile } from "@/typing-effect/types";
 import { getLevelData } from "../utils";
 
-export const getMaguroProfile = (level: number): ParticleProfile => {
+export const useMaguroProfile = (level: number): ParticleProfile => {
 	const svgs = [maguroLv1, maguroLv2, maguroLv3, maguroLv4, maguroLv5];
 	const sizes = [
 		{ w: 10, h: 16 },
@@ -43,7 +43,7 @@ export const getMaguroProfile = (level: number): ParticleProfile => {
 	};
 };
 
-export const getIkuraProfile = (level: number): ParticleProfile => {
+export const useIkuraProfile = (level: number): ParticleProfile => {
 	const svgs = [ikuraLv1, ikuraLv2, ikuraLv3, ikuraLv4, ikuraLv5];
 	const sizes = [
 		{ w: 10, h: 10 },
@@ -65,7 +65,7 @@ export const getIkuraProfile = (level: number): ParticleProfile => {
 	};
 };
 
-export const getEbiProfile = (level: number): ParticleProfile => {
+export const useEbiProfile = (level: number): ParticleProfile => {
 	const svgs = [ebiLv1, ebiLv2, ebiLv3, ebiLv4, ebiLv5];
 	const sizes = [
 		{ w: 12, h: 12 },
@@ -87,7 +87,7 @@ export const getEbiProfile = (level: number): ParticleProfile => {
 	};
 };
 
-export const getMatchaProfile = (level: number): ParticleProfile => {
+export const useMatchaProfile = (level: number): ParticleProfile => {
 	const svgs = [matchaLv1, matchaLv2, matchaLv3, matchaLv4, matchaLv5];
 	const sizes = [
 		{ w: 12, h: 12 },

@@ -6,7 +6,7 @@ import explosionLv5 from "@/assets-svg/explosion/lv5.svg";
 import type { ParticleProfile } from "@/typing-effect/types";
 import { getLevelData } from "../utils";
 
-export const getExplosionProfile = (level: number = 1): ParticleProfile => {
+export const useExplosionProfile = (level: number = 1): ParticleProfile => {
 	const svgs = [explosionLv1, explosionLv2, explosionLv3, explosionLv4, explosionLv5];
 	const sizes = [
 		{ w: 50, h: 50 },
