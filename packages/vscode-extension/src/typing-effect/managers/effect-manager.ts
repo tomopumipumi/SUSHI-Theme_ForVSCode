@@ -1,21 +1,21 @@
 import {
 	AnimationComponent,
 	type CoreSettings,
-	createAnimationSystem,
-	createLifecycleSystem,
 	LifecycleComponent,
 	Registry,
 	RenderComponent,
 	TransformComponent,
+	useAnimationSystem,
+	useLifecycleSystem,
 	useWorld,
 } from "@typing-fx/core";
 import {
 	ColliderComponent,
-	createCollisionSystem,
-	createPhysicsSystem,
 	PhysicsComponent,
+	useCollisionSystem,
+	usePhysicsSystem,
 } from "@typing-fx/physics-2d";
-import { createTrackingSystem, TrackingComponent } from "@typing-fx/tracking";
+import { TrackingComponent, useTrackingSystem } from "@typing-fx/tracking";
 import type * as vscode from "vscode";
 
 import { useGameSettings } from "@/game-settings";
@@ -82,13 +82,13 @@ export const useEffectManager = (): EffectManager => {
 		},
 		onRender: (reg) => renderAdapter.updateDecorations(reg),
 		systems: [
-			createPhysicsSystem(coreSettings),
-			...(settings.enableParticleCollision ? [createCollisionSystem()] : []),
-			createTrackingSystem({
+			usePhysicsSystem(coreSettings),
+			useCollisionSystem(coreSettings),
+			useTrackingSystem({
 				onCapture: (id, line, char, x, y) => onExplodeCallback(id, line, char, x, y),
 			}),
-			createLifecycleSystem(),
-			createAnimationSystem(),
+			useLifecycleSystem(),
+			useAnimationSystem(),
 		],
 	});
 
@@ -111,9 +111,14 @@ export const useEffectManager = (): EffectManager => {
 			registry.getComponentMask(COMPONENT_NAME.render) |
 			registry.getComponentMask(COMPONENT_NAME.lifecycle);
 
+		let needsCleanup = false;
 		for (let i = 0; i < registry.activeCount; i++)
 			if ((registry.entityMasks[i] & RequiredMask) === RequiredMask)
-				if (render.targetIds[i] === targetId) lifecycle.life[i] = 0;
+				if (render.targetIds[i] === targetId) {
+					lifecycle.life[i] = 0;
+					needsCleanup = true;
+				}
+		if (needsCleanup) world.startLoop();
 	};
 
 	const dispose = (): void => {

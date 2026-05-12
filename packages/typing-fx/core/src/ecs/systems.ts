@@ -1,13 +1,14 @@
 import type { AnimationComponent, LifecycleComponent, RenderComponent } from "./components";
+import { COMPONENT_NAME } from "./constants";
 import type { Registry } from "./registry";
 import type { System } from "./world";
 
-export const createLifecycleSystem = (): System => {
+export const useLifecycleSystem = (): System => {
 	return (registry: Registry, dt: number): void => {
-		const lifecycle = registry.getComponent<LifecycleComponent>("lifecycle");
+		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
 		if (!lifecycle) return;
 
-		const RequiredMask = registry.getComponentMask("lifecycle");
+		const RequiredMask = registry.getComponentMask(COMPONENT_NAME.lifecycle);
 
 		for (let i = registry.activeCount - 1; i >= 0; i--) {
 			if ((registry.entityMasks[i] & RequiredMask) !== RequiredMask) continue;
@@ -22,16 +23,17 @@ export const createLifecycleSystem = (): System => {
 	};
 };
 
-export const createAnimationSystem = (): System => {
+export const useAnimationSystem = (): System => {
 	return (registry: Registry): void => {
-		const render = registry.getComponent<RenderComponent>("render");
-		const lifecycle = registry.getComponent<LifecycleComponent>("lifecycle");
-		const animation = registry.getComponent<AnimationComponent>("animation");
+		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
+		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
+		const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
 		if (!render || !lifecycle) return;
 
 		const RequiredMask =
-			registry.getComponentMask("render") | registry.getComponentMask("lifecycle");
-		const AnimMask = registry.getComponentMask("animation");
+			registry.getComponentMask(COMPONENT_NAME.render) |
+			registry.getComponentMask(COMPONENT_NAME.lifecycle);
+		const AnimMask = registry.getComponentMask(COMPONENT_NAME.animation);
 
 		for (let i = 0; i < registry.activeCount; i++) {
 			if ((registry.entityMasks[i] & RequiredMask) !== RequiredMask) continue;

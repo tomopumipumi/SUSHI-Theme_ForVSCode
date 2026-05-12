@@ -17,8 +17,9 @@
 		"load-fx":"pnpm load-fx:physics-2d && pnpm load-fx:tracking",
 		"build:typing-fx":"pnpm build:core && pnpm build:physics-2d && pnpm build:tracking",
 		"load:typing-fx":"pnpm load:core && pnpm load:physics-2d && pnpm load:tracking",
+		"reset":"pnpm dlx rimraf --glob \"**/node_modules\" \"**/dist\" & pnpm store prune & pnpm cache delete && pnpm install",
 
-		"resetup":"pnpm load-fx && pnpm build:typing-fx && pnpm load:typing-fx"
+		"bootstrap":"pnpm load-fx && pnpm build:typing-fx && pnpm load:typing-fx"
 	},
 	"keywords": [],
 	"author": "",

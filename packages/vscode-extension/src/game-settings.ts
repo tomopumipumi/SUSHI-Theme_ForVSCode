@@ -67,7 +67,7 @@ export const useGameSettings = (): GameSettings => {
 			particleLifespanMultiplier: clamp(
 				rawSettings.get("particleLifespanMultiplier"),
 				0.1,
-				10.0,
+				50.0,
 				1.0,
 			),
 

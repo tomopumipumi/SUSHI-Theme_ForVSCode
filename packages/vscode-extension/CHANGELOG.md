@@ -4,7 +4,7 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-<!-- ## [1.7.1] - 2026-05-10
+## [1.7.1] - 2026-05-13
 
 ### Refactored
 - ECS Architecture: Extracted collision logic into a dedicated `CollisionSystem` and introduced a `ColliderComponent` with mass and restitution properties for more accurate, impulse-based physics resolution.
@@ -13,12 +13,22 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - ECS Architecture: Overhauled the Entity Component System. The Registry now supports dynamic component registration, and systems are completely decoupled, making the architecture much cleaner and highly scalable.
 - Physics Pipeline: Decoupled the tracking logic from the physics engine. Tracking now cleanly applies directional "Forces" rather than overriding velocities, resolving potential state conflicts and making movement more natural.
 - Type Safety: Replaced magic strings with a centralized component mapping for safer and more robust component queries.
+- Spatial Hash Grid: Completely overhauled the collision detection engine. By utilizing a zero-allocation Spatial Hash Grid, the physics calculation complexity has been reduced from $O(N^2)$ to $O(N)$. This guarantees buttery-smooth 60 FPS even when hundreds of sushi pieces are bouncing on the screen during Fever Mode.
+- Physics Stability: Introduced a multi-iteration physics solver to prevent high-speed particles from clipping through each other or getting stuck in clumps.
+- Line Highlight Optimization: Implemented line-caching for the Fever Mode highlight. This eliminates redundant object allocations during horizontal cursor movement, significantly reducing Garbage Collection (GC) spikes.
+
+### Fixed
+- Real-time Collision Toggle: Fixed a bug where toggling the `Enable Particle Collision` setting required an editor reload. You can now turn physics on and off seamlessly on the fly.
+- Ghost Particles: Fixed a visual glitch where closing a file tab would sometimes leave frozen particles permanently stuck on the screen.
 
 ### Changed
 - Monorepo Structure: Reorganized internal packages under the `packages/typing-fx/` namespace to strictly separate the engine's core, physics, and tracking modules.
+- Increased the maximum value of the `Particle Lifespan Multiplier` setting from `10.0` to `50.0` for users who want to build massive mountains of sushi.
+- Updated README to include new interactive physics showcases and a friendly "Chef's Warning".
+- Internal code cleanups and naming convention standardization across particle profile factories.
 
 ### Performance
-- Render Optimization: Extracted static CSS properties to drastically reduce dynamic string allocations per frame. This significantly mitigates Garbage Collection (GC) spikes, ensuring buttery-smooth 60+ FPS even during intense typing and Fever Mode. -->
+- Render Optimization: Extracted static CSS properties to drastically reduce dynamic string allocations per frame. This significantly mitigates Garbage Collection (GC) spikes, ensuring buttery-smooth 60+ FPS even during intense typing and Fever Mode.
 
 ## [1.7.0] - 2026-05-10
 

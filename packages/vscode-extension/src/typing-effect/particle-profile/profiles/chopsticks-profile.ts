@@ -2,7 +2,7 @@ import chopsticksSvg from "@/assets-svg/chopsticks/lv1.svg";
 import type { ParticleProfile } from "@/typing-effect/types";
 import { getLevelData } from "../utils";
 
-export const getChopsticksProfile = (): ParticleProfile => {
+export const useChopsticksProfile = (): ParticleProfile => {
 	const svgs = [chopsticksSvg];
 	const sizes = [{ w: 50, h: 50 }];
 

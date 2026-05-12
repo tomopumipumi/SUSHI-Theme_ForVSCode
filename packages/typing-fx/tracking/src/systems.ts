@@ -5,8 +5,11 @@ import type {
 	System,
 	TransformComponent,
 } from "@typing-fx/core";
+import { COMPONENT_NAME as COMPONENT_NAME_CORE } from "@typing-fx/core";
 import type { PhysicsComponent } from "@typing-fx/physics-2d";
+import { COMPONENT_NAME as COMPONENT_NAME_PHYSICS2D } from "@typing-fx/physics-2d";
 import type { TrackingComponent } from "./components";
+import { COMPONENT_NAME } from "./constants";
 
 export interface TrackingOptions {
 	captureDistance?: number;
@@ -15,22 +18,22 @@ export interface TrackingOptions {
 
 const INVALID_TARGET_ID = -1;
 
-export const createTrackingSystem = (options: TrackingOptions = {}): System => {
+export const useTrackingSystem = (options: TrackingOptions = {}): System => {
 	const captureDist = options.captureDistance || 20;
 
 	return (registry: Registry, _dt: number) => {
-		const tracking = registry.getComponent<TrackingComponent>("tracking");
-		const transform = registry.getComponent<TransformComponent>("transform");
-		const physics = registry.getComponent<PhysicsComponent>("physics");
-		const lifecycle = registry.getComponent<LifecycleComponent>("lifecycle");
-		const render = registry.getComponent<RenderComponent>("render");
+		const tracking = registry.getComponent<TrackingComponent>(COMPONENT_NAME.tracking);
+		const transform = registry.getComponent<TransformComponent>(COMPONENT_NAME_CORE.transform);
+		const physics = registry.getComponent<PhysicsComponent>(COMPONENT_NAME_PHYSICS2D.physics);
+		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME_CORE.lifecycle);
+		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME_CORE.render);
 
 		if (!tracking || !transform || !physics) return;
 
 		const RequiredMask =
-			registry.getComponentMask("tracking") |
-			registry.getComponentMask("transform") |
-			registry.getComponentMask("physics");
+			registry.getComponentMask(COMPONENT_NAME.tracking) |
+			registry.getComponentMask(COMPONENT_NAME_CORE.transform) |
+			registry.getComponentMask(COMPONENT_NAME_PHYSICS2D.physics);
 
 		for (let i = registry.activeCount - 1; i >= 0; i--) {
 			if ((registry.entityMasks[i] & RequiredMask) !== RequiredMask) continue;

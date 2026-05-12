@@ -26,7 +26,7 @@ const createFeverGlowSvgUrl = (svgContent: string, width: number, height: number
 	};
 };
 
-export const getFeverProfile = (spawnCount: number): ParticleProfile => {
+export const useFeverProfile = (spawnCount: number): ParticleProfile => {
 	const svgs = [feverLv1, feverLv2, feverLv3, feverLv4, feverLv5];
 	const sizes = [
 		{ w: 24, h: 18 },
