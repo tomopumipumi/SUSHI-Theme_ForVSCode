@@ -29,7 +29,7 @@
   <tr>
     <td style="width: 45%; padding: 20px; vertical-align: middle;">
       <h3>🥢 Omakase Typing Effects</h3>
-      <p>Every keystroke drops a piece of sushi! Enjoy a smooth, zero-lag experience powered by our high-performance ECS engine.</p>
+      <p>Every keystroke drops a piece of sushi! Enjoy a smooth, zero-lag experience powered by a high-performance ECS engine built from scratch specifically for this extension.</p>
       <p>Build your combo to upgrade your sushi. Choose your favorite topping: <b>Maguro, Ikura, Ebi, Matcha</b>, or let the chef decide with <b>Random</b> mode.</p>
     </td>
     <td style="width: 55%; text-align: center; padding: 20px; vertical-align: middle;">
