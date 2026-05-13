@@ -49,6 +49,12 @@ export const useEffectManager = (): EffectManager => {
 		get bounceBottomDistance() {
 			return settings.bounceBottomDistance;
 		},
+		get bounceLeftDistance() {
+			return settings.bounceLeftDistance;
+		},
+		get bounceRightDistance() {
+			return settings.bounceRightDistance;
+		},
 		get particleSpeedMultiplier() {
 			return settings.particleSpeedMultiplier;
 		},

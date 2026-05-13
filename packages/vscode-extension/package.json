@@ -2,7 +2,7 @@
 	"name": "sushitheme",
 	"displayName": "SUSHI Theme",
 	"description": "%sushiTheme.desc%",
-	"version": "1.7.1",
+	"version": "1.8.0",
 	"publisher": "ichimura-tomoo",
 	"icon": "icon.png",
 	"repository": {
@@ -93,6 +93,20 @@
 					"default": 0,
 					"minimum": 0,
 					"maximum": 1000
+				},
+				"sushiTheme.bounceLeftDistance": {
+					"type": "number",
+					"description": "%sushiTheme.bounceLeftDistance.desc%",
+					"default": 0,
+					"minimum": 0,
+					"maximum": 2000
+				},
+				"sushiTheme.bounceRightDistance": {
+					"type": "number",
+					"description": "%sushiTheme.bounceRightDistance.desc%",
+					"default": 0,
+					"minimum": 0,
+					"maximum": 2000
 				},
 				"sushiTheme.enableParticleCollision": {
 					"type": "boolean",

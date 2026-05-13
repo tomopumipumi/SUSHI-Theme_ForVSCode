@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.7.1</h1>
+  <h1>🍣 SUSHI-Theme v1.8.0</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.
@@ -115,6 +115,16 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Bottom Distance</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>0</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sets the distance to the bottom wall (floor). Set to 0 for no floor (infinite fall). The larger the value, the lower it will bounce.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 1000</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Left Distance</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sets the distance to the left wall. Set to 0 to disable the left wall.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 2000</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Bounce Right Distance</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Sets the distance to the right wall. Set to 0 to disable the right wall.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0 / Max: 2000</i></span></td>
     </tr>
     <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Enable Particle Collision</code></td>

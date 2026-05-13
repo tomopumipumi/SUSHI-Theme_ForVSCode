@@ -11,6 +11,8 @@
 	"sushiTheme.particleSpeedMultiplier.desc": "날아가는 초밥의 속도 배율 (기본값: 1.3. 예: 1.3은 1.3배속).",
 	"sushiTheme.bounceTopDistance.desc": "초밥이 타이핑 커서에서 위로 날아가는 거리(픽셀 단위). 이후 튕겨져 나옵니다(0으로 설정하면 바운스 비활성화).",
 	"sushiTheme.bounceBottomDistance.desc": "아래쪽 벽(바닥)까지의 거리를 설정합니다. 0으로 설정하면 바닥이 없어집니다(무한 낙하). 값을 크게 할수록 더 아래쪽에서 튕깁니다.",
+	"sushiTheme.bounceLeftDistance.desc": "왼쪽 벽까지의 거리를 설정합니다. 0으로 설정하면 왼쪽 벽을 비활성화합니다.",
+	"sushiTheme.bounceRightDistance.desc": "오른쪽 벽까지의 거리를 설정합니다. 0으로 설정하면 오른쪽 벽을 비활성화합니다.",
 	"sushiTheme.comboUnit.desc": "초밥을 업그레이드하기 위한 키 입력 횟수 (기본값: 5)",
 	"sushiTheme.comboTimeoutMs.desc": "콤보가 초기화되기 전 대기 시간(ms) (기본값: 1500)",
 	"sushiTheme.feverTriggerCombo.desc": "피버 타임을 시작하기 위한 콤보 수.",

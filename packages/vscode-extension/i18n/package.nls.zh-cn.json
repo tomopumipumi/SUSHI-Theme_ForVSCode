@@ -11,6 +11,8 @@
 	"sushiTheme.particleSpeedMultiplier.desc": "飞行寿司的速度倍率（默认：1.3。例如：1.3表示1.3倍速）。",
 	"sushiTheme.bounceTopDistance.desc": "寿司从打字光标向上飞行并在弹回之前的像素距离（设置为0以禁用弹回）。",
 	"sushiTheme.bounceBottomDistance.desc": "设置到下方墙壁（地板）的距离。设为 0 表示没有地板（无限下落）。数值越大，弹跳的位置越低。",
+	"sushiTheme.bounceLeftDistance.desc": "设置到左侧墙壁的距离。设置为 0 以禁用左侧墙壁。",
+	"sushiTheme.bounceRightDistance.desc": "设置到右侧墙壁的距离。设置为 0 以禁用右侧墙壁。",
 	"sushiTheme.comboUnit.desc": "升级寿司所需的击键次数（默认：5）",
 	"sushiTheme.comboTimeoutMs.desc": "连击重置前的时间（毫秒）（默认：1500）",
 	"sushiTheme.feverTriggerCombo.desc": "触发狂热时间（Fever Time）所需的连击数。",

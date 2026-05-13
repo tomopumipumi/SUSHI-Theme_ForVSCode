@@ -6,6 +6,8 @@ import { COMPONENT_NAME } from "../constants";
 export interface PhysicsOptions {
 	bounceTopDistance?: number;
 	bounceBottomDistance?: number;
+	bounceLeftDistance?: number;
+	bounceRightDistance?: number;
 }
 
 export const usePhysicsSystem = (options: PhysicsOptions = {}): System => {
@@ -57,6 +59,24 @@ export const usePhysicsSystem = (options: PhysicsOptions = {}): System => {
 							physics.vy[i] *= -0.6;
 						}
 						physics.vx[i] *= 0.7;
+					}
+				}
+
+				if (options.bounceLeftDistance && options.bounceLeftDistance > 0) {
+					const leftLimit = transform.baseX[i] - Math.abs(options.bounceLeftDistance);
+					if (transform.x[i] <= leftLimit) {
+						transform.x[i] = leftLimit;
+						physics.vx[i] *= -0.7;
+						physics.vy[i] *= 0.9;
+					}
+				}
+
+				if (options.bounceRightDistance && options.bounceRightDistance > 0) {
+					const rightLimit = transform.baseX[i] + Math.abs(options.bounceRightDistance);
+					if (transform.x[i] >= rightLimit) {
+						transform.x[i] = rightLimit;
+						physics.vx[i] *= -0.7;
+						physics.vy[i] *= 0.9;
 					}
 				}
 
