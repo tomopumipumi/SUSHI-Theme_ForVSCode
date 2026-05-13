@@ -13,6 +13,9 @@ import type { ParticleProfile } from "./types";
 
 const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
+const CHAR_WIDTH = 10;
+const LINE_HEIGHT = 20;
+
 export const spawnParticles = (
 	registry: Registry,
 	settings: SushiSettings,
@@ -26,9 +29,6 @@ export const spawnParticles = (
 	const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
 	const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
 	const physics = registry.getComponent<PhysicsComponent>(COMPONENT_NAME.physics);
-	const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
-	const collider = registry.getComponent<ColliderComponent>(COMPONENT_NAME.collider);
-	const targeting = registry.getComponent<TrackingComponent>(COMPONENT_NAME.tracking);
 
 	if (!transform || !lifecycle || !render || !physics) return;
 
@@ -38,11 +38,18 @@ export const spawnParticles = (
 		registry.getComponentMask(COMPONENT_NAME.render) |
 		registry.getComponentMask(COMPONENT_NAME.physics);
 
+	const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
+	const collider = registry.getComponent<ColliderComponent>(COMPONENT_NAME.collider);
+	const targeting = registry.getComponent<TrackingComponent>(COMPONENT_NAME.tracking);
+
 	if (profile.isTracking && targeting) mask |= registry.getComponentMask(COMPONENT_NAME.tracking);
 	if (profile.isAnimation && Array.isArray(profile.graphic) && animation)
 		mask |= registry.getComponentMask(COMPONENT_NAME.animation);
 	if (settings.enableParticleCollision && collider)
 		mask |= registry.getComponentMask(COMPONENT_NAME.collider);
+
+	const estimatedX = anchorChar * CHAR_WIDTH;
+	const estimatedY = anchorLine * LINE_HEIGHT;
 
 	for (let i = 0; i < profile.count; i++) {
 		const entityId = registry.createEntity(mask);
@@ -75,13 +82,15 @@ export const spawnParticles = (
 		render.svgUrls[dataIdx] = initialSvgUrl;
 		render.width[dataIdx] = initialWidth;
 		render.height[dataIdx] = initialHeight;
+		transform.baseX[dataIdx] = estimatedX;
+		transform.baseY[dataIdx] = estimatedY;
 
-		transform.x[dataIdx] = profile.spawnSpreadX
-			? randomInRange(profile.spawnSpreadX[0], profile.spawnSpreadX[1])
-			: 0;
-		transform.y[dataIdx] = profile.spawnSpreadY
-			? randomInRange(profile.spawnSpreadY[0], profile.spawnSpreadY[1])
-			: 0;
+		transform.x[dataIdx] =
+			estimatedX +
+			(profile.spawnSpreadX ? randomInRange(profile.spawnSpreadX[0], profile.spawnSpreadX[1]) : 0);
+		transform.y[dataIdx] =
+			estimatedY +
+			(profile.spawnSpreadY ? randomInRange(profile.spawnSpreadY[0], profile.spawnSpreadY[1]) : 0);
 		transform.rotation[dataIdx] = profile.initialRotationRange
 			? randomInRange(profile.initialRotationRange[0], profile.initialRotationRange[1])
 			: 0;
@@ -98,6 +107,7 @@ export const spawnParticles = (
 			collider.radius[dataIdx] = Math.max(initialWidth, initialHeight) / 2;
 			collider.restitution[dataIdx] = settings.particleRestitution;
 			collider.mass[dataIdx] = 1.0;
+			if (profile.isTracking) collider.isSensor[dataIdx] = 1;
 		}
 
 		const initScale = profile.initialScaleRange

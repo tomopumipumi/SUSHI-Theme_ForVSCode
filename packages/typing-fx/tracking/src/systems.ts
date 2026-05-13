@@ -59,6 +59,10 @@ export const useTrackingSystem = (options: TrackingOptions = {}): System => {
 					const line = render.anchorLine[i];
 					const char = render.anchorChar[i];
 					options.onCapture(tId, line, char, transform.x[i], transform.y[i]);
+
+					const relX = transform.x[i] - transform.baseX[i];
+					const relY = transform.y[i] - transform.baseY[i];
+					options.onCapture(tId, line, char, relX, relY);
 				}
 
 				if (lifecycle) {

@@ -3,15 +3,21 @@
 All notable changes to the "sushi-theme" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-<!-- 
-## [1.7.2] - 2026-05-13
+
+<!-- ## [1.7.2] - 2026-05-13
 
 ### Fixed
 - Physics: Fixed an issue where sushi particles would jitter endlessly on the floor. Particles now come to a natural resting state.
 - Physics: Improved collision resolution by adding tangential friction, making sushi interactions look more realistic.
+- Physics Accuracy: Fixed a "phantom collision" bug where sushi pieces would bounce off each other in mid-air. The physics engine now accurately calculates distances using absolute global coordinates instead of relative text-anchor coordinates.
+- Tracking Accuracy: Fixed a bug where chopsticks would fly off the screen instead of tracking flying sushi.
+- Sensor Logic: Tracking items (chopsticks) now properly act as physics "sensors". They will no longer bounce off sushi pieces, ensuring they catch their targets reliably.
 
 ### Performance
-- ECS Engine: Slightly optimized the component querying order in rendering and collision systems to prevent unnecessary operations. -->
+- ECS Engine: Slightly optimized the component querying order in rendering and collision systems to prevent unnecessary operations.
+
+### Changed
+- Increased the tracking capture distance to ensure explosion animations trigger exactly when the chopsticks touch the sushi. -->
 
 ## [1.7.1] - 2026-05-13
 

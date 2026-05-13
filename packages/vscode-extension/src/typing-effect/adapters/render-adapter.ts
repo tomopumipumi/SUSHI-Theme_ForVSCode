@@ -52,12 +52,15 @@ export const useRenderAdapter = (): RenderAdapter => {
 
 			const opacity = Math.max(0, lifecycle.life[i] / lifecycle.maxLife[i]);
 
+			const translateX = transform.x[i] - transform.baseX[i];
+			const translateY = transform.y[i] - transform.baseY[i];
+
 			const style = `
 			${defaultCSS}
             width:${render.width[i]}px;
             height:${render.height[i]}px;
             background-image:${render.svgUrls[i]};
-            transform:translate(${transform.x[i].toFixed(1)}px,${transform.y[i].toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg) scale(${render.currentScale[i].toFixed(2)});
+           	transform:translate(${translateX.toFixed(1)}px,${translateY.toFixed(1)}px) rotate(${transform.rotation[i].toFixed(1)}deg) scale(${render.currentScale[i].toFixed(2)});
             opacity:${opacity.toFixed(2)};
             `;
 
