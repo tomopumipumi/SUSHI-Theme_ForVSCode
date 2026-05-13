@@ -44,6 +44,7 @@ export class PhysicsComponent implements IComponentData {
 export class ColliderComponent implements IComponentData {
 	public shapeType = new Uint8Array(MAX_PARTICLES).fill(ShapeType.circle);
 	public isSensor = new Uint8Array(MAX_PARTICLES).fill(0);
+	public isStatic = new Uint8Array(MAX_PARTICLES).fill(0);
 
 	public radius = new Float32Array(MAX_PARTICLES);
 	public width = new Float32Array(MAX_PARTICLES);
@@ -55,6 +56,7 @@ export class ColliderComponent implements IComponentData {
 	public swapAndPop(removedIndex: number, lastIndex: number): void {
 		this.shapeType[removedIndex] = this.shapeType[lastIndex];
 		this.isSensor[removedIndex] = this.isSensor[lastIndex];
+		this.isStatic[removedIndex] = this.isStatic[lastIndex];
 		this.radius[removedIndex] = this.radius[lastIndex];
 		this.width[removedIndex] = this.width[lastIndex];
 		this.height[removedIndex] = this.height[lastIndex];
@@ -65,6 +67,7 @@ export class ColliderComponent implements IComponentData {
 	public clear(index: number): void {
 		this.shapeType[index] = ShapeType.circle;
 		this.isSensor[index] = 0;
+		this.isStatic[index] = 0;
 		this.radius[index] = 0;
 		this.width[index] = 0;
 		this.height[index] = 0;

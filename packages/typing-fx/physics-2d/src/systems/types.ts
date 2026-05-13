@@ -13,6 +13,7 @@ export interface PhysicsData {
 	restitution: number;
 	vx: number;
 	vy: number;
+	isStatic: boolean;
 }
 
 export interface CollisionManifold {

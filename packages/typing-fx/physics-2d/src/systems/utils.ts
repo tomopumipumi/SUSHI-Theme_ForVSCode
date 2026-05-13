@@ -68,7 +68,11 @@ export const calculateImpulse = (
 
 	if (velAlongNormal > 0) return { jx: 0, jy: 0 };
 
-	const invMassSum = 1 / p1.mass + 1 / p2.mass;
+	const invMass1 = p1.isStatic ? 0 : 1 / p1.mass;
+	const invMass2 = p2.isStatic ? 0 : 1 / p2.mass;
+	const invMassSum = invMass1 + invMass2;
+
+	if (invMassSum === 0) return { jx: 0, jy: 0 };
 
 	const restitution = Math.min(p1.restitution, p2.restitution);
 	const j = (-(1 + restitution) * velAlongNormal) / invMassSum;
