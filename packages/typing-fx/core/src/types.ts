@@ -18,6 +18,8 @@ export interface Point {
 export interface CoreSettings {
 	bounceTopDistance: number;
 	bounceBottomDistance: number;
+	bounceLeftDistance: number;
+	bounceRightDistance: number;
 	particleSpeedMultiplier: number;
 	particleLifespanMultiplier: number;
 	enableParticleCollision: boolean;

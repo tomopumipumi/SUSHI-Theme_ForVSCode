@@ -6,6 +6,8 @@ export interface SushiSettings {
 	fps: number;
 	bounceTopDistance: number;
 	bounceBottomDistance: number;
+	bounceLeftDistance: number;
+	bounceRightDistance: number;
 	particleSpeedMultiplier: number;
 	particleLifespanMultiplier: number;
 	enableParticleCollision: boolean;
@@ -24,6 +26,8 @@ const currentConfig: SushiSettings = {
 	fps: 30,
 	bounceTopDistance: 100,
 	bounceBottomDistance: 0,
+	bounceLeftDistance: 0,
+	bounceRightDistance: 0,
 	particleSpeedMultiplier: 1.0,
 	particleLifespanMultiplier: 1.0,
 	enableParticleCollision: false,
@@ -61,8 +65,10 @@ export const useGameSettings = (): GameSettings => {
 			fps: clamp(rawSettings.get("fps"), 1, 120, 30),
 			feverSpawnCount: clamp(rawSettings.get("feverSpawnCount"), 1, 50, 5),
 
-			bounceTopDistance: Number(rawSettings.get("bounceTopDistance")) || 200,
-			bounceBottomDistance: Number(rawSettings.get("bounceBottomDistance")) || 0,
+			bounceTopDistance: Number(rawSettings.get("bounceTopDistance")) ?? 200,
+			bounceBottomDistance: Number(rawSettings.get("bounceBottomDistance")) ?? 0,
+			bounceLeftDistance: Number(rawSettings.get("bounceLeftDistance")) ?? 0,
+			bounceRightDistance: Number(rawSettings.get("bounceRightDistance")) ?? 0,
 			particleSpeedMultiplier: clamp(rawSettings.get("particleSpeedMultiplier"), 0.1, 5.0, 1.3),
 			particleLifespanMultiplier: clamp(
 				rawSettings.get("particleLifespanMultiplier"),

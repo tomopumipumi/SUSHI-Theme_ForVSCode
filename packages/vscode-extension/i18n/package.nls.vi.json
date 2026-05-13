@@ -11,6 +11,8 @@
 	"sushiTheme.particleSpeedMultiplier.desc": "Hệ số nhân tốc độ cho sushi bay (Mặc định: 1.3. Ví dụ: 1.3 là tốc độ gấp 1.3 lần).",
 	"sushiTheme.bounceTopDistance.desc": "Khoảng cách (tính bằng pixel) mà sushi bay lên từ con trỏ văn bản trước khi nảy ngược lại (Đặt bằng 0 để vô hiệu hóa độ nảy).",
 	"sushiTheme.bounceBottomDistance.desc": "Đặt khoảng cách đến bức tường (sàn) bên dưới. Đặt bằng 0 nghĩa là không có sàn (rơi vô tận). Giá trị càng lớn thì điểm nảy sẽ càng thấp.",
+	"sushiTheme.bounceLeftDistance.desc": "Đặt khoảng cách đến bức tường bên trái. Đặt bằng 0 để vô hiệu hóa bức tường bên trái.",
+	"sushiTheme.bounceRightDistance.desc": "Đặt khoảng cách đến bức tường bên phải. Đặt bằng 0 để vô hiệu hóa bức tường bên phải.",
 	"sushiTheme.comboUnit.desc": "Số lần gõ phím để nâng cấp sushi (Mặc định: 5)",
 	"sushiTheme.comboTimeoutMs.desc": "Thời gian (tính bằng ms) trước khi combo được đặt lại (Mặc định: 1500)",
 	"sushiTheme.feverTriggerCombo.desc": "Số lượng combo để bắt đầu Thời gian Sôi động (Fever Time).",

@@ -11,6 +11,8 @@
 	"sushiTheme.particleSpeedMultiplier.desc": "Multiplicateur de vitesse pour le sushi volant (Par défaut : 1.3. Exemple : 1.3 équivaut à 1.3x la vitesse).",
 	"sushiTheme.bounceTopDistance.desc": "Distance en pixels dont le sushi vole vers le haut depuis le curseur avant de rebondir (Régler sur 0 pour désactiver le rebond).",
 	"sushiTheme.bounceBottomDistance.desc": "Définit la distance jusqu'au mur inférieur (sol). Si défini sur 0, il n'y a pas de sol (chute infinie). Plus la valeur est grande, plus le rebond s'effectuera bas.",
+	"sushiTheme.bounceLeftDistance.desc": "Définit la distance jusqu'au mur gauche. Régler sur 0 pour désactiver le mur gauche.",
+	"sushiTheme.bounceRightDistance.desc": "Définit la distance jusqu'au mur droit. Régler sur 0 pour désactiver le mur droit.",
 	"sushiTheme.comboUnit.desc": "Frappes pour améliorer le sushi (Par défaut : 5)",
 	"sushiTheme.comboTimeoutMs.desc": "Temps (en ms) avant la réinitialisation du combo (Par défaut : 1500)",
 	"sushiTheme.feverTriggerCombo.desc": "Nombre de combos pour déclencher le mode Fever Time.",

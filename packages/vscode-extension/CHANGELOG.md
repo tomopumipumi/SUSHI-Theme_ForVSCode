@@ -4,7 +4,7 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-<!-- ## [1.7.2] - 2026-05-13
+## [1.8.0] - 2026-05-13
 
 ### Fixed
 - Physics: Fixed an issue where sushi particles would jitter endlessly on the floor. Particles now come to a natural resting state.
@@ -17,7 +17,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - ECS Engine: Slightly optimized the component querying order in rendering and collision systems to prevent unnecessary operations.
 
 ### Changed
-- Increased the tracking capture distance to ensure explosion animations trigger exactly when the chopsticks touch the sushi. -->
+- Increased the tracking capture distance to ensure explosion animations trigger exactly when the chopsticks touch the sushi.
+- Physics Engine Enhancement: Added `isStatic` support to the `@typing-fx/physics-2d` package. Developers can now spawn immovable physics bodies (such as walls or platforms) that interact with dynamic particles without being affected by gravity or collisions. 
+- Horizontal Walls (Pinball Mode): Added `Bounce Left Distance` and `Bounce Right Distance` settings. You can now build a fully enclosed box around your cursor to make your sushi bounce off the left and right walls! Combine this with high Restitution and Speed for the ultimate sushi pinball experience.
 
 ## [1.7.1] - 2026-05-13
 
