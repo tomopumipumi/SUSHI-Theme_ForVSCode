@@ -19,8 +19,8 @@ export interface CollisionOptions {
 export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 	const s1: ShapeData = { type: 0, x: 0, y: 0, radius: 0, width: 0, height: 0, scale: 1 };
 	const s2: ShapeData = { type: 0, x: 0, y: 0, radius: 0, width: 0, height: 0, scale: 1 };
-	const p1: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0 };
-	const p2: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0 };
+	const p1: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0, isStatic: false };
+	const p2: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0, isStatic: false };
 	const manifold: CollisionManifold = { isColliding: false, overlap: 0, nx: 0, ny: 0 };
 
 	const CellSize = 200;
@@ -82,6 +82,8 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 				p1.restitution = collider.restitution[i];
 				p1.vx = physics.vx[i];
 				p1.vy = physics.vy[i];
+				p1.isStatic = collider.isStatic[i] === 1;
+				p1.mass = collider.mass[i];
 
 				const cx = Math.floor(transform.x[i] / CellSize);
 				const cy = Math.floor(transform.y[i] / CellSize);
@@ -103,6 +105,7 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 								s2.height = collider.height[j];
 								s2.scale = hasRenderJ ? render.currentScale[j] : 1.0;
 
+								p2.isStatic = collider.isStatic[j] === 1;
 								p2.mass = collider.mass[j];
 								p2.restitution = collider.restitution[j];
 								p2.vx = physics.vx[j];
@@ -111,6 +114,8 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 								detectCollision(s1, s2, manifold);
 
 								if (manifold.isColliding) {
+									if (p1.isStatic && p2.isStatic) continue;
+
 									const isSensor1 = collider.isSensor[i] === 1;
 									const isSensor2 = collider.isSensor[j] === 1;
 
@@ -122,9 +127,20 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 											if (isSensor2) options.onSensorTrigger(id2, id1);
 										}
 									} else {
-										const totalMass = p1.mass + p2.mass;
-										const moveRatio1 = p2.mass / totalMass;
-										const moveRatio2 = p1.mass / totalMass;
+										let moveRatio1 = 0;
+										let moveRatio2 = 0;
+
+										if (!p1.isStatic && !p2.isStatic) {
+											const totalMass = p1.mass + p2.mass;
+											moveRatio1 = p2.mass / totalMass;
+											moveRatio2 = p1.mass / totalMass;
+										} else if (p1.isStatic && !p2.isStatic) {
+											moveRatio1 = 0;
+											moveRatio2 = 1;
+										} else if (!p1.isStatic && p2.isStatic) {
+											moveRatio1 = 1;
+											moveRatio2 = 0;
+										}
 
 										transform.x[i] -= manifold.nx * manifold.overlap * moveRatio1;
 										transform.y[i] -= manifold.ny * manifold.overlap * moveRatio1;
@@ -137,13 +153,18 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 										const { jx, jy } = calculateImpulse(p1, p2, manifold);
 
 										if (jx !== 0 || jy !== 0) {
-											physics.vx[i] -= jx / p1.mass;
-											physics.vy[i] -= jy / p1.mass;
-											physics.vx[j] += jx / p2.mass;
-											physics.vy[j] += jy / p2.mass;
-
-											p1.vx = physics.vx[i];
-											p1.vy = physics.vy[i];
+											if (!p1.isStatic) {
+												physics.vx[i] -= jx / p1.mass;
+												physics.vy[i] -= jy / p1.mass;
+												p1.vx = physics.vx[i];
+												p1.vy = physics.vy[i];
+											}
+											if (!p2.isStatic) {
+												physics.vx[j] += jx / p2.mass;
+												physics.vy[j] += jy / p2.mass;
+												p2.vx = physics.vx[j];
+												p2.vy = physics.vy[j];
+											}
 										}
 									}
 								}
