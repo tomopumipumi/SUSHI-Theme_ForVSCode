@@ -68,11 +68,32 @@ export const calculateImpulse = (
 
 	if (velAlongNormal > 0) return { jx: 0, jy: 0 };
 
-	const restitution = Math.min(p1.restitution, p2.restitution);
-	const jImpulse = (-(1 + restitution) * velAlongNormal) / (1 / p1.mass + 1 / p2.mass);
+	const invMassSum = 1 / p1.mass + 1 / p2.mass;
 
-	return {
-		jx: jImpulse * manifold.nx,
-		jy: jImpulse * manifold.ny,
-	};
+	const restitution = Math.min(p1.restitution, p2.restitution);
+	const j = (-(1 + restitution) * velAlongNormal) / invMassSum;
+
+	let jx = j * manifold.nx;
+	let jy = j * manifold.ny;
+
+	let tx = dvx - velAlongNormal * manifold.nx;
+	let ty = dvy - velAlongNormal * manifold.ny;
+	const tLen = Math.sqrt(tx * tx + ty * ty);
+
+	if (tLen > 0.0001) {
+		tx /= tLen;
+		ty /= tLen;
+		const velAlongTangent = dvx * tx + dvy * ty;
+
+		let jt = -velAlongTangent / invMassSum;
+
+		const mu = 0.8;
+
+		if (Math.abs(jt) > j * mu) jt = j * mu * Math.sign(jt);
+
+		jx += jt * tx;
+		jy += jt * ty;
+	}
+
+	return { jx, jy };
 };

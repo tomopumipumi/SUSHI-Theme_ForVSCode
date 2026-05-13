@@ -3,6 +3,15 @@
 All notable changes to the "sushi-theme" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+<!-- 
+## [1.7.2] - 2026-05-13
+
+### Fixed
+- Physics: Fixed an issue where sushi particles would jitter endlessly on the floor. Particles now come to a natural resting state.
+- Physics: Improved collision resolution by adding tangential friction, making sushi interactions look more realistic.
+
+### Performance
+- ECS Engine: Slightly optimized the component querying order in rendering and collision systems to prevent unnecessary operations. -->
 
 ## [1.7.1] - 2026-05-13
 

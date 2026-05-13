@@ -27,13 +27,14 @@ export const useAnimationSystem = (): System => {
 	return (registry: Registry): void => {
 		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME.render);
 		const lifecycle = registry.getComponent<LifecycleComponent>(COMPONENT_NAME.lifecycle);
-		const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
 		if (!render || !lifecycle) return;
 
 		const RequiredMask =
 			registry.getComponentMask(COMPONENT_NAME.render) |
 			registry.getComponentMask(COMPONENT_NAME.lifecycle);
 		const AnimMask = registry.getComponentMask(COMPONENT_NAME.animation);
+
+		const animation = registry.getComponent<AnimationComponent>(COMPONENT_NAME.animation);
 
 		for (let i = 0; i < registry.activeCount; i++) {
 			if ((registry.entityMasks[i] & RequiredMask) !== RequiredMask) continue;
