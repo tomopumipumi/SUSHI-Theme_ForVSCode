@@ -44,10 +44,15 @@ export const usePhysicsSystem = (options: PhysicsOptions = {}): System => {
 
 				if (options.bounceBottomDistance && options.bounceBottomDistance > 0) {
 					const bottomLimit = Math.abs(options.bounceBottomDistance);
-					if (transform.y[i] > bottomLimit) {
+					if (transform.y[i] >= bottomLimit) {
 						transform.y[i] = bottomLimit;
-						physics.vy[i] *= -0.6;
-						physics.vx[i] *= 0.8;
+
+						if (Math.abs(physics.vy[i]) < 2.0) {
+							physics.vy[i] = 0;
+						} else {
+							physics.vy[i] *= -0.6;
+						}
+						physics.vx[i] *= 0.7;
 					}
 				}
 

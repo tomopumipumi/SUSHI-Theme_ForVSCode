@@ -39,7 +39,6 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 		const transform = registry.getComponent<TransformComponent>(COMPONENT_NAME_CORE.transform);
 		const physics = registry.getComponent<PhysicsComponent>(COMPONENT_NAME.physics);
 		const collider = registry.getComponent<ColliderComponent>(COMPONENT_NAME.collider);
-		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME_CORE.render);
 		if (!transform || !physics || !collider) return;
 
 		const RequiredMask =
@@ -47,6 +46,8 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 			registry.getComponentMask(COMPONENT_NAME.physics) |
 			registry.getComponentMask(COMPONENT_NAME.collider);
 		const RenderMask = registry.getComponentMask(COMPONENT_NAME_CORE.render);
+
+		const render = registry.getComponent<RenderComponent>(COMPONENT_NAME_CORE.render);
 
 		const iterations = 2;
 
