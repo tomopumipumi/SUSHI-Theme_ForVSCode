@@ -85,6 +85,7 @@ export const useEffectManager = (): EffectManager => {
 			usePhysicsSystem(coreSettings),
 			useCollisionSystem(coreSettings),
 			useTrackingSystem({
+				captureDistance: 40,
 				onCapture: (id, line, char, x, y) => onExplodeCallback(id, line, char, x, y),
 			}),
 			useLifecycleSystem(),

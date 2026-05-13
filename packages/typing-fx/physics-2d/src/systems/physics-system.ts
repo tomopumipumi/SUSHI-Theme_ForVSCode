@@ -35,7 +35,7 @@ export const usePhysicsSystem = (options: PhysicsOptions = {}): System => {
 				transform.y[i] += physics.vy[i] * dt;
 
 				if (options.bounceTopDistance && options.bounceTopDistance > 0) {
-					const topLimit = -Math.abs(options.bounceTopDistance);
+					const topLimit = transform.baseY[i] - Math.abs(options.bounceTopDistance);
 					if (transform.y[i] < topLimit) {
 						transform.y[i] = topLimit;
 						physics.vy[i] *= -0.7;
@@ -43,7 +43,7 @@ export const usePhysicsSystem = (options: PhysicsOptions = {}): System => {
 				}
 
 				if (options.bounceBottomDistance && options.bounceBottomDistance > 0) {
-					const bottomLimit = Math.abs(options.bounceBottomDistance);
+					const bottomLimit = transform.baseY[i] + Math.abs(options.bounceBottomDistance);
 					if (transform.y[i] >= bottomLimit) {
 						transform.y[i] = bottomLimit;
 

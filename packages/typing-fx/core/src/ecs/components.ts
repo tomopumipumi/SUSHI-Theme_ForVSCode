@@ -7,15 +7,22 @@ export class TransformComponent implements IComponentData {
 	public y = new Float32Array(MAX_PARTICLES);
 	public rotation = new Float32Array(MAX_PARTICLES);
 
+	public baseX = new Float32Array(MAX_PARTICLES);
+	public baseY = new Float32Array(MAX_PARTICLES);
+
 	public swapAndPop(removedIndex: number, lastIndex: number): void {
 		this.x[removedIndex] = this.x[lastIndex];
 		this.y[removedIndex] = this.y[lastIndex];
 		this.rotation[removedIndex] = this.rotation[lastIndex];
+		this.baseX[removedIndex] = this.baseX[lastIndex];
+		this.baseY[removedIndex] = this.baseY[lastIndex];
 	}
 	public clear(index: number): void {
 		this.x[index] = 0;
 		this.y[index] = 0;
 		this.rotation[index] = 0;
+		this.baseX[index] = 0;
+		this.baseY[index] = 0;
 	}
 }
 
