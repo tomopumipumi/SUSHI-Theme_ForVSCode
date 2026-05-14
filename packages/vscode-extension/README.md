@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-  <h1>🍣 SUSHI-Theme v1.8.0</h1>
+  <h1>🍣 SUSHI-Theme v1.9.0</h1>
   <p><b>Welcome to the best Sushi restaurant in your editor.</b></p>
   <blockquote style="background: #fff3cd; color: #856404; padding: 10px; border-left: 5px solid #ffeeba; display: inline-block;">
     ⚠️ <b>Warning:</b> May cause sudden cravings for sushi.
@@ -135,6 +135,21 @@
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Restitution</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>0.8</code></td>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;">Bounciness factor when particles collide. 1.0 is perfectly elastic, 0 is inelastic.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0.0 / Max: 2.0</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Mass Multiplier</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>1.0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Multiplier for the mass (weight) of sushi particles.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0.1 / Max: 10.0</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Friction Multiplier</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>1.0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Multiplier for how slippery the sushi is. Higher values make them stop faster.<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0.1 / Max: 5.0</i></span></td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Particle Bounciness Multiplier</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center;"><code>1.0</code></td>
+      <td style="padding: 10px; border-bottom: 1px solid #ddd;">Multiplier for how bouncy specific sushi types are (e.g., Ikura is bouncier than Maguro).<br><span style="font-size: 0.9em; color: #666;"><i>Min: 0.0 / Max: 5.0</i></span></td>
     </tr>
     <tr>
       <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>Combo Unit</code></td>

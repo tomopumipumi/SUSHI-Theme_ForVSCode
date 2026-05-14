@@ -25,5 +25,8 @@
 	"sushiTheme.fps.desc": "Establece la tasa de fotogramas (renderizaciones por segundo) de los efectos. Valores más altos son más fluidos, pero aumentan la carga del editor. \n*Debido a las limitaciones de la arquitectura de renderizado de VS Code, la tasa real puede verse limitada incluso si se establece un valor alto.",
 	"sushiTheme.particleLifespanMultiplier.desc": "Establece el multiplicador del tiempo de visualización (vida útil) del sushi. Un valor más alto hace que permanezca más tiempo en pantalla, pero consumirá más memoria.",
 	"sushiTheme.enableParticleCollision.desc": "Activa las colisiones físicas entre las partículas de sushi. (Puede afectar el rendimiento si se generan muchas partículas)",
-	"sushiTheme.particleRestitution.desc": "Factor de rebote cuando las partículas colisionan. 1.0 es perfectamente elástico, 0 es inelástico."
+	"sushiTheme.particleRestitution.desc": "Factor de rebote cuando las partículas colisionan. 1.0 es perfectamente elástico, 0 es inelástico.",
+	"sushiTheme.particleMassMultiplier.desc": "Multiplicador de la masa (peso) de las partículas de sushi. (Predeterminado: 1.0)",
+	"sushiTheme.particleFrictionMultiplier.desc": "Multiplicador de la fricción (resbaladizo) del sushi. Valores más altos hacen que se detengan más rápido. (Predeterminado: 1.0)",
+	"sushiTheme.particleBouncinessMultiplier.desc": "Multiplicador del rebote específico para cada tipo de sushi (ej., Ikura rebota más que Maguro). (Predeterminado: 1.0)"
 }

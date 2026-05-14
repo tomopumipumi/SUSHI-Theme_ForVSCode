@@ -40,6 +40,9 @@ export const useMaguroProfile = (level: number): ParticleProfile => {
 		friction: 1.0,
 		rotationFactor: 1.0,
 		baseLife: 20,
+		mass: 1.2,
+		restitution: 0.5,
+		surfaceFriction: 0.9,
 	};
 };
 
@@ -62,6 +65,9 @@ export const useIkuraProfile = (level: number): ParticleProfile => {
 		friction: 0.95,
 		rotationFactor: 0.5,
 		baseLife: 30,
+		mass: 0.5,
+		restitution: 1.2,
+		surfaceFriction: 0.95,
 	};
 };
 
@@ -84,6 +90,9 @@ export const useEbiProfile = (level: number): ParticleProfile => {
 		friction: 0.98,
 		rotationFactor: 1.5,
 		baseLife: 20,
+		mass: 1.0,
+		restitution: 0.6,
+		surfaceFriction: 0.7,
 	};
 };
 
@@ -106,5 +115,8 @@ export const useMatchaProfile = (level: number): ParticleProfile => {
 		friction: 0.9,
 		rotationFactor: 1.0,
 		baseLife: 30,
+		mass: 0.3,
+		restitution: 0.3,
+		surfaceFriction: 0.6,
 	};
 };

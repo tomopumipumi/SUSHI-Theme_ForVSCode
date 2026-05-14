@@ -79,8 +79,12 @@ export const useRenderAdapter = (): RenderAdapter => {
 			decos.push(decoration);
 		}
 
-		for (const editor of editorDecorations.keys())
-			if (!visibleEditors.includes(editor)) editorDecorations.delete(editor);
+		for (const editor of editorDecorations.keys()) {
+			if (!visibleEditors.includes(editor)) {
+				editor.setDecorations(decorationType, []);
+				editorDecorations.delete(editor);
+			}
+		}
 
 		for (const editor of visibleEditors) {
 			const decos = editorDecorations.get(editor) || [];

@@ -26,5 +26,8 @@
 	"sushiTheme.fps.desc": "효과의 프레임 레이트(초당 렌더링 횟수)를 설정합니다. 수치가 높을수록 부드러워지지만 에디터 부하가 증가합니다. \n*VS Code의 렌더링 아키텍처 제한으로 인해 높은 FPS로 설정하더라도 실제 프레임 레이트가 제한될 수 있습니다.",
 	"sushiTheme.particleLifespanMultiplier.desc": "초밥의 표시 시간(수명) 배율을 설정합니다. 수치를 크게 하면 화면에 더 오래 남아 있지만, 그만큼 메모리를 더 소비합니다.",
 	"sushiTheme.enableParticleCollision.desc": "스시 파티클 간의 물리 충돌을 활성화합니다. (많은 파티클이 생성될 경우 성능에 영향을 줄 수 있습니다)",
-	"sushiTheme.particleRestitution.desc": "파티클 충돌 시의 반발 계수입니다. 1.0은 완전 탄성 충돌, 0은 완전 비탄성 충돌을 의미합니다."
+	"sushiTheme.particleRestitution.desc": "파티클 충돌 시의 반발 계수입니다. 1.0은 완전 탄성 충돌, 0은 완전 비탄성 충돌을 의미합니다.",
+	"sushiTheme.particleMassMultiplier.desc": "초밥 파티클의 질량(무게) 배율을 설정합니다. (기본값: 1.0)",
+	"sushiTheme.particleFrictionMultiplier.desc": "초밥의 마찰(미끄러짐) 배율을 설정합니다. 값이 클수록 더 빨리 멈춥니다. (기본값: 1.0)",
+	"sushiTheme.particleBouncinessMultiplier.desc": "초밥 종류별 반발력(탄성) 배율을 설정합니다 (예: 연어알은 참치보다 더 잘 튀어오릅니다). (기본값: 1.0)"
 }

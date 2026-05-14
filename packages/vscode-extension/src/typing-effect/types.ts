@@ -30,4 +30,7 @@ export interface ParticleProfile {
 	initialRotationRange?: [number, number];
 	initialScaleRange?: [number, number];
 	targetScale?: number;
+	mass?: number;
+	restitution?: number;
+	surfaceFriction?: number;
 }
