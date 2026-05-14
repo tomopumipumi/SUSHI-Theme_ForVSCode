@@ -10,9 +10,11 @@ export interface ShapeData {
 
 export interface PhysicsData {
 	mass: number;
+	inertia: number;
 	restitution: number;
 	vx: number;
 	vy: number;
+	angularVelocity: number;
 	isStatic: boolean;
 }
 
@@ -21,4 +23,6 @@ export interface CollisionManifold {
 	overlap: number;
 	nx: number;
 	ny: number;
+	contactX: number;
+	contactY: number;
 }

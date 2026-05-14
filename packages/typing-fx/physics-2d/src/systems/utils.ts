@@ -3,6 +3,8 @@ import type { CollisionManifold, PhysicsData, ShapeData } from "./types";
 
 export const detectCollision = (s1: ShapeData, s2: ShapeData, out: CollisionManifold): void => {
 	out.isColliding = false;
+	out.contactX = 0;
+	out.contactY = 0;
 
 	if (s1.type === ShapeType.circle && s2.type === ShapeType.circle) {
 		const r1 = s1.radius * s1.scale;
@@ -24,6 +26,8 @@ export const detectCollision = (s1: ShapeData, s2: ShapeData, out: CollisionMani
 				out.nx = 1;
 				out.ny = 0;
 			}
+			out.contactX = s1.x + out.nx * r1;
+			out.contactY = s1.y + out.ny * r1;
 		}
 	} else if (s1.type !== s2.type) {
 		const isCircleFirst = s1.type === ShapeType.circle;
@@ -53,6 +57,8 @@ export const detectCollision = (s1: ShapeData, s2: ShapeData, out: CollisionMani
 				out.nx = 0;
 				out.ny = isCircleFirst ? -1 : 1;
 			}
+			out.contactX = px;
+			out.contactY = py;
 		}
 	}
 };
@@ -61,18 +67,38 @@ export const calculateImpulse = (
 	p1: PhysicsData,
 	p2: PhysicsData,
 	manifold: CollisionManifold,
-): { jx: number; jy: number } => {
-	const dvx = p2.vx - p1.vx;
-	const dvy = p2.vy - p1.vy;
+	s1: ShapeData,
+	s2: ShapeData,
+): { jx: number; jy: number; r1x: number; r1y: number; r2x: number; r2y: number } => {
+	const r1x = manifold.contactX - s1.x;
+	const r1y = manifold.contactY - s1.y;
+	const r2x = manifold.contactX - s2.x;
+	const r2y = manifold.contactY - s2.y;
+
+	const v1x = p1.vx - p1.angularVelocity * r1y;
+	const v1y = p1.vy + p1.angularVelocity * r1x;
+	const v2x = p2.vx - p2.angularVelocity * r2y;
+	const v2y = p2.vy + p2.angularVelocity * r2x;
+
+	const dvx = v2x - v1x;
+	const dvy = v2y - v1y;
+
 	const velAlongNormal = dvx * manifold.nx + dvy * manifold.ny;
 
-	if (velAlongNormal > 0) return { jx: 0, jy: 0 };
+	if (velAlongNormal > 0) return { jx: 0, jy: 0, r1x: 0, r1y: 0, r2x: 0, r2y: 0 };
 
 	const invMass1 = p1.isStatic ? 0 : 1 / p1.mass;
 	const invMass2 = p2.isStatic ? 0 : 1 / p2.mass;
-	const invMassSum = invMass1 + invMass2;
+	const invInertia1 = p1.isStatic ? 0 : 1 / p1.inertia;
+	const invInertia2 = p2.isStatic ? 0 : 1 / p2.inertia;
 
-	if (invMassSum === 0) return { jx: 0, jy: 0 };
+	const r1CrossN = r1x * manifold.ny - r1y * manifold.nx;
+	const r2CrossN = r2x * manifold.ny - r2y * manifold.nx;
+
+	const invMassSum =
+		invMass1 + invMass2 + r1CrossN * r1CrossN * invInertia1 + r2CrossN * r2CrossN * invInertia2;
+
+	if (invMassSum === 0) return { jx: 0, jy: 0, r1x: 0, r1y: 0, r2x: 0, r2y: 0 };
 
 	const restitution = Math.min(p1.restitution, p2.restitution);
 	const j = (-(1 + restitution) * velAlongNormal) / invMassSum;
@@ -89,9 +115,14 @@ export const calculateImpulse = (
 		ty /= tLen;
 		const velAlongTangent = dvx * tx + dvy * ty;
 
-		let jt = -velAlongTangent / invMassSum;
+		const r1CrossT = r1x * ty - r1y * tx;
+		const r2CrossT = r2x * ty - r2y * tx;
 
-		const mu = 0.8;
+		const invMassSumT =
+			invMass1 + invMass2 + r1CrossT * r1CrossT * invInertia1 + r2CrossT * r2CrossT * invInertia2;
+
+		let jt = -velAlongTangent / invMassSumT;
+		const mu = 0.5;
 
 		if (Math.abs(jt) > j * mu) jt = j * mu * Math.sign(jt);
 
@@ -99,5 +130,5 @@ export const calculateImpulse = (
 		jy += jt * ty;
 	}
 
-	return { jx, jy };
+	return { jx, jy, r1x, r1y, r2x, r2y };
 };

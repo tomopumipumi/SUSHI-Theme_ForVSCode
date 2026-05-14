@@ -4,22 +4,36 @@
 	"private": "true",
 	"description": "",
 	"main": "index.js",
+	"pnpm":{
+		"overrides": {
+			"serialize-javascript": "7.0.5",
+			"diff": "8.0.3"
+		}
+	},
 	"scripts": {
-		"build:core":"cd ./packages/typing-fx/core && pnpm build",
-		"build:physics-2d":"cd ./packages/typing-fx/physics-2d && pnpm build",
-		"build:tracking":"cd ./packages/typing-fx/tracking && pnpm build",
+		"lint:core": "cd ./packages/typing-fx/core && pnpm lint",
+		"lint:physics-2d": "cd ./packages/typing-fx/physics-2d && pnpm lint",
+		"lint:tracking": "cd ./packages/typing-fx/tracking && pnpm lint",
+		"format:core": "cd ./packages/typing-fx/core && pnpm format",
+		"format:physics-2d": "cd ./packages/typing-fx/physics-2d && pnpm format",
+		"format:tracking": "cd ./packages/typing-fx/tracking && pnpm format",
+		"build:core": "cd ./packages/typing-fx/core && pnpm build",
+		"build:physics-2d": "cd ./packages/typing-fx/physics-2d && pnpm build",
+		"build:tracking": "cd ./packages/typing-fx/tracking && pnpm build",
 		"load-fx:physics-2d": "pnpm --filter \"@typing-fx/physics-2d\" add \"@typing-fx/core@workspace:*\"",
-		"load-fx:tracking":"pnpm --filter \"@typing-fx/tracking\" add \"@typing-fx/core@workspace:*\" \"@typing-fx/physics-2d@workspace:*\"",
-		"load:core":"pnpm --filter \"sushitheme\" add \"@typing-fx/core@workspace:*\"",
-		"load:physics-2d":"pnpm --filter \"sushitheme\" add \"@typing-fx/physics-2d@workspace:*\"",
-		"load:tracking":"pnpm --filter \"sushitheme\" add \"@typing-fx/tracking@workspace:*\"",
+		"load-fx:tracking": "pnpm --filter \"@typing-fx/tracking\" add \"@typing-fx/core@workspace:*\" \"@typing-fx/physics-2d@workspace:*\"",
+		"load:core": "pnpm --filter \"sushitheme\" add \"@typing-fx/core@workspace:*\"",
+		"load:physics-2d": "pnpm --filter \"sushitheme\" add \"@typing-fx/physics-2d@workspace:*\"",
+		"load:tracking": "pnpm --filter \"sushitheme\" add \"@typing-fx/tracking@workspace:*\"",
 
-		"load-fx":"pnpm load-fx:physics-2d && pnpm load-fx:tracking",
-		"build:typing-fx":"pnpm build:core && pnpm build:physics-2d && pnpm build:tracking",
-		"load:typing-fx":"pnpm load:core && pnpm load:physics-2d && pnpm load:tracking",
-		"reset":"pnpm dlx rimraf --glob \"**/node_modules\" \"**/dist\" & pnpm store prune & pnpm cache delete && pnpm install",
+		"lint:typing-fx": "pnpm lint:core & pnpm lint:physics-2d & pnpm lint:tracking",
+		"format:typing-fx": "pnpm format:core & pnpm format:physics-2d & pnpm format:tracking",
+		"load-fx": "pnpm load-fx:physics-2d && pnpm load-fx:tracking",
+		"build:typing-fx": "pnpm build:core && pnpm build:physics-2d && pnpm build:tracking",
+		"load:typing-fx": "pnpm load:core && pnpm load:physics-2d && pnpm load:tracking",
+		"reset": "pnpm dlx rimraf --glob \"**/node_modules\" \"**/dist\" & pnpm store prune & pnpm cache delete && pnpm install",
 
-		"bootstrap":"pnpm load-fx && pnpm build:typing-fx && pnpm load:typing-fx"
+		"bootstrap": "pnpm format:typing-fx && pnpm lint:typing-fx &&pnpm load-fx && pnpm build:typing-fx && pnpm load:typing-fx"
 	},
 	"keywords": [],
 	"author": "",
