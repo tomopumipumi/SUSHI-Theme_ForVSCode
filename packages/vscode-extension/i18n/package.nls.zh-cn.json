@@ -26,5 +26,8 @@
 	"sushiTheme.fps.desc": "设置特效的帧率（每秒渲染次数）。数值越高，动画越流畅，但会增加编辑器的负载。\n*受 VS Code 渲染架构限制，即使设置较高的 FPS，实际帧率也可能受到限制。",
 	"sushiTheme.particleLifespanMultiplier.desc": "设置寿司显示时间（寿命）的倍率。数值越大，在屏幕上停留的时间越长，但相应地也会消耗更多内存。",
 	"sushiTheme.enableParticleCollision.desc": "启用寿司粒子之间的物理碰撞。（如果生成大量粒子，可能会影响性能）",
-	"sushiTheme.particleRestitution.desc": "粒子碰撞时的弹力系数。1.0 为完全弹性，0 为完全非弹性。"
+	"sushiTheme.particleRestitution.desc": "粒子碰撞时的弹力系数。1.0 为完全弹性，0 为完全非弹性。",
+	"sushiTheme.particleMassMultiplier.desc": "寿司粒子质量（重量）的倍率。（默认：1.0）",
+	"sushiTheme.particleFrictionMultiplier.desc": "寿司摩擦力（滑动程度）的倍率。数值越高，停下得越快。（默认：1.0）",
+	"sushiTheme.particleBouncinessMultiplier.desc": "不同种类寿司的弹力倍率（例如，鲑鱼籽比金枪鱼更有弹性）。（默认：1.0）"
 }

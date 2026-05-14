@@ -100,7 +100,13 @@ export const spawnParticles = (
 		physics.vy[dataIdx] =
 			randomInRange(profile.vyRange[0], profile.vyRange[1]) * settings.particleSpeedMultiplier;
 		physics.gravity[dataIdx] = profile.gravity;
-		physics.friction[dataIdx] = profile.friction;
+
+		const baseFriction = profile.surfaceFriction ?? profile.friction;
+		physics.friction[dataIdx] = Math.max(
+			0.1,
+			Math.min(1.0, baseFriction * settings.particleFrictionMultiplier),
+		);
+
 		physics.rotationFactor[dataIdx] = profile.rotationFactor;
 		physics.angularVelocity[dataIdx] =
 			randomInRange(-profile.rotationFactor, profile.rotationFactor) * 0.1;
@@ -108,9 +114,13 @@ export const spawnParticles = (
 		if (settings.enableParticleCollision && collider) {
 			const radius = Math.max(initialWidth, initialHeight) / 2;
 			collider.radius[dataIdx] = radius;
-			collider.restitution[dataIdx] = settings.particleRestitution;
 
-			collider.mass[dataIdx] = 1.0;
+			const baseRestitution = profile.restitution ?? 0.8;
+			collider.restitution[dataIdx] =
+				settings.particleRestitution * baseRestitution * settings.particleBouncinessMultiplier;
+
+			const baseMass = profile.mass ?? 1.0;
+			collider.mass[dataIdx] = baseMass * settings.particleMassMultiplier;
 			collider.inertia[dataIdx] = 0.5 * collider.mass[dataIdx] * (radius * radius);
 
 			if (profile.isTracking) collider.isSensor[dataIdx] = 1;

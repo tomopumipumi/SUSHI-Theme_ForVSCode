@@ -26,5 +26,8 @@
 	"sushiTheme.fps.desc": "Sets the frame rate (draws per second) for effects. Higher values provide smoother animations but increase editor load. \n*Due to VS Code's rendering architecture limitations, the actual frame rate may be capped even if a higher value is set.",
 	"sushiTheme.particleLifespanMultiplier.desc": "Sets the multiplier for the sushi's display time (lifespan). A larger value keeps it on the screen longer, but consumes more memory.",
 	"sushiTheme.enableParticleCollision.desc": "Enable physics collisions between sushi particles. (Might impact performance if spawning many particles)",
-	"sushiTheme.particleRestitution.desc": "Bounciness factor when particles collide. 1.0 is perfectly elastic, 0 is inelastic."
+	"sushiTheme.particleRestitution.desc": "Bounciness factor when particles collide. 1.0 is perfectly elastic, 0 is inelastic.",
+	"sushiTheme.particleMassMultiplier.desc": "Multiplier for the mass (weight) of sushi particles. (Default: 1.0)",
+	"sushiTheme.particleFrictionMultiplier.desc": "Multiplier for how slippery the sushi is. Higher values make them stop faster. (Default: 1.0)",
+	"sushiTheme.particleBouncinessMultiplier.desc": "Multiplier for how bouncy specific sushi types are (e.g., Ikura is bouncier than Maguro). (Default: 1.0)"
 }

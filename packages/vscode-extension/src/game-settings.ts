@@ -20,6 +20,9 @@ export interface SushiSettings {
 	comboTimeoutMs: number;
 	throttleMs: number;
 	enableStatusBar: boolean;
+	particleMassMultiplier: number;
+	particleFrictionMultiplier: number;
+	particleBouncinessMultiplier: number;
 }
 
 const currentConfig: SushiSettings = {
@@ -40,6 +43,9 @@ const currentConfig: SushiSettings = {
 	comboTimeoutMs: 1500,
 	throttleMs: 80,
 	enableStatusBar: true,
+	particleMassMultiplier: 1.0,
+	particleFrictionMultiplier: 1.0,
+	particleBouncinessMultiplier: 1.0,
 };
 
 const clamp = (val: unknown, min: number, max: number, fallback: number): number => {
@@ -89,6 +95,19 @@ export const useGameSettings = (): GameSettings => {
 			throttleMs: clamp(rawSettings.get("throttleMs"), 16, 1000, 80),
 
 			enableStatusBar: Boolean(rawSettings.get("enableStatusBar", true)),
+			particleMassMultiplier: clamp(rawSettings.get("particleMassMultiplier"), 0.1, 10.0, 1.0),
+			particleFrictionMultiplier: clamp(
+				rawSettings.get("particleFrictionMultiplier"),
+				0.1,
+				5.0,
+				1.0,
+			),
+			particleBouncinessMultiplier: clamp(
+				rawSettings.get("particleBouncinessMultiplier"),
+				0.0,
+				5.0,
+				1.0,
+			),
 		});
 	};
 

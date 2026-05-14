@@ -5,7 +5,7 @@ import {
 	useIkuraProfile,
 	useMaguroProfile,
 	useMatchaProfile,
-} from "./profiles/theme-profile";
+} from "./profiles/sushi-profile";
 
 export const createParticleProfile = (targetType: EffectTypeKey, level: number) => {
 	switch (targetType) {
