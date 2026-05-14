@@ -4,6 +4,11 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.9.1] - 2026-05-14
+
+### Changed
+- Decreased the spawn rate of the chopsticks effect from 5% to 1% to reduce visual clutter during continuous typing.
+
 ## [1.9.0] - 2026-05-14
 
 ### Added
