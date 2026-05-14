@@ -102,11 +102,17 @@ export const spawnParticles = (
 		physics.gravity[dataIdx] = profile.gravity;
 		physics.friction[dataIdx] = profile.friction;
 		physics.rotationFactor[dataIdx] = profile.rotationFactor;
+		physics.angularVelocity[dataIdx] =
+			randomInRange(-profile.rotationFactor, profile.rotationFactor) * 0.1;
 
 		if (settings.enableParticleCollision && collider) {
-			collider.radius[dataIdx] = Math.max(initialWidth, initialHeight) / 2;
+			const radius = Math.max(initialWidth, initialHeight) / 2;
+			collider.radius[dataIdx] = radius;
 			collider.restitution[dataIdx] = settings.particleRestitution;
+
 			collider.mass[dataIdx] = 1.0;
+			collider.inertia[dataIdx] = 0.5 * collider.mass[dataIdx] * (radius * radius);
+
 			if (profile.isTracking) collider.isSensor[dataIdx] = 1;
 		}
 

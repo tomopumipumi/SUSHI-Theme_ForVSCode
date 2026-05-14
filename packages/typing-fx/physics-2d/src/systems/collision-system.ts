@@ -19,9 +19,32 @@ export interface CollisionOptions {
 export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 	const s1: ShapeData = { type: 0, x: 0, y: 0, radius: 0, width: 0, height: 0, scale: 1 };
 	const s2: ShapeData = { type: 0, x: 0, y: 0, radius: 0, width: 0, height: 0, scale: 1 };
-	const p1: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0, isStatic: false };
-	const p2: PhysicsData = { mass: 1, restitution: 0, vx: 0, vy: 0, isStatic: false };
-	const manifold: CollisionManifold = { isColliding: false, overlap: 0, nx: 0, ny: 0 };
+	const p1: PhysicsData = {
+		mass: 1,
+		inertia: 0,
+		restitution: 0,
+		vx: 0,
+		vy: 0,
+		angularVelocity: 0,
+		isStatic: false,
+	};
+	const p2: PhysicsData = {
+		mass: 1,
+		inertia: 0,
+		restitution: 0,
+		vx: 0,
+		vy: 0,
+		angularVelocity: 0,
+		isStatic: false,
+	};
+	const manifold: CollisionManifold = {
+		isColliding: false,
+		overlap: 0,
+		nx: 0,
+		ny: 0,
+		contactX: 0,
+		contactY: 0,
+	};
 
 	const CellSize = 200;
 	const HashSize = 4096;
@@ -84,6 +107,8 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 				p1.vy = physics.vy[i];
 				p1.isStatic = collider.isStatic[i] === 1;
 				p1.mass = collider.mass[i];
+				p1.inertia = collider.inertia[i];
+				p1.angularVelocity = physics.angularVelocity[i];
 
 				const cx = Math.floor(transform.x[i] / CellSize);
 				const cy = Math.floor(transform.y[i] / CellSize);
@@ -110,6 +135,8 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 								p2.restitution = collider.restitution[j];
 								p2.vx = physics.vx[j];
 								p2.vy = physics.vy[j];
+								p2.inertia = collider.inertia[j];
+								p2.angularVelocity = physics.angularVelocity[j];
 
 								detectCollision(s1, s2, manifold);
 
@@ -150,20 +177,32 @@ export const useCollisionSystem = (options: CollisionOptions = {}): System => {
 										s1.x = transform.x[i];
 										s1.y = transform.y[i];
 
-										const { jx, jy } = calculateImpulse(p1, p2, manifold);
+										const { jx, jy, r1x, r1y, r2x, r2y } = calculateImpulse(
+											p1,
+											p2,
+											manifold,
+											s1,
+											s2,
+										);
 
 										if (jx !== 0 || jy !== 0) {
 											if (!p1.isStatic) {
 												physics.vx[i] -= jx / p1.mass;
 												physics.vy[i] -= jy / p1.mass;
+												physics.angularVelocity[i] -= (r1x * jy - r1y * jx) / p1.inertia;
+
 												p1.vx = physics.vx[i];
 												p1.vy = physics.vy[i];
+												p1.angularVelocity = physics.angularVelocity[i];
 											}
 											if (!p2.isStatic) {
 												physics.vx[j] += jx / p2.mass;
 												physics.vy[j] += jy / p2.mass;
+												physics.angularVelocity[j] += (r2x * jy - r2y * jx) / p2.inertia;
+
 												p2.vx = physics.vx[j];
 												p2.vy = physics.vy[j];
+												p2.angularVelocity = physics.angularVelocity[j];
 											}
 										}
 									}

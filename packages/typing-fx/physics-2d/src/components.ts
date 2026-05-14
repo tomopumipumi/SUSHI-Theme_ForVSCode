@@ -12,6 +12,10 @@ export class PhysicsComponent implements IComponentData {
 	public fx = new Float32Array(MAX_PARTICLES);
 	public fy = new Float32Array(MAX_PARTICLES);
 
+	public angularVelocity = new Float32Array(MAX_PARTICLES);
+	public torque = new Float32Array(MAX_PARTICLES);
+	public angularFriction = new Float32Array(MAX_PARTICLES).fill(0.98);
+
 	public gravity = new Float32Array(MAX_PARTICLES);
 	public friction = new Float32Array(MAX_PARTICLES);
 	public rotationFactor = new Float32Array(MAX_PARTICLES);
@@ -23,6 +27,9 @@ export class PhysicsComponent implements IComponentData {
 		this.vy[removedIndex] = this.vy[lastIndex];
 		this.fx[removedIndex] = this.fx[lastIndex];
 		this.fy[removedIndex] = this.fy[lastIndex];
+		this.angularVelocity[removedIndex] = this.angularVelocity[lastIndex];
+		this.torque[removedIndex] = this.torque[lastIndex];
+		this.angularFriction[removedIndex] = this.angularFriction[lastIndex];
 		this.gravity[removedIndex] = this.gravity[lastIndex];
 		this.friction[removedIndex] = this.friction[lastIndex];
 		this.rotationFactor[removedIndex] = this.rotationFactor[lastIndex];
@@ -34,6 +41,9 @@ export class PhysicsComponent implements IComponentData {
 		this.vy[index] = 0;
 		this.fx[index] = 0;
 		this.fy[index] = 0;
+		this.angularVelocity[index] = 0;
+		this.torque[index] = 0;
+		this.angularFriction[index] = 0.98;
 		this.gravity[index] = 0;
 		this.friction[index] = 1.0;
 		this.rotationFactor[index] = 0;
@@ -51,6 +61,7 @@ export class ColliderComponent implements IComponentData {
 	public height = new Float32Array(MAX_PARTICLES);
 
 	public mass = new Float32Array(MAX_PARTICLES).fill(1.0);
+	public inertia = new Float32Array(MAX_PARTICLES).fill(1.0);
 	public restitution = new Float32Array(MAX_PARTICLES).fill(0.8);
 
 	public swapAndPop(removedIndex: number, lastIndex: number): void {
@@ -61,6 +72,7 @@ export class ColliderComponent implements IComponentData {
 		this.width[removedIndex] = this.width[lastIndex];
 		this.height[removedIndex] = this.height[lastIndex];
 		this.mass[removedIndex] = this.mass[lastIndex];
+		this.inertia[removedIndex] = this.inertia[lastIndex];
 		this.restitution[removedIndex] = this.restitution[lastIndex];
 	}
 
@@ -72,6 +84,7 @@ export class ColliderComponent implements IComponentData {
 		this.width[index] = 0;
 		this.height[index] = 0;
 		this.mass[index] = 1.0;
+		this.inertia[index] = 1.0;
 		this.restitution[index] = 0.8;
 	}
 }

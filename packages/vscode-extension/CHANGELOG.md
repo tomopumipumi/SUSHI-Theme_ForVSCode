@@ -4,6 +4,16 @@ All notable changes to the "sushi-theme" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+<!-- ## [1.8.1] - 2026-05-14
+
+### Added
+- True Angular Physics: Introduced `angularVelocity`, `torque`, and `inertia` to the `@typing-fx/physics-2d` engine. Sushi particles now spin realistically based on the exact angle and position of their collisions.
+- Rolling Friction: Particles now interact with walls and the floor realistically. Sliding along the floor converts horizontal velocity into rotational spin.
+
+### Changed
+- Physics Resting State: Implemented a "sleep" mechanism in the physics system. Particles with near-zero velocity and rotation now completely stop, eliminating infinite micro-jittering when sushi stacks up or rests on the floor.
+- Performance Optimization: Moved the `RAD_TO_DEG` conversion constant to the module scope in the physics system to prevent redundant calculations per frame. -->
+
 ## [1.8.0] - 2026-05-13
 
 ### Fixed
