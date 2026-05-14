@@ -85,7 +85,7 @@ export const useParticleEffect = (world: World): ParticleEffect => {
 		spawnParticles(world.registry, settings, profile, targetId, anchorLine, anchorChar);
 		world.startLoop();
 
-		if (Math.random() < 0.05) {
+		if (Math.random() < 0.01) {
 			const targetEntityId = world.getRandomAliveEntityId();
 			if (targetEntityId !== -1) {
 				const t = setTimeout(() => {
